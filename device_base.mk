@@ -171,3 +171,11 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dexopt-data-only=1
 
+# installer
+PRODUCT_COPY_FILES += \
+	device/samsung/p1-common/updater.sh:updater.sh
+
+# bml_over_mtd
+PRODUCT_COPY_FILES += \
+	device/samsung/p1-common/bml_over_mtd.sh:bml_over_mtd.sh
+
