@@ -71,7 +71,8 @@ USE_OPENGL_RENDERER := true
 BOARD_USE_SKIA_LCDTEXT := true
 
 # Device related defines
-BOARD_NAND_PAGE_SIZE := 4096 -s 128
+BOARD_NAND_PAGE_SIZE := 4096
+BOARD_NAND_SPARE_SIZE := 128
 BOARD_KERNEL_BASE := 0x32000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_CMDLINE := console=ttyFIQ0,115200 init=/init no_console_suspend
@@ -83,7 +84,7 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun%d/file"
 
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
