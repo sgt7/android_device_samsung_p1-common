@@ -38,8 +38,6 @@ char const*const BUTTON_FILE = "/sys/class/leds/button-backlight/brightness";
 
 char const*const LCD_BACKLIGHT_FILE = "/sys/class/backlight/s5p_bl/brightness";
 
-char const*const NOTIFICATION_FILE = "/sys/class/misc/backlightnotification/notification_led";
-
 /**
  * Aux method, write int to file
  */
@@ -119,7 +117,7 @@ set_light_notifications(struct light_device_t* dev,
 	LOGV("%s color=%08x flashMode=%d flashOnMS=%d flashOffMS=%d\n", __func__,
 	     state->color, state->flashMode, state->flashOnMS, state->flashOffMS);
 	pthread_mutex_lock(&g_lock);
-	err = write_int(NOTIFICATION_FILE, on?1:0);
+	err = write_int(BUTTON_FILE, on?255:0);
 	pthread_mutex_unlock(&g_lock);
 	return err;
 }
