@@ -13,15 +13,9 @@ import android.preference.PreferenceActivity;
 
 public class P1Parts extends PreferenceActivity  {
 
-    public static final String KEY_COLOR_TUNING = "color_tuning";
-    public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
-    public static final String KEY_HSPA = "hspa";
     public static final String KEY_TVOUT_ENABLE = "tvout_enable";
     public static final String KEY_TVOUT_SYSTEM = "tvout_system";
 
-    private ColorTuningPreference mColorTuning;
-    private ListPreference mBacklightTimeout;
-    private ListPreference mHspa;
     private CheckBoxPreference mTvOutEnable;
     private ListPreference mTvOutSystem;
     private TvOut mTvOut;
@@ -40,17 +34,6 @@ public class P1Parts extends PreferenceActivity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
-
-        mColorTuning = (ColorTuningPreference) findPreference(KEY_COLOR_TUNING);
-        mColorTuning.setEnabled(ColorTuningPreference.isSupported());
-
-        mBacklightTimeout = (ListPreference) findPreference(KEY_BACKLIGHT_TIMEOUT);
-        mBacklightTimeout.setEnabled(TouchKeyBacklightTimeout.isSupported());
-        mBacklightTimeout.setOnPreferenceChangeListener(new TouchKeyBacklightTimeout());
-
-        mHspa = (ListPreference) findPreference(KEY_HSPA);
-        mHspa.setEnabled(Hspa.isSupported());
-        mHspa.setOnPreferenceChangeListener(new Hspa(this));
 
         mTvOut = new TvOut();
         mTvOutEnable = (CheckBoxPreference) findPreference(KEY_TVOUT_ENABLE);
