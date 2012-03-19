@@ -95,6 +95,11 @@ PRODUCT_PACKAGES += \
 	hwcomposer.s5pc110 \
 	libstagefrighthw
 
+# Device-specific packages
+PRODUCT_PACKAGES += \
+	P1Parts \
+	tvouthack
+
 # apns config file
 PRODUCT_COPY_FILES += \
 	development/data/etc/apns-conf.xml:system/etc/apns-conf.xml
