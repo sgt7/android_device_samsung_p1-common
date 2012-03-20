@@ -1,4 +1,4 @@
-package com.cyanogenmod.P1Parts;
+package com.cyanogenmod.settings.device;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 
-public class P1Parts extends PreferenceActivity  {
+public class DeviceSettings extends PreferenceActivity  {
 
     public static final String KEY_TVOUT_ENABLE = "tvout_enable";
     public static final String KEY_TVOUT_SYSTEM = "tvout_system";
@@ -44,7 +44,7 @@ public class P1Parts extends PreferenceActivity  {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 boolean enable = (Boolean) newValue;
-                Intent i = new Intent(P1Parts.this, TvOutService.class);
+                Intent i = new Intent(DeviceSettings.this, TvOutService.class);
                 i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_ENABLE : TvOutService.COMMAND_DISABLE);
                 startService(i);
                 return true;
@@ -59,7 +59,7 @@ public class P1Parts extends PreferenceActivity  {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (mTvOut._isEnabled()) {
                     int newSystem = Integer.valueOf((String) newValue);
-                    Intent i = new Intent(P1Parts.this, TvOutService.class);
+                    Intent i = new Intent(DeviceSettings.this, TvOutService.class);
                     i.putExtra(TvOutService.EXTRA_COMMAND, TvOutService.COMMAND_CHANGE_SYSTEM);
                     i.putExtra(TvOutService.EXTRA_SYSTEM, newSystem);
                     startService(i);
