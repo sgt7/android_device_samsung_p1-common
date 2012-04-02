@@ -154,10 +154,6 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     fi
     #/tmp/erase_image userdata
 
-    # unmount and format datadata
-    /tmp/busybox umount -l /datadata
-    /tmp/erase_image datadata
-
     if $IS_GSM ; then
         # restore efs backup
         if /tmp/busybox test -e /sdcard/backup/efs/nv_data.bin ; then
