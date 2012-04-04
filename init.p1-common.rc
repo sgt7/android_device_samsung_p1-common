@@ -1,0 +1,130 @@
+on init
+
+loglevel 9
+    export EXTERNAL_STORAGE /mnt/sdcard
+
+    mkdir /mnt/sdcard 0000 system system
+    symlink /mnt/sdcard /sdcard
+
+on fs
+
+    # mount /data - default mount mtd@userdata in init.rc is not valid for this device
+    mount ext4 /dev/block/mmcblk0p2 /data wait nosuid nodev noatime nodiratime noauto_da_alloc
+
+    # mount debugfs
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+on post-fs
+
+    # now that all filesystems are mounted, load device specific kernel modules
+    insmod /system/lib/modules/vibrator.ko   # vibrator
+    insmod /system/lib/modules/bthid.ko      # bthid
+
+on post-fs-data
+
+    # bluetooth
+    chown bluetooth bluetooth /dev/s3c2410_serial0
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill1/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill1/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+
+    # System server can control backlight brightness
+    chown system system /sys/class/backlight/s5p_bl/brightness
+
+    # change permission for uart_switch
+    chown radio radio /sys/class/sec/uart_switch/UART_SEL/value
+    chmod 660 /sys/class/sec/uart_switch/UART_SEL/value
+
+    chown system radio /sys/class/sec/switch/usb_state
+    chown system radio /sys/class/sec/switch/usb_sel
+    chown system radio /sys/class/sec/switch/uart_sel
+
+    chown compass root /sys/class/input/input3/distortion
+    chown compass root /sys/class/input/input3/offsets
+    chown compass root /sys/class/input/input3/shape
+    chown compass root /sys/class/input/input3/threshold
+
+    # create data/gps for GPS demon
+    mkdir /data/gps 771 gps system
+    chown gps system /data/gps
+    chmod 0777 /system/vendor/bin/gpsd
+
+    # wi-fi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+
+    # allow system to modify cpufreq control files
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    
+    # sensors
+    # this needs to be fixed correctly, see: frameworks/base/services/sensorservice/SensorDevice.cpp
+    write /sys/class/input/input3/enable 1
+    write /sys/class/input/input4/enable 1
+
+    setprop vold.post_fs_data_done 1
+
+on boot
+
+    # fake some battery state
+    setprop status.battery.state Slow
+    setprop status.battery.level 5
+    setprop status.battery.level_raw  50
+    setprop status.battery.level_scale 9
+
+    # to enable wifi
+    setprop wifi.interface "eth0"
+
+    # phone
+    setprop ro.radio.noril yes
+    setprop ro.telephony.call_ring.multiple 0
+
+    # data encryption
+    setprop ro.crypto.keyfile.userdata /data/metadata
+
+# 3D init
+service pvrsrvinit /system/bin/pvrsrvinit
+    class core
+    user root
+    group root
+    oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
+    class main
+    socket wpa_eth0 dgram 0660 wifi wifi
+    disabled
+    oneshot
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service hciattach /system/bin/brcm_patchram_plus --enable_hci --baudrate 3000000 --patchram /system/bin/BCM4329B1_002.002.023.0534.0571.hcd /dev/s3c2410_serial0
+    class main
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service gps-daemon /system/vendor/bin/gpsd
+    class late_start
+    user system
+    group system inet
+
+service tvout /system/bin/tvoutserver
+    class late_start
+    user system
+    group graphics
+
+service tvouthack /system/bin/tvouthack
+    user system
+    group graphics
+    disabled
+
