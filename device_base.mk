@@ -79,10 +79,6 @@ PRODUCT_PACKAGES += \
 	P1Parts \
 	tvouthack
 
-# apns config file
-PRODUCT_COPY_FILES += \
-	development/data/etc/apns-conf.xml:system/etc/apns-conf.xml
-
 # Touchscreen
 PRODUCT_COPY_FILES += \
         device/samsung/p1-common/prebuilt/usr/idc/AT42QT602240_Touchscreen.idc:system/usr/idc/AT42QT602240_Touchscreen.idc
