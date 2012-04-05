@@ -13,9 +13,11 @@ import android.preference.PreferenceActivity;
 
 public class DeviceSettings extends PreferenceActivity  {
 
+    public static final String KEY_HSPA = "hspa";
     public static final String KEY_TVOUT_ENABLE = "tvout_enable";
     public static final String KEY_TVOUT_SYSTEM = "tvout_system";
 
+    private ListPreference mHspa;
     private CheckBoxPreference mTvOutEnable;
     private ListPreference mTvOutSystem;
     private TvOut mTvOut;
@@ -34,6 +36,10 @@ public class DeviceSettings extends PreferenceActivity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
+
+        mHspa = (ListPreference) findPreference(KEY_HSPA);
+        mHspa.setEnabled(Hspa.isSupported());
+        mHspa.setOnPreferenceChangeListener(new Hspa(this));
 
         mTvOut = new TvOut();
         mTvOutEnable = (CheckBoxPreference) findPreference(KEY_TVOUT_ENABLE);

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galaxy Tab 設定</string>
+
+    <string name="category_radio_title">行動網路</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">啟用 HSDPA／HSUPA</string>
+</resources>
