@@ -1,8 +1,6 @@
 package com.cyanogenmod.settings.device;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 public class Utils {
 
