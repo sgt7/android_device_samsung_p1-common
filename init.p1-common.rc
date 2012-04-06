@@ -64,12 +64,12 @@ on post-fs-data
 
     # cpufreq, set ondemand governor
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
-    
+
     # sensors
     # this needs to be fixed correctly, see: frameworks/base/services/sensorservice/SensorDevice.cpp
 
-    write /sys/class/input/input4/enable 1  # enable gyro
-    write /sys/class/input/input5/enable 1  # enable lightsensor-level
+    write /sys/class/input/input3/enable 1  # enable gyro (p1c) & orientation_sensor (p1)
+    write /sys/class/input/input4/enable 1  # enable lightsensor-level (p1c) & gyro (p1)
 
     setprop vold.post_fs_data_done 1
 
