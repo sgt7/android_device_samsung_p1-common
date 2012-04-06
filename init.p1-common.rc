@@ -46,11 +46,9 @@ on post-fs-data
     chown compass root /sys/class/input/input3/shape
     chown compass root /sys/class/input/input3/threshold
 
-    # gps
+    # create data/gps for GPS demon
     mkdir /data/gps 771 gps system
     chown gps system /data/gps
-    chown gps root /sys/class/sec/gps/GPS_PWR_EN/value
-    chmod 660 /sys/class/sec/gps/GPS_PWR_EN/value
 
     # wi-fi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
@@ -67,21 +65,10 @@ on post-fs-data
     # cpufreq, set ondemand governor
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
     
-    # sensor light
+    # sensors
+    # this needs to be fixed correctly, see: frameworks/base/services/sensorservice/SensorDevice.cpp
     write /sys/class/input/input3/enable 1
-    chown root input /sys/class/input/input3/enable
-    chmod 660 /sys/class/input/input3/enable
-
-    # gyro
     write /sys/class/input/input4/enable 1
-    chown root input /sys/class/input/input4/enable
-    chmod 660 /sys/class/input/input4/enable
-
-    # Change permission for compass
-    chown compass input /sys/class/input/input3/offsets
-    chown compass input /sys/class/input/input3/shape
-    chown compass input /sys/class/input/input3/distortion
-    chown compass input /sys/class/input/input3/threshold
 
     setprop vold.post_fs_data_done 1
 
