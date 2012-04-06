@@ -122,6 +122,7 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci \
     user bluetooth
     group bluetooth net_bt_admin
     disabled
+    oneshot
 
 service gps-daemon /system/vendor/bin/gpsd
     class late_start
