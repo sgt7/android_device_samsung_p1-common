@@ -67,8 +67,9 @@ on post-fs-data
     
     # sensors
     # this needs to be fixed correctly, see: frameworks/base/services/sensorservice/SensorDevice.cpp
-    write /sys/class/input/input3/enable 1
-    write /sys/class/input/input4/enable 1
+
+    write /sys/class/input/input4/enable 1  # enable gyro
+    write /sys/class/input/input5/enable 1  # enable lightsensor-level
 
     setprop vold.post_fs_data_done 1
 
