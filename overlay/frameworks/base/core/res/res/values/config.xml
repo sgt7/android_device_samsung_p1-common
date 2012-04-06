@@ -63,22 +63,13 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-         <item>10</item>
-         <item>25</item>
-         <item>50</item>
-         <item>100</item>
-         <item>150</item>
-         <item>200</item>
-         <item>700</item>
-         <item>1300</item>
-         <item>2000</item>
-         <item>3000</item>
-         <item>4000</item>
-         <item>5000</item>
-         <item>6000</item>
-         <item>7000</item>
-         <item>8000</item>
-         <item>9000</item>
+        <item>6</item>
+        <item>23</item>
+        <item>76</item>
+        <item>221</item>
+        <item>801</item>
+        <item>2801</item>
+        <item>4801</item>
     </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -86,23 +77,14 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-         <item>32</item>
-         <item>32</item>
-         <item>32</item>
-         <item>32</item>
-         <item>64</item>
-         <item>64</item>
-         <item>95</item>
-         <item>95</item>
-         <item>122</item>
-         <item>149</item>
-         <item>176</item>
-         <item>197</item>
-         <item>228</item>
-         <item>255</item>
-         <item>255</item>
-         <item>255</item>
-         <item>255</item>
+        <item>75</item>
+        <item>90</item>
+        <item>105</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+        <item>210</item>
+        <item>240</item>
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -113,17 +95,8 @@
         <item>255</item>
         <item>255</item>
         <item>255</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
+        <item>255</item>
+        <item>255</item>
         <item>0</item>
         <item>0</item>
         <item>0</item>
@@ -135,15 +108,6 @@
          Crespo has no keyboard so all values are zero.
     -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
         <item>0</item>
         <item>0</item>
         <item>0</item>

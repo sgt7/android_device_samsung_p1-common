@@ -2,6 +2,10 @@
 <resources>
     <string name="app_name">Configurações do Galaxy Tab</string>
 
+    <string name="category_radio_title">Radio</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">Ativar HSDPA/HSUPA</string>
+
     <string name="category_tvout_title">Saída de TV</string>
     <string name="tvout_enable_head">Saída de TV</string>
     <string name="tvout_enable_summary_nocable">Cabo para Saída de TV não conectado</string>

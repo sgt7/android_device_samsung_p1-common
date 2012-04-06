@@ -26,6 +26,7 @@ PRODUCT_COPY_FILES := \
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/init.p1-common.rc:root/init.p1-common.rc \
+	device/samsung/p1-common/usb.rc:root/usb.rc \
 	device/samsung/p1-common/usb.rc:recovery/root/usb.rc \
 	device/samsung/p1-common/lpm.rc:root/lpm.rc
 
@@ -38,7 +39,6 @@ PRODUCT_COPY_FILES += \
 # Filesystem management tools
 PRODUCT_PACKAGES := \
 	make_ext4fs \
-	setup_fs \
 	bml_over_mtd
 
 # Lights
