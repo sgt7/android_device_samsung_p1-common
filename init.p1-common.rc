@@ -111,12 +111,14 @@ service iprenew_eth0 /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service hciattach /system/bin/brcm_patchram_plus --enable_hci --baudrate 3000000 --patchram /system/bin/BCM4329B1_002.002.023.0534.0590.hcd /dev/s3c2410_serial0
+service hciattach /system/bin/brcm_patchram_plus --enable_hci \
+    --baudrate 3000000 --use_baudrate_for_download \
+    --scopcm=0,0,0,0,0,0,0,0,0,0 \
+    --patchram /system/bin/BCM4329B1_002.002.023.0534.0590.hcd /dev/s3c2410_serial0
     class main
     user bluetooth
     group bluetooth net_bt_admin
     disabled
-    oneshot
 
 service gps-daemon /system/vendor/bin/gpsd
     class late_start
