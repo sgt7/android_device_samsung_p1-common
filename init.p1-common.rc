@@ -124,11 +124,6 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci \
     disabled
     oneshot
 
-service gps-daemon /system/vendor/bin/gpsd
-    class late_start
-    user system
-    group system inet
-
 service tvout /system/bin/tvoutserver
     class late_start
     user system
