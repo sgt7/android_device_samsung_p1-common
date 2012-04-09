@@ -41,11 +41,6 @@ on post-fs-data
     chown system radio /sys/class/sec/switch/usb_sel
     chown system radio /sys/class/sec/switch/uart_sel
 
-    chown compass root /sys/class/input/input3/distortion
-    chown compass root /sys/class/input/input3/offsets
-    chown compass root /sys/class/input/input3/shape
-    chown compass root /sys/class/input/input3/threshold
-
     # create data/gps for GPS demon
     mkdir /data/gps 771 gps system
     chown gps system /data/gps
