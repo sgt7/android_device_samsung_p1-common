@@ -420,9 +420,9 @@ status_t AudioHardware::setMode(int mode)
                 struct mixer_ctl *ctl= mixer_get_ctl_by_name(mMixer, "Playback Path");
                 TRACE_DRIVER_OUT
                 if (ctl != NULL) {
-                    LOGV("setMode() reset Playback Path to RCV");
+                    LOGV("setMode() reset Playback Path to SPK");   // P1 has no RCV
                     TRACE_DRIVER_IN(DRV_MIXER_SEL)
-                    mixer_ctl_set_enum_by_string(ctl, "RCV");
+                    mixer_ctl_set_enum_by_string(ctl, "SPK");       // P1 has no RCV
                     TRACE_DRIVER_OUT
                 }
             }
@@ -627,7 +627,7 @@ void AudioHardware::setVoiceVolume_l(float volume)
         switch (device) {
             case AudioSystem::DEVICE_OUT_EARPIECE:
                 LOGD("### earpiece call volume");
-                type = SOUND_TYPE_VOICE;
+                type = SOUND_TYPE_SPEAKER;      // P1 has no EARPIECE
                 break;
 
             case AudioSystem::DEVICE_OUT_SPEAKER:
@@ -771,7 +771,7 @@ status_t AudioHardware::setIncallPath_l(uint32_t device)
             switch(device){
                 case AudioSystem::DEVICE_OUT_EARPIECE:
                     LOGD("### incall mode earpiece route");
-                    path = SOUND_AUDIO_PATH_HANDSET;
+                    path = SOUND_AUDIO_PATH_SPEAKER;         // P1 has no EARPIECE
                     break;
 
                 case AudioSystem::DEVICE_OUT_SPEAKER:
@@ -1045,8 +1045,7 @@ void AudioHardware::closeMixer_l()
 const char *AudioHardware::getOutputRouteFromDevice(uint32_t device)
 {
     switch (device) {
-    case AudioSystem::DEVICE_OUT_EARPIECE:
-        return "RCV";
+    case AudioSystem::DEVICE_OUT_EARPIECE:  // intended fall-through P1 has no RCV
     case AudioSystem::DEVICE_OUT_SPEAKER:
         if (mMode == AudioSystem::MODE_RINGTONE) return "RING_SPK";
         else return "SPK";
@@ -1072,8 +1071,7 @@ const char *AudioHardware::getOutputRouteFromDevice(uint32_t device)
 const char *AudioHardware::getVoiceRouteFromDevice(uint32_t device)
 {
     switch (device) {
-    case AudioSystem::DEVICE_OUT_EARPIECE:
-        return "RCV";
+    case AudioSystem::DEVICE_OUT_EARPIECE:  // intended fall-through P1 has no RCV
     case AudioSystem::DEVICE_OUT_SPEAKER:
         return "SPK";
     case AudioSystem::DEVICE_OUT_WIRED_HEADPHONE:
