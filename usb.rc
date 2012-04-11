@@ -1,7 +1,17 @@
 on property:sys.usb.config=mass_storage
+    write /sys/devices/platform/android_usb/tethering 0
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mass_storage,adb
+    write /sys/devices/platform/android_usb/tethering 0
     start adbd
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=rndis
+    write /sys/devices/platform/android_usb/tethering 1
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=rndis,adb
+    write /sys/devices/platform/android_usb/tethering 1
     setprop sys.usb.state $sys.usb.config
 
