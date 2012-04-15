@@ -93,16 +93,6 @@ service pvrsrvinit /system/bin/pvrsrvinit
     group root
     oneshot
 
-# set device specific MAC addresses, depends on preceding start of rild
-service set-macaddr /system/vendor/bin/set-macaddr
-    user root
-    group root
-    disabled
-    oneshot
-
-on property:init.svc.ril-daemon=running
-    start set-macaddr
-
 service wpa_supplicant /system/bin/wpa_supplicant -Dwext -ieth0 -c/data/misc/wifi/wpa_supplicant.conf
     class main
     socket wpa_eth0 dgram 0660 wifi wifi
@@ -138,3 +128,4 @@ service tvouthack /system/bin/tvouthack
     user system
     group graphics
     disabled
+
