@@ -3,13 +3,20 @@
 #
 # NOTE: this script depends on samsung rild
 #
-#       /data/.nvmac.info is created by samsung rild
+#       $MACINFO is created by samsung rild
 #
 
-if [ -f /data/.nvmac.info ]; then
+DEVICE=`getprop ro.cm.device`
+if [ $DEVICE == "p1c" ]; then
+  MACINFO="/data/misc/wifi/.nvmac.info"
+else
+  MACINFO="/data/.nvmac.info"
+fi
+
+if [ -f $MACINFO ]; then
 
   # read wlan mac address
-  WLMAC=$(cat /data/.nvmac.info)
+  WLMAC=$(cat $MACINFO)
 
   # write updated wifi driver config
   cat /system/vendor/firmware/nvram_net.txt | sed "s/macaddr=\([0-9a-fA-F]\{2\}\:\?\)\+/macaddr=$WLMAC/" > /data/.nvram_net.txt
@@ -18,6 +25,7 @@ if [ -f /data/.nvmac.info ]; then
 
 fi
 
+# non-existant on p1c; no harm tho
 if [ -f /efs/imei/bt.txt ]; then
 
   # read bluetooth mac address
