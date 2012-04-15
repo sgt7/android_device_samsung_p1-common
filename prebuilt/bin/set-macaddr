@@ -25,6 +25,19 @@ if [ -f $MACINFO ]; then
 
 fi
 
+# /data/.nvram_net.txt *needs* to exist, even if the MAC is incorrect.
+# On p1c, $MACINFO is created too late in the boot process for this script
+# to work on the first boot. Go ahead and copy stock nvram_net.txt just in
+# case so that wifi doesn't crash the system if the user tries to start it
+# on first boot.
+if [ ! -f /data/.nvram_net.txt ]; then
+
+  cp /system/vendor/firmware/nvram_net.txt /data/.nvram_net.txt
+  chown radio.radio /data/.nvram_net.txt
+  chmod 0664 /data/.nvram_net.txt
+
+fi
+
 # non-existant on p1c; no harm tho
 if [ -f /efs/imei/bt.txt ]; then
 
