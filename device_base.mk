@@ -74,10 +74,14 @@ PRODUCT_PACKAGES += \
 	hwcomposer.s5pc110 \
 	libstagefrighthw
 
-# Device-specific packages
+# tvout
 PRODUCT_PACKAGES += \
 	P1Parts \
 	tvouthack
+
+# script to set bluetooth and wlan MAC addresses
+PRODUCT_COPY_FILES += \
+        device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
 
 # Touchscreen
 PRODUCT_COPY_FILES += \
