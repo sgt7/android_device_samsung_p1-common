@@ -121,15 +121,6 @@
     <!-- Minimum screen brightness allowed by the power manager. -->
     <integer name="config_screenBrightnessDim">10</integer>
 
-    <!-- Don't name config resources like this.  It should look like config_annoyDianne -->
-    <bool name="config_annoy_dianne">true</bool>
-
-    <!-- XXXXXX END OF RESOURCES USING WRONG NAMING CONVENTION -->
-
-    <!-- If true, the screen can be rotated via the accelerometer in all 4
-         rotations as the default behavior. -->
-    <bool name="config_allowAllRotations">true</bool>
-
     <!-- Component name of the service providing network location support. -->
     <string name="config_networkLocationProvider">com.google.android.location.NetworkLocationProvider</string>
 
