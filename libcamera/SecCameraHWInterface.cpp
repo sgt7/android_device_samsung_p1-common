@@ -1118,12 +1118,14 @@ int CameraHardwareSec::pictureThread()
 
     if (mSecCamera->getCameraId() == SecCamera::CAMERA_ID_BACK) {
         // TODO: copy postview to PostviewHeap->base()
-        memcpy(JpegHeap->data, jpeg_data, jpeg_size);
-        JpegImageSize = jpeg_size;
+        decodeInterleaveData(jpeg_data,
+                             SecCamera::getInterleaveDataSize(),
+                             320, 240,
+                             &JpegImageSize, JpegHeap->data, PostviewHeap->base());
     } else {
         JpegImageSize = static_cast<int>(output_size);
     }
-    scaleDownYuv422((char *)PostviewHeap->base(), mPostViewWidth, mPostViewHeight,
+    scaleDownYuv422((char *)PostviewHeap->base(), 320, 240,
                     (char *)ThumbnailHeap->base(), mThumbWidth, mThumbHeight);
 
     memcpy(mRawHeap->data, PostviewHeap->base(), postviewHeapSize);
@@ -1278,6 +1280,95 @@ bool CameraHardwareSec::FindEOIMarkerInJPEG(unsigned char *pBuf, int dwBufSize, 
     }
 
     return false;
+}
+
+int CameraHardwareSec::decodeInterleaveData(unsigned char *pInterleaveData,
+                                                 int interleaveDataSize,
+                                                 int yuvWidth,
+                                                 int yuvHeight,
+                                                 int *pJpegSize,
+                                                 void *pJpegData,
+                                                 void *pYuvData)
+{
+    if (pInterleaveData == NULL)
+        return false;
+
+    bool ret = true;
+    unsigned int *interleave_ptr = (unsigned int *)pInterleaveData;
+    unsigned char *jpeg_ptr = (unsigned char *)pJpegData;
+    unsigned char *yuv_ptr = (unsigned char *)pYuvData;
+    unsigned char *p;
+    int jpeg_size = 0;
+    int yuv_size = 0;
+
+    int i = 0;
+
+    LOGV("decodeInterleaveData Start~~~");
+    while (i < interleaveDataSize) {
+        if ((*interleave_ptr == 0xFFFFFFFF) || (*interleave_ptr == 0x02FFFFFF) ||
+                (*interleave_ptr == 0xFF02FFFF)) {
+            // Padding Data
+//            LOGE("%d(%x) padding data\n", i, *interleave_ptr);
+            interleave_ptr++;
+            i += 4;
+        }
+        else if ((*interleave_ptr & 0xFFFF) == 0x05FF) {
+            // Start-code of YUV Data
+//            LOGE("%d(%x) yuv data\n", i, *interleave_ptr);
+            p = (unsigned char *)interleave_ptr;
+            p += 2;
+            i += 2;
+
+            // Extract YUV Data
+            if (pYuvData != NULL) {
+                memcpy(yuv_ptr, p, yuvWidth * 2);
+                yuv_ptr += yuvWidth * 2;
+                yuv_size += yuvWidth * 2;
+            }
+            p += yuvWidth * 2;
+            i += yuvWidth * 2;
+
+            // Check End-code of YUV Data
+            if ((*p == 0xFF) && (*(p + 1) == 0x06)) {
+                interleave_ptr = (unsigned int *)(p + 2);
+                i += 2;
+            } else {
+                ret = false;
+                break;
+            }
+        } else {
+            // Extract JPEG Data
+//            LOGE("%d(%x) jpg data, jpeg_size = %d bytes\n", i, *interleave_ptr, jpeg_size);
+            if (pJpegData != NULL) {
+                memcpy(jpeg_ptr, interleave_ptr, 4);
+                jpeg_ptr += 4;
+                jpeg_size += 4;
+            }
+            interleave_ptr++;
+            i += 4;
+        }
+    }
+    if (ret) {
+        if (pJpegData != NULL) {
+            // Remove Padding after EOI
+            for (i = 0; i < 3; i++) {
+                if (*(--jpeg_ptr) != 0xFF) {
+                    break;
+                }
+                jpeg_size--;
+            }
+            *pJpegSize = jpeg_size;
+
+        }
+        // Check YUV Data Size
+        if (pYuvData != NULL) {
+            if (yuv_size != (yuvWidth * yuvHeight * 2)) {
+                ret = false;
+            }
+        }
+    }
+    LOGV("decodeInterleaveData End~~~");
+    return ret;
 }
 
 status_t CameraHardwareSec::dump(int fd) const
