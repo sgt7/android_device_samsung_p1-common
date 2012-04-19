@@ -1120,12 +1120,12 @@ int CameraHardwareSec::pictureThread()
         // TODO: copy postview to PostviewHeap->base()
         decodeInterleaveData(jpeg_data,
                              SecCamera::getInterleaveDataSize(),
-                             320, 240,
+                             mPostViewWidth, mPostViewHeight,
                              &JpegImageSize, JpegHeap->data, PostviewHeap->base());
     } else {
         JpegImageSize = static_cast<int>(output_size);
     }
-    scaleDownYuv422((char *)PostviewHeap->base(), 320, 240,
+    scaleDownYuv422((char *)PostviewHeap->base(), mPostViewWidth, mPostViewHeight,
                     (char *)ThumbnailHeap->base(), mThumbWidth, mThumbHeight);
 
     memcpy(mRawHeap->data, PostviewHeap->base(), postviewHeapSize);
