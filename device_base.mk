@@ -18,7 +18,7 @@
 DEVICE_PACKAGE_OVERLAYS := device/samsung/p1-common/overlay
 
 # Bootanimation
-TARGET_BOOTANIMATION_NAME := vertical-540x960
+TARGET_BOOTANIMATION_NAME := vertical-600x1024
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
