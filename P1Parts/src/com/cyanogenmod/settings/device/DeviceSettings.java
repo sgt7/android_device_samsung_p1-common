@@ -10,17 +10,31 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
+
+import java.io.File;
+import java.io.IOException;
 
 public class DeviceSettings extends PreferenceActivity  {
 
     public static final String KEY_HSPA = "hspa";
     public static final String KEY_TVOUT_ENABLE = "tvout_enable";
     public static final String KEY_TVOUT_SYSTEM = "tvout_system";
+    public static final String KEY_BUTTONS_DISABLE = "buttons_disable";
+    public static final String KEY_BUTTONS = "buttons_category";
+
+    public static final String COMMAND_SHELL = "/system/bin/sh";
+    public static final String ECHO_COMMAND = "echo ";
+    public static final String BUTTONS_ENABLED_PATH =
+            "/sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/buttons_enabled";
+    public static final String BUTTONS_ENABLED_COMMAND =
+            " > /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/buttons_enabled";
 
     private ListPreference mHspa;
     private CheckBoxPreference mTvOutEnable;
     private ListPreference mTvOutSystem;
     private TvOut mTvOut;
+    private CheckBoxPreference mDisableButtons;
 
     private BroadcastReceiver mHeadsetReceiver = new BroadcastReceiver() {
 
@@ -37,6 +51,8 @@ public class DeviceSettings extends PreferenceActivity  {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
 
+        PreferenceScreen prefSet = getPreferenceScreen();
+
         mHspa = (ListPreference) findPreference(KEY_HSPA);
         mHspa.setEnabled(Hspa.isSupported());
         mHspa.setOnPreferenceChangeListener(new Hspa(this));
@@ -51,7 +67,8 @@ public class DeviceSettings extends PreferenceActivity  {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 boolean enable = (Boolean) newValue;
                 Intent i = new Intent(DeviceSettings.this, TvOutService.class);
-                i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_ENABLE : TvOutService.COMMAND_DISABLE);
+                i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_ENABLE :
+                        TvOutService.COMMAND_DISABLE);
                 startService(i);
                 return true;
             }
@@ -74,6 +91,12 @@ public class DeviceSettings extends PreferenceActivity  {
             }
 
         });
+
+        mDisableButtons = (CheckBoxPreference) findPreference(KEY_BUTTONS_DISABLE);
+        File file = new File(BUTTONS_ENABLED_PATH);
+        if (!file.exists()) {
+            prefSet.removePreference(findPreference(KEY_BUTTONS));
+        }
     }
 
     @Override
@@ -90,7 +113,8 @@ public class DeviceSettings extends PreferenceActivity  {
 
     private void updateTvOutEnable(boolean connected) {
         mTvOutEnable.setEnabled(connected);
-        mTvOutEnable.setSummaryOff(connected ? R.string.tvout_enable_summary : R.string.tvout_enable_summary_nocable);
+        mTvOutEnable.setSummaryOff(connected ? R.string.tvout_enable_summary :
+                R.string.tvout_enable_summary_nocable);
 
         if (!connected && mTvOutEnable.isChecked()) {
             // Disable on unplug (UI)
@@ -102,6 +126,23 @@ public class DeviceSettings extends PreferenceActivity  {
     protected void onDestroy() {
         mTvOut.finalize();
         super.onDestroy();
+    }
+
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        boolean value;
+        if (preference == mDisableButtons) {
+            value = mDisableButtons.isChecked();
+            try {
+                String[] cmds = {COMMAND_SHELL, "-c",
+                        ECHO_COMMAND + (value ? "0" : "1") +
+                        BUTTONS_ENABLED_COMMAND};
+                Runtime.getRuntime().exec(cmds);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
     }
 
 }
