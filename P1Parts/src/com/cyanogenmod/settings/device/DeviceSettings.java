@@ -1,5 +1,6 @@
 package com.cyanogenmod.settings.device;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +22,9 @@ public class DeviceSettings extends PreferenceActivity  {
     private CheckBoxPreference mTvOutEnable;
     private ListPreference mTvOutSystem;
     private TvOut mTvOut;
-
+    private C30Observer	c30plug;
+    private Activity	me;
+    
     private BroadcastReceiver mHeadsetReceiver = new BroadcastReceiver() {
 
         @Override
@@ -37,6 +40,8 @@ public class DeviceSettings extends PreferenceActivity  {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
 
+        me = this;
+        
         mHspa = (ListPreference) findPreference(KEY_HSPA);
         mHspa.setEnabled(Hspa.isSupported());
         mHspa.setOnPreferenceChangeListener(new Hspa(this));
@@ -74,6 +79,31 @@ public class DeviceSettings extends PreferenceActivity  {
             }
 
         });
+        
+        c30plug = new C30Observer();
+        
+        updateTvOutEnable(c30plug.getConnectionState());
+        
+        c30plug.setOnStateChangeListener(new C30StateListener() {
+			
+			@Override
+			public boolean onStateChange(Object state) {
+				final boolean connected = "online".equals(state);
+
+				// Need to post message to itself here
+				me.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						updateTvOutEnable(connected);
+					}
+				});
+
+				return true;
+			}
+		});
+        
+        c30plug.start();
     }
 
     @Override

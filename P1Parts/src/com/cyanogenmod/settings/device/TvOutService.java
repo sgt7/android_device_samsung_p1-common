@@ -57,7 +57,6 @@ public class TvOutService extends Service {
                 }
             }
         }
-
     };
 
     @Override
