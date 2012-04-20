@@ -17,6 +17,9 @@
 # application settings that are stored in resourced.
 DEVICE_PACKAGE_OVERLAYS := device/samsung/p1-common/overlay
 
+# Bootanimation
+TARGET_BOOTANIMATION_NAME := vertical-540x960
+
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
 	device/samsung/p1-common/prebuilt/etc/asound.conf:system/etc/asound.conf \
