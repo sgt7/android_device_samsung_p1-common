@@ -2456,9 +2456,8 @@ void SecCamera::setExifChangedAttribute()
         iso = ISO_100;
     }
     switch(iso) {
-        case ISO_50:
-            mExifInfo.iso_speed_rating = 50;
-            break;
+        // ISO_50, ISO_800, and ISO_1600 not supported by camera sensor
+        // let them fall through, and get set to 100
         case ISO_100:
             mExifInfo.iso_speed_rating = 100;
             break;
@@ -2467,12 +2466,6 @@ void SecCamera::setExifChangedAttribute()
             break;
         case ISO_400:
             mExifInfo.iso_speed_rating = 400;
-            break;
-        case ISO_800:
-            mExifInfo.iso_speed_rating = 800;
-            break;
-        case ISO_1600:
-            mExifInfo.iso_speed_rating = 1600;
             break;
         default:
             mExifInfo.iso_speed_rating = 100;
