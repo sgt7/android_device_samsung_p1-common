@@ -82,6 +82,10 @@ PRODUCT_PACKAGES += \
 	P1Parts \
 	tvouthack
 
+# Usb accessory
+PRODUCT_PACKAGES += \
+	com.android.future.usb.accessory
+
 # script to set bluetooth and wlan MAC addresses
 PRODUCT_COPY_FILES += \
         device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
