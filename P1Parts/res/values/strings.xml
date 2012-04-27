@@ -16,6 +16,6 @@
 
     <string name="category_capacitive_buttons_title">Capacitive buttons</string>
     <string name="capacitive_buttons_title">Disable capacitive buttons</string>
-    <string name="capacitive_buttons_summary">Disable hard capacitive button lights and touches</string>
+    <string name="capacitive_buttons_summary">Disable hard capacitive button lights and touches (Including notifications)</string>
 
 </resources>
