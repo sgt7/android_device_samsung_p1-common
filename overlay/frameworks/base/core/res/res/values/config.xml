@@ -158,4 +158,7 @@
          a car dock make the accelerometer more a physical input (like a lid). -->
     <bool name="config_carDockEnablesAccelerometer">true</bool>
 
+    <!-- There is no charging LED. -->
+    <bool name="config_unplugTurnsOnScreen">true</bool>
+
 </resources>
