@@ -127,7 +127,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-       wifi.interface=eth0 \
+       wifi.interface=wlan0 \
        wifi.supplicant_scan_interval=45
 
 # enable Google-specific location features,
@@ -169,6 +169,8 @@ PRODUCT_COPY_FILES += \
 # bml_over_mtd
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/bml_over_mtd.sh:bml_over_mtd.sh
+
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
 # Set product characteristic to tablet, needed for some ui elements
 PRODUCT_CHARACTERISTICS := tablet
