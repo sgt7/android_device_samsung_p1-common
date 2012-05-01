@@ -23,7 +23,6 @@ TARGET_BOOTANIMATION_NAME := vertical-540x960
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
 	device/samsung/p1-common/prebuilt/etc/asound.conf:system/etc/asound.conf \
-	device/samsung/p1-common/prebuilt/lib/egl/egl.cfg:system/lib/egl/egl.cfg \
 	device/samsung/p1-common/prebuilt/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf
 
 # Init files
@@ -108,8 +107,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
 	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
+	frameworks/base/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number

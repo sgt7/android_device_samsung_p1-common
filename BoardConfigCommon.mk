@@ -21,6 +21,7 @@
 # Set this up here so that BoardVendorConfig.mk can override it
 BOARD_USES_GENERIC_AUDIO := false
 
+BOARD_PROVIDES_LIBRIL := true
 BOARD_USES_LIBSECRIL_STUB := true
 
 # ARMv7-A Cortex-A8 architecture
