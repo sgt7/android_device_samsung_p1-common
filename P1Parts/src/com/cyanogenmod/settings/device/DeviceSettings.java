@@ -1,5 +1,6 @@
 package com.cyanogenmod.settings.device;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class DeviceSettings extends PreferenceActivity  {
     public static final String KEY_HSPA = "hspa";
     public static final String KEY_TVOUT_ENABLE = "tvout_enable";
     public static final String KEY_TVOUT_SYSTEM = "tvout_system";
+    public static final String KEY_HDMI_ENABLE = "hdmi_enable";
     public static final String KEY_BUTTONS_DISABLE = "buttons_disable";
     public static final String KEY_BUTTONS = "buttons_category";
 
@@ -32,9 +34,15 @@ public class DeviceSettings extends PreferenceActivity  {
 
     private ListPreference mHspa;
     private CheckBoxPreference mTvOutEnable;
+    private CheckBoxPreference mHDMIEnable;
     private ListPreference mTvOutSystem;
     private TvOut mTvOut;
+    private C30Observer	c30plug;
+    private Activity	me;
     private CheckBoxPreference mDisableButtons;
+
+    private boolean	mTVoutConnected = false;
+    private boolean mHDMIConnected = false;
 
     private BroadcastReceiver mHeadsetReceiver = new BroadcastReceiver() {
 
@@ -50,7 +58,9 @@ public class DeviceSettings extends PreferenceActivity  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
-
+        
+        me = this;
+        
         PreferenceScreen prefSet = getPreferenceScreen();
 
         mHspa = (ListPreference) findPreference(KEY_HSPA);
@@ -92,11 +102,58 @@ public class DeviceSettings extends PreferenceActivity  {
 
         });
 
+        mHDMIEnable = (CheckBoxPreference) findPreference(KEY_HDMI_ENABLE);
+        mHDMIEnable.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {       	
+                boolean enable = (Boolean) newValue;
+                Intent i = new Intent(DeviceSettings.this, TvOutService.class);
+                i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_HDMI_ENABLE : TvOutService.COMMAND_HDMI_DISABLE);
+                startService(i);
+                return true;
+            }
+
+        });
+
         mDisableButtons = (CheckBoxPreference) findPreference(KEY_BUTTONS_DISABLE);
         File file = new File(BUTTONS_ENABLED_PATH);
         if (!file.exists()) {
             prefSet.removePreference(findPreference(KEY_BUTTONS));
         }
+
+        c30plug = new C30Observer();
+        
+        mTVoutConnected = c30plug.isTVoutConnected();
+        mHDMIConnected = c30plug.isDockDeskConnected();
+        
+        updateTvOutEnable(mTVoutConnected);
+        updateHDMIEnable(mHDMIConnected);
+        
+        c30plug.setOnStateChangeListener(new C30StateListener() {
+			
+			@Override
+			public boolean onStateChange(Object dev, Object state) {
+				final boolean connected = "online".equals(state);
+				final String  device = (String)dev;
+				
+				// Need to post message to itself here
+				me.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						if ("TV".equals(device))
+							updateTvOutEnable(connected);
+						else if ("desk".equals(device))
+							updateHDMIEnable(connected);
+					}
+				});
+
+				return true;
+			}
+		});
+        
+        c30plug.start();
     }
 
     @Override
@@ -116,10 +173,30 @@ public class DeviceSettings extends PreferenceActivity  {
         mTvOutEnable.setSummaryOff(connected ? R.string.tvout_enable_summary :
                 R.string.tvout_enable_summary_nocable);
 
-        if (!connected && mTvOutEnable.isChecked()) {
-            // Disable on unplug (UI)
-            mTvOutEnable.setChecked(false);
+        if (!connected)
+        {
+        	if (mTvOutEnable.isChecked())
+        		// Disable on unplug (UI)
+        		mTvOutEnable.setChecked(false);
         }
+        else
+        	if (mTvOut._isEnabled())
+        		mTvOutEnable.setChecked(true);
+    }
+
+    private void updateHDMIEnable(boolean connected) {
+        mHDMIEnable.setEnabled(connected);
+        mHDMIEnable.setSummaryOff(connected ? R.string.hdmi_dock_summary : R.string.hdmi_dock_summary_nodock);
+
+        if (!connected)
+        {
+        	if (mHDMIEnable.isChecked())
+        		// Disable on unplug (UI)
+        		mHDMIEnable.setChecked(false);
+        }
+        else
+        	if (mTvOut._isHdmiEnabled())
+        		mHDMIEnable.setChecked(true);
     }
 
     @Override
