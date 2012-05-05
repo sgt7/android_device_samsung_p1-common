@@ -743,15 +743,18 @@ int SecCamera::startPreview(void)
                            V4L2_CID_CAMERA_CHECK_DATALINE, m_chk_dataline);
     CHECK(ret);
 
-    if (m_camera_id == CAMERA_ID_FRONT) {
-        /* VT mode setting */
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_VT_MODE, m_vtmode);
-        CHECK(ret);
+    /* VT mode setting */
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_VT_MODE, m_vtmode);
+    CHECK(ret);
 
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CHECK_FLIP, 0);
-        CHECK(ret);
+    //reference only, this is in stock camera HAL, but not supported in the kernel
+    //if (m_camera_id == CAMERA_ID_BACK) {
+    //    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_ANTI_BANDING, 0);
+    //    CHECK(ret);
+    //}
 
-    }
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_CHECK_FLIP, 0);
+    CHECK(ret);
 
     /* start with all buffers in queue */
     for (int i = 0; i < MAX_BUFFERS; i++) {
@@ -763,6 +766,9 @@ int SecCamera::startPreview(void)
     CHECK(ret);
 
     m_flag_camera_start = 1;
+
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAM_PREVIEW_ONOFF, 1);
+    CHECK(ret);
 
     if (m_camera_id == CAMERA_ID_BACK) {
         ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_SCENE_MODE, m_params->scene_mode);
@@ -791,23 +797,18 @@ int SecCamera::startPreview(void)
         CHECK(ret);
         ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_FLASH_MODE, m_params->flash_mode);
         CHECK(ret);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_APP_CHECK, 0);
-        CHECK(ret);
     }
+
+    ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_APP_CHECK, 0);
+    CHECK(ret);
 
     ret = fimc_v4l2_s_parm(m_cam_fd, &m_streamparm);
     CHECK(ret);
 
-    if (m_camera_id == CAMERA_ID_FRONT) {
-        /* Blur setting */
-        LOGV("m_blur_level = %d", m_blur_level);
-        ret = fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_VGA_BLUR,
-                               m_blur_level);
-        CHECK(ret);
+    if (m_camera_id == CAMERA_ID_BACK) {
+        ret = fimc_v4l2_g_ctrl(m_cam_fd, V4L2_CID_ESD_INT);
+        CHECK_PTR(ret);
     }
-
-    ret = fimc_v4l2_g_ctrl(m_cam_fd, V4L2_CID_ESD_INT);
-    CHECK_PTR(ret);
 
     LOGV("%s: got the first frame of the preview\n", __func__);
 
