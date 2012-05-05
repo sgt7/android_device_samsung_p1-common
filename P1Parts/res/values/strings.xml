@@ -13,7 +13,11 @@
     <string name="tvout_enable_summary_on">TV Out enabled</string>
     <string name="tvout_system_head">TV System</string>
     <string name="tvout_system_summary">Set your TV system for TV Out</string>
-
+    <string name="hdmi_dock_summary_nodock">HDMI dock not connected</string>
+    <string name="hdmi_dock_summary">HDMI dock connected, check to enable</string>
+    <string name="hdmi_dock_summary_on">HDMI dock enabled</string>
+    <string name="hdmi_dock_head">HDMI dock</string>
+    
     <string name="category_capacitive_buttons_title">Capacitive buttons</string>
     <string name="capacitive_buttons_title">Disable capacitive buttons</string>
     <string name="capacitive_buttons_summary">Disable hard capacitive button lights and touches (Including notifications)</string>

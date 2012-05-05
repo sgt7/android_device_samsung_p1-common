@@ -24,7 +24,9 @@ public class TvOutService extends Service {
     public static final String COMMAND_ENABLE = "enable";
     public static final String COMMAND_DISABLE = "disable";
     public static final String COMMAND_CHANGE_SYSTEM = "system";
-
+    public static final String COMMAND_HDMI_ENABLE = "hdmi_enable";
+    public static final String COMMAND_HDMI_DISABLE = "hdmi_disable";
+    
     private TvOut mTvOut;
     private SharedPreferences mPref;
     private int mSystem;
@@ -106,6 +108,13 @@ public class TvOutService extends Service {
                     enable();
                 }
             }
+            else if (COMMAND_HDMI_ENABLE.equals(command)) {
+            	hdmi_enable();
+            }
+            else if (COMMAND_HDMI_DISABLE.equals(command)) {
+            	hdmi_disable();
+            	stopSelf();
+            }
         }
 
         return START_STICKY;
@@ -141,6 +150,24 @@ public class TvOutService extends Service {
 
         mTvOut._DisableTvOut();
         mTvOut._setTvoutCableConnected(0);
+    }
+
+    private void hdmi_enable() {
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        mTvOut._SetOrientation(display.getRotation());
+
+        mTvOut._setHdmiCableConnected(1);
+        mTvOut._SetTvoutHdmiStatus(1);
+        
+        // Start tvouthack service used to bombard screen refresh messages
+        SystemProperties.set("ctl.start", "tvouthack");        
+    }
+    
+    private void hdmi_disable() {
+        SystemProperties.set("ctl.stop", "tvouthack");
+
+        mTvOut._SetTvoutHdmiStatus(0);
+        mTvOut._setHdmiCableConnected(0);    	
     }
 
 }
