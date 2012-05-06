@@ -13,6 +13,10 @@
     <string name="tvout_enable_summary_on">ТВ выход включен</string>
     <string name="tvout_system_head">Система ТВ</string>
     <string name="tvout_system_summary">Установите систему вещания</string>
+    <string name="hdmi_dock_summary_nodock">HDMI док-станция не подключена</string>
+    <string name="hdmi_dock_summary">HDMI док-станция подключена, нажмите для включения</string>
+    <string name="hdmi_dock_summary_on">HDMI док-станция включена</string>
+    <string name="hdmi_dock_head">HDMI док-станция</string>
 
     <string name="category_capacitive_buttons_title">Сенсорные кнопки</string>
     <string name="capacitive_buttons_title">Отключить сенсорные кнопки</string>
