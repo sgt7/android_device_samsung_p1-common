@@ -66,6 +66,9 @@ on post-fs-data
     write /sys/class/input/input3/enable 1  # enable gyro (p1c) & orientation_sensor (p1)
     write /sys/class/input/input4/enable 1  # enable lightsensor-level (p1c) & gyro (p1)
 
+    # make sure that /data/.nvram_net.txt exists during wifi initialization
+    start set-macaddr
+
     setprop vold.post_fs_data_done 1
 
 on boot
@@ -97,7 +100,7 @@ service set-macaddr /system/vendor/bin/set-macaddr
     disabled
     oneshot
 
-on property:init.svc.ril-daemon=running
+on property:sys.boot_completed=1
     start set-macaddr
 
 service wpa_supplicant /system/bin/wpa_supplicant \
