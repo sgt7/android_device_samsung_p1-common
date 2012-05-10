@@ -157,10 +157,6 @@ include frameworks/base/build/phone-hdpi-512-dalvik-heap.mk
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mass_storage
 
-# keep dalvik cache on /data
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dexopt-data-only=1
-
 # installer
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/updater.sh:updater.sh
