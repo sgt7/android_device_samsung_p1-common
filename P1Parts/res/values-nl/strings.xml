@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="app_name">Galaxy Tab-instellingen</string>
+
+    <string name="category_radio_title">Radio</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">HSDPA/HSUPA inschakelen</string>
+
+    <string name="category_tvout_title">Tv-uitoer</string>
+    <string name="tvout_enable_head">Tv-uitvoer</string>
+    <string name="tvout_enable_summary_nocable">Kabel voor tv-uitvoer niet verbonden</string>
+    <string name="tvout_enable_summary">Kabel voor tv-uitvoer verbonden, activeer om in te schakelen</string>
+    <string name="tvout_enable_summary_on">Tv-uitvoer ingeschakeld</string>
+    <string name="tvout_system_head">Tv-systeem</string>
+    <string name="tvout_system_summary">Tv-systeem voor tv-uitvoer instellen</string>
+    <string name="hdmi_dock_summary_nodock">HDMI-dock niet verbonden</string>
+    <string name="hdmi_dock_summary">HDMI-dock verbonden, activeer om in te schakelen</string>
+    <string name="hdmi_dock_summary_on">HDMI-dock ingeschakeld</string>
+    <string name="hdmi_dock_head">HDMI-dock</string>
+    
+    <string name="category_capacitive_buttons_title">Capacitieve knoppen</string>
+    <string name="capacitive_buttons_title">Capacitieve knoppen</string>
+    <string name="capacitive_buttons_summary">Lichten en aanrakingen op vaste capacitieve knoppen uitschakelen (incl. meldingen)</string>
+
+</resources>
