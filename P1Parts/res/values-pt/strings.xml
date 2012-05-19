@@ -12,5 +12,11 @@
     <string name="tvout_enable_summary">Cabo para Saída de TV conectado, ative para usar</string>
     <string name="tvout_enable_summary_on">Saída de TV ativada</string>
     <string name="tvout_system_head">Sistema de TV</string>
-    <string name="tvout_system_summary">Ajuste seu sistema de TV para a Saída de TV</string>
+    <string name="tvout_system_summary">Ajuste o padrão de saída para TV</string>
+    <string name="hdmi_dock_summary">Encaixe HDMI conectado, selecione para ativar</string>
+    <string name="hdmi_dock_summary_on">Encaixe HDMI ativado</string>
+    <string name="hdmi_dock_head">Encaixe HDMI</string>
+    <string name="category_capacitive_buttons_title">Botões capacitivos</string>
+    <string name="capacitive_buttons_title">Desativar botões capacitivos</string>
+    <string name="capacitive_buttons_summary">Desativar luzes e funções de toque dos botões capacitivos (incluindo notificações)</string>
 </resources>
