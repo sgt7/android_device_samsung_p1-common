@@ -21,6 +21,7 @@ public class Startup extends BroadcastReceiver {
         if (prefs.getBoolean(DeviceSettings.KEY_BUTTONS_DISABLE, false)) {
             configureButtons();
         }
+        TouchKeyBacklightTimeout.restore(context);
     }
 
     private void configureButtons() {

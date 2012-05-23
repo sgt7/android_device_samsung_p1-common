@@ -24,6 +24,7 @@ public class DeviceSettings extends PreferenceActivity  {
     public static final String KEY_HDMI_ENABLE = "hdmi_enable";
     public static final String KEY_BUTTONS_DISABLE = "buttons_disable";
     public static final String KEY_BUTTONS = "buttons_category";
+    public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
 
     public static final String COMMAND_SHELL = "/system/bin/sh";
     public static final String ECHO_COMMAND = "echo ";
@@ -40,6 +41,7 @@ public class DeviceSettings extends PreferenceActivity  {
     private C30Observer	c30plug;
     private Activity	me;
     private CheckBoxPreference mDisableButtons;
+    private ListPreference mBacklightTimeout;
 
     private boolean	mTVoutConnected = false;
     private boolean mHDMIConnected = false;
@@ -121,6 +123,10 @@ public class DeviceSettings extends PreferenceActivity  {
         if (!file.exists()) {
             prefSet.removePreference(findPreference(KEY_BUTTONS));
         }
+
+        mBacklightTimeout = (ListPreference) findPreference(KEY_BACKLIGHT_TIMEOUT);
+        mBacklightTimeout.setEnabled(TouchKeyBacklightTimeout.isSupported());
+        mBacklightTimeout.setOnPreferenceChangeListener(new TouchKeyBacklightTimeout());
 
         c30plug = new C30Observer();
         
