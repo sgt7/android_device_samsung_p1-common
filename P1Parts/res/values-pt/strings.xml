@@ -19,4 +19,7 @@
     <string name="category_capacitive_buttons_title">Botões capacitivos</string>
     <string name="capacitive_buttons_title">Desativar botões capacitivos</string>
     <string name="capacitive_buttons_summary">Desativar luzes e funções de toque dos botões capacitivos (incluindo notificações)</string>
+    <string name="hdmi_dock_summary_nodock">Encaixe HDMI não está conectado</string>
+    <string name="backlight_timeout_title_head">Tempo limite da luz de fundo</string>
+    <string name="backlight_timeout_summary_head">Ajusta o tempo que a luz de fundo da tecla sensível ao toque ficará piscando antes de desligar automaticamente</string>
 </resources>
