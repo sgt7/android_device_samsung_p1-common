@@ -19,3 +19,12 @@ on property:sys.usb.config=rndis,adb
     start adbd
     setprop sys.usb.state $sys.usb.config
 
+on property:sys.usb.config=mtp
+    write /sys/devices/virtual/usb_composite/mtp/enable 1
+    setprop sys.usb.state $sys.usb.config
+
+on property:sys.usb.config=mtp,adb
+    write /sys/devices/virtual/usb_composite/mtp/enable 0
+    start adbd
+    setprop sys.usb.state $sys.usb.config
+
