@@ -18,19 +18,8 @@ public class Startup extends BroadcastReceiver {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        if (prefs.getBoolean(DeviceSettings.KEY_BUTTONS_DISABLE, false)) {
-            configureButtons();
-        }
+        ToggleCapacitiveKeys.restore(context);
         TouchKeyBacklightTimeout.restore(context);
     }
 
-    private void configureButtons() {
-        try {
-            String[] cmds = {DeviceSettings.COMMAND_SHELL, "-c",
-                    DeviceSettings.ECHO_COMMAND + "0" + DeviceSettings.BUTTONS_ENABLED_COMMAND};
-            Runtime.getRuntime().exec(cmds);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
