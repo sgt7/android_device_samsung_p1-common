@@ -29,7 +29,8 @@
         <item>10 seconds</item>
         <item>15 seconds</item>
         <item>30 seconds</item>
-        <item>Never</item>
+        <item>Always on</item>
+        <item>Always off</item>
     </string-array>
 
     <string-array name="backlight_timeout_entries_values" translatable="false">
@@ -41,5 +42,6 @@
         <item>15000</item>
         <item>30000</item>
         <item>-1</item>
+        <item>0</item>
     </string-array>
 </resources>
