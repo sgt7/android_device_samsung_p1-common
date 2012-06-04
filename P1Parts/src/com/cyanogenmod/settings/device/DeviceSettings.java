@@ -11,6 +11,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
 import java.io.File;
@@ -66,8 +67,15 @@ public class DeviceSettings extends PreferenceActivity  {
         PreferenceScreen prefSet = getPreferenceScreen();
 
         mHspa = (ListPreference) findPreference(KEY_HSPA);
-        mHspa.setEnabled(Hspa.isSupported());
-        mHspa.setOnPreferenceChangeListener(new Hspa(this));
+        if (Hspa.isSupported()) {
+            mHspa.setEnabled(true);
+            mHspa.setOnPreferenceChangeListener(new Hspa(this));
+        } else {
+            mHspa.setEnabled(false);
+            PreferenceCategory category = (PreferenceCategory) prefSet.findPreference("category_radio");
+            category.removePreference(mHspa);
+            prefSet.removePreference(category);
+        }
 
         mTvOut = new TvOut();
         mTvOutEnable = (CheckBoxPreference) findPreference(KEY_TVOUT_ENABLE);
