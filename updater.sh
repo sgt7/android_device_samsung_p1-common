@@ -152,7 +152,6 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     if ! /tmp/busybox mount -t ext4 /dev/block/mmcblk0p2 /data ; then
         /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -a /data /dev/block/mmcblk0p2
     fi
-    #/tmp/erase_image userdata
 
     if $IS_GSM ; then
         # restore efs backup

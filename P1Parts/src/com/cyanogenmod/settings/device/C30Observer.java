@@ -20,7 +20,14 @@ public class C30Observer extends UEventObserver {
 	private static final String	uEventInfo = "DEVPATH=/devices/platform/acc_con";
 	private static final String	stateFile = "/sys/devices/platform/acc_con/acc_file";
 	private C30StateListener	listener;
-	private boolean	mState = false;	
+	private int	mState = 0;	
+	
+	private static final int	DOCK_DESK 		= 1 << 0;
+	private static final int	DOCK_KEYBD 		= 1 << 1;
+	private static final int	ACC_CARMOUNT 	= 1 << 2;
+	private static final int	ACC_TVOUT 		= 1 << 3;
+	private static final int	ACC_LINEOUT 	= 1 << 4;
+	private static final int	HDMI_CONNECTED 	= 1 << 5;
 	
 	public C30Observer()
 	{
@@ -28,7 +35,15 @@ public class C30Observer extends UEventObserver {
 		
 		try
 		{
-			// Read current driver state of TVOUT
+			// Read current driver state of 30-pin connector
+			// The state bits describe current status:
+			// 0 - DOCK_DESK connected
+			// 1 - DOCK_KEYBD connected
+			// 2 - ACC_CARMOUNT connected
+			// 3 - ACC_TVOUT connected
+			// 4 - ACC_LINEOUT connected
+			// 5 - HDMI cable is connected ?
+			
 			curState = new FileReader(stateFile);
 			
 			char[]	rawData = new char[128];
@@ -39,7 +54,7 @@ public class C30Observer extends UEventObserver {
 				Integer	val = new Integer(state.trim());
 			
 				if (val != null)
-					mState = val.intValue() > 0 ? true : false;
+					mState = val.intValue();
 					
 				Log.v("SGT7", "C30 initial state: " + mState);
 			}
@@ -85,7 +100,7 @@ public class C30Observer extends UEventObserver {
         	Log.v("SGT7", "TVout 30-pin connection state: " + state);
         	
         	if (listener != null)
-        		listener.onStateChange(state);
+        		listener.onStateChange(accessory, state);
         }
     
         if (dock != null && "desk".equals(dock))
@@ -95,7 +110,7 @@ public class C30Observer extends UEventObserver {
         	Log.v("SGT7", "Dock connection state: " + state);
         	
         	if (listener != null)
-        		listener.onStateChange(state);
+        		listener.onStateChange(dock, state);
         }
     }
     
@@ -104,6 +119,14 @@ public class C30Observer extends UEventObserver {
      * @return true if connected
      */
     public boolean getConnectionState() {
-		return mState;
+		return (mState > 0);
 	}
+    
+    public boolean isTVoutConnected() {
+    	return (mState & ACC_TVOUT) != 0;
+    }
+    
+    public boolean isDockDeskConnected() {
+    	return (mState & DOCK_DESK) != 0;
+    }
 }
