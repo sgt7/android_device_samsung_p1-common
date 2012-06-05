@@ -26,6 +26,7 @@ public class DeviceSettings extends PreferenceActivity  {
     public static final String KEY_BUTTONS_DISABLE = "buttons_disable";
     public static final String KEY_BUTTONS = "buttons_category";
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
+    public static final String KEY_GPU_OVERCLOCK = "gpu_overclock";
 
     private ListPreference mHspa;
     private CheckBoxPreference mTvOutEnable;
@@ -36,6 +37,7 @@ public class DeviceSettings extends PreferenceActivity  {
     private Activity	me;
     private CheckBoxPreference mDisableButtons;
     private ListPreference mBacklightTimeout;
+    private ListPreference mGpuOverclock;
 
     private boolean	mTVoutConnected = false;
     private boolean mHDMIConnected = false;
@@ -63,6 +65,7 @@ public class DeviceSettings extends PreferenceActivity  {
         if (Hspa.isSupported()) {
             mHspa.setEnabled(true);
             mHspa.setOnPreferenceChangeListener(new Hspa(this));
+            Hspa.updateSummary(mHspa, Integer.parseInt(mHspa.getValue()));
         } else {
             mHspa.setEnabled(false);
             PreferenceCategory category = (PreferenceCategory) prefSet.findPreference("category_radio");
@@ -100,10 +103,12 @@ public class DeviceSettings extends PreferenceActivity  {
                     i.putExtra(TvOutService.EXTRA_SYSTEM, newSystem);
                     startService(i);
                 }
+                updateSummary(mTvOutSystem, Integer.parseInt(mTvOutSystem.getValue()));
                 return true;
             }
 
         });
+        updateSummary(mTvOutSystem, Integer.parseInt(mTvOutSystem.getValue()));
 
         mHDMIEnable = (CheckBoxPreference) findPreference(KEY_HDMI_ENABLE);
         mHDMIEnable.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -126,9 +131,16 @@ public class DeviceSettings extends PreferenceActivity  {
         mBacklightTimeout = (ListPreference) findPreference(KEY_BACKLIGHT_TIMEOUT);
         mBacklightTimeout.setEnabled(TouchKeyBacklightTimeout.isSupported());
         mBacklightTimeout.setOnPreferenceChangeListener(new TouchKeyBacklightTimeout());
+        TouchKeyBacklightTimeout.updateSummary(mBacklightTimeout,
+                Integer.parseInt(mBacklightTimeout.getValue()));
+
+        mGpuOverclock = (ListPreference) findPreference(KEY_GPU_OVERCLOCK);
+        mGpuOverclock.setEnabled(GpuOverclock.isSupported());
+        mGpuOverclock.setOnPreferenceChangeListener(new GpuOverclock());
+        GpuOverclock.updateSummary(mGpuOverclock, Integer.parseInt(mGpuOverclock.getValue()));
 
         c30plug = new C30Observer();
-        
+
         mTVoutConnected = c30plug.isTVoutConnected();
         mHDMIConnected = c30plug.isDockDeskConnected();
         
@@ -136,7 +148,7 @@ public class DeviceSettings extends PreferenceActivity  {
         updateHDMIEnable(mHDMIConnected);
         
         c30plug.setOnStateChangeListener(new C30StateListener() {
-			
+
 			@Override
 			public boolean onStateChange(Object dev, Object state) {
 				final boolean connected = "online".equals(state);
@@ -202,6 +214,19 @@ public class DeviceSettings extends PreferenceActivity  {
         else
         	if (mTvOut._isHdmiEnabled())
         		mHDMIEnable.setChecked(true);
+    }
+
+    private void updateSummary(ListPreference preference, int value) {
+        final CharSequence[] entries = preference.getEntries();
+        final CharSequence[] values = preference.getEntryValues();
+        int best = 0;
+        for (int i = 0; i < values.length; i++) {
+            int summaryValue = Integer.parseInt(values[i].toString());
+            if (value >= summaryValue) {
+                best = i;
+            }
+        }
+        preference.setSummary(entries[best].toString());
     }
 
     @Override

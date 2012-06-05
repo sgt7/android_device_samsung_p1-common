@@ -44,4 +44,18 @@
         <item>-1</item>
         <item>0</item>
     </string-array>
+
+    <string-array name="gpu_overclock_entries">
+        <item>200 Mhz</item>
+        <item>240 Mhz</item>
+        <item>280 Mhz</item>
+        <item>320 Mhz</item>
+    </string-array>
+
+    <string-array name="gpu_overclock_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

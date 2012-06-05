@@ -20,6 +20,7 @@ public class Startup extends BroadcastReceiver {
 
         ToggleCapacitiveKeys.restore(context);
         TouchKeyBacklightTimeout.restore(context);
+        GpuOverclock.restore(context);
     }
 
 }

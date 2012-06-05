@@ -59,4 +59,15 @@
                 android:dependency="buttons_disable" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/category_gpu_title"
+        android:key="gpu_category">
+        <ListPreference
+            android:key="gpu_overclock"
+            android:title="@string/gpu_overclock_title"
+            android:entries="@array/gpu_overclock_entries"
+            android:entryValues="@array/gpu_overclock_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
