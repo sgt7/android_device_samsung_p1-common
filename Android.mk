@@ -1,3 +1,3 @@
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),s5pc110)
+ifeq ($(TARGET_BOARD_SAMSUNG_P1),true)
     include $(all-subdir-makefiles)
 endif
