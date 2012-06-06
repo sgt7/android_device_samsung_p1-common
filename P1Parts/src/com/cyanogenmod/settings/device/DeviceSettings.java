@@ -27,6 +27,9 @@ public class DeviceSettings extends PreferenceActivity  {
     public static final String KEY_BUTTONS = "buttons_category";
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
     public static final String KEY_GPU_OVERCLOCK = "gpu_overclock";
+    public static final String KEY_WIFI_PM = "wifi_pm";
+    public static final String KEY_LIVE_OC = "live_oc";
+    public static final String KEY_FAST_CHARGE = "fast_charge";
 
     private ListPreference mHspa;
     private CheckBoxPreference mTvOutEnable;
@@ -38,6 +41,9 @@ public class DeviceSettings extends PreferenceActivity  {
     private CheckBoxPreference mDisableButtons;
     private ListPreference mBacklightTimeout;
     private ListPreference mGpuOverclock;
+    private ListPreference mWifiPM;
+    private ListPreference mLiveOC;
+    private ListPreference mFastCharge;
 
     private boolean	mTVoutConnected = false;
     private boolean mHDMIConnected = false;
@@ -138,6 +144,21 @@ public class DeviceSettings extends PreferenceActivity  {
         mGpuOverclock.setEnabled(GpuOverclock.isSupported());
         mGpuOverclock.setOnPreferenceChangeListener(new GpuOverclock());
         GpuOverclock.updateSummary(mGpuOverclock, Integer.parseInt(mGpuOverclock.getValue()));
+
+        mWifiPM = (ListPreference) findPreference(KEY_WIFI_PM);
+        mWifiPM.setEnabled(WifiPowerManagement.isSupported());
+        mWifiPM.setOnPreferenceChangeListener(new WifiPowerManagement());
+        WifiPowerManagement.updateSummary(mWifiPM, Integer.parseInt(mWifiPM.getValue()));
+
+        mLiveOC = (ListPreference) findPreference(KEY_LIVE_OC);
+        mLiveOC.setEnabled(LiveOverClock.isSupported());
+        mLiveOC.setOnPreferenceChangeListener(new LiveOverClock());
+        LiveOverClock.updateSummary(mLiveOC, Integer.parseInt(mLiveOC.getValue()));
+
+        mFastCharge = (ListPreference) findPreference(KEY_FAST_CHARGE);
+        mFastCharge.setEnabled(FastCharge.isSupported());
+        mFastCharge.setOnPreferenceChangeListener(new FastCharge());
+        FastCharge.updateSummary(mFastCharge, Integer.parseInt(mFastCharge.getValue()));
 
         c30plug = new C30Observer();
 

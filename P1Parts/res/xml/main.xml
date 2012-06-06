@@ -2,6 +2,59 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:title="@string/category_capacitive_buttons_title"
+        android:key="buttons_category">
+        <CheckBoxPreference
+            android:key="buttons_disable"
+            android:title="@string/capacitive_buttons_title"
+            android:summary="@string/capacitive_buttons_summary"
+            android:disableDependentsState="true"
+            android:defaultValue="false" />
+            <!-- Touch key backlight timeout -->
+            <ListPreference
+                android:key="backlight_timeout"
+                android:title="@string/backlight_timeout_title_head"
+                android:summary="@string/backlight_timeout_summary_head"
+                android:entries="@array/backlight_timeout_entries"
+                android:entryValues="@array/backlight_timeout_entries_values"
+                android:defaultValue="1600"
+                android:dependency="buttons_disable" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/category_fast_charge_title"
+        android:key="fast_charge_category">
+        <ListPreference
+            android:key="fast_charge"
+            android:title="@string/fast_charge_title"
+            android:entries="@array/fast_charge_entries"
+            android:entryValues="@array/fast_charge_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/category_gpu_title"
+        android:key="gpu_category">
+        <ListPreference
+            android:key="gpu_overclock"
+            android:title="@string/gpu_overclock_title"
+            android:entries="@array/gpu_overclock_entries"
+            android:entryValues="@array/gpu_overclock_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/category_live_oc_title"
+        android:key="live_oc_category">
+        <ListPreference
+            android:key="live_oc"
+            android:title="@string/live_oc_title"
+            android:entries="@array/live_oc_entries"
+            android:entryValues="@array/live_oc_values"
+            android:defaultValue="100" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/category_radio_title"
         android:key="category_radio">
         <!-- UMTS/HSDPA/HSUPA settings -->
@@ -40,33 +93,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/category_capacitive_buttons_title"
-        android:key="buttons_category">
-        <CheckBoxPreference
-            android:key="buttons_disable"
-            android:title="@string/capacitive_buttons_title"
-            android:summary="@string/capacitive_buttons_summary"
-            android:disableDependentsState="true"
-            android:defaultValue="false" />
-            <!-- Touch key backlight timeout -->
-            <ListPreference
-                android:key="backlight_timeout"
-                android:title="@string/backlight_timeout_title_head"
-                android:summary="@string/backlight_timeout_summary_head"
-                android:entries="@array/backlight_timeout_entries"
-                android:entryValues="@array/backlight_timeout_entries_values"
-                android:defaultValue="1600"
-                android:dependency="buttons_disable" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/category_gpu_title"
-        android:key="gpu_category">
+        android:title="@string/category_wifi_pm_title"
+        android:key="wifi_pm_category">
         <ListPreference
-            android:key="gpu_overclock"
-            android:title="@string/gpu_overclock_title"
-            android:entries="@array/gpu_overclock_entries"
-            android:entryValues="@array/gpu_overclock_values"
+            android:key="wifi_pm"
+            android:title="@string/wifi_pm_title"
+            android:entries="@array/wifi_pm_entries"
+            android:entryValues="@array/wifi_pm_values"
             android:defaultValue="0" />
     </PreferenceCategory>
 
