@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="live_oc"
+        android:title="@string/live_oc_title"
+        android:entries="@array/live_oc_entries"
+        android:entryValues="@array/live_oc_values"
+        android:defaultValue="100" />
+
+    <ListPreference
+        android:key="gpu_overclock"
+        android:title="@string/gpu_overclock_title"
+        android:entries="@array/gpu_overclock_entries"
+        android:entryValues="@array/gpu_overclock_values"
+        android:defaultValue="0" />
+
+</PreferenceScreen>

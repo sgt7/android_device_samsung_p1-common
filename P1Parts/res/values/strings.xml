@@ -6,7 +6,7 @@
     <string name="hspa_title_head">HSPA</string>
     <string name="hspa_summary_head">Enable HSDPA/HSUPA</string>
 
-    <string name="category_tvout_title">TV Out</string>
+    <string name="category_tvout_title">TV</string>
     <string name="tvout_enable_head">TV Out</string>
     <string name="tvout_enable_summary_nocable">TV Out cable not connected</string>
     <string name="tvout_enable_summary">TV Out cable connected, check to enable</string>
@@ -17,7 +17,8 @@
     <string name="hdmi_dock_summary">HDMI dock connected, check to enable</string>
     <string name="hdmi_dock_summary_on">HDMI dock enabled</string>
     <string name="hdmi_dock_head">HDMI Dock</string>
-    
+
+    <string name="category_buttons_title">Buttons</string>
     <string name="category_capacitive_buttons_title">Capacitive buttons</string>
     <string name="capacitive_buttons_title">Disable Capacitive Buttons</string>
     <string name="capacitive_buttons_summary">Disable hard capacitive button lights and touches (Including notifications)</string>
@@ -27,12 +28,14 @@
     <string name="category_gpu_title">GPU</string>
     <string name="gpu_overclock_title">GPU Clock Speed</string>
 
-    <string name="category_wifi_pm_title">Wifi Power Management</string>
+    <string name="category_wifi_title">WiFi</string>
+    <string name="category_wifi_pm_title">WiFi Power Management</string>
     <string name="wifi_pm_title">Sleep Power Mode</string>
 
-    <string name="category_live_oc_title">Overclock</string>
+    <string name="category_live_oc_title">Speed</string>
     <string name="live_oc_title">Live Overclock</string>
 
+    <string name="category_usb_title">USB</string>
     <string name="category_fast_charge_title">Charging Mode</string>
     <string name="fast_charge_title">Fast Charge</string>
 
