@@ -9,6 +9,7 @@
     <application android:label="@string/app_name" >
         <activity
             android:name="com.cyanogenmod.settings.device.DeviceSettings"
+            android:theme="@style/Theme.DevicePreference"
             android:icon="@drawable/ic_launcher_cmdevicesettings"
             android:label="@string/app_name" >
             <intent-filter>
