@@ -105,3 +105,6 @@ BOARD_USES_BML_OVER_MTD := true
 # MTP
 BOARD_MTP_DEVICE := "/dev/usb_mtp_gadget"
 
+# Bootanimation
+TARGET_BOOTANIMATION_PRELOAD := true
+TARGET_BOOTANIMATION_TEXTURE_CACHE := false
