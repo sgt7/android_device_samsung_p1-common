@@ -448,10 +448,4 @@ EXIT:
     return ret;
 }
 
-int isTvOutEnabled() {
-    char value[PROPERTY_VALUE_MAX];
-    property_get("init.svc.tvouthack", value, "");
-    return (strcmp(value, "running") == 0);
-}
-
 #endif
