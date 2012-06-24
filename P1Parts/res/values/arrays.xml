@@ -47,9 +47,9 @@
 
     <string-array name="gpu_overclock_entries">
         <item>200 Mhz</item>
-        <item>240 Mhz</item>
-        <item>280 Mhz</item>
         <item>320 Mhz</item>
+        <item>370 Mhz</item>
+        <item>420 Mhz</item>
     </string-array>
 
     <string-array name="gpu_overclock_values" translatable="false">
