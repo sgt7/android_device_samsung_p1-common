@@ -7,9 +7,9 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
 
-public class LiveOverClock implements OnPreferenceChangeListener {
+public class TouchscreenClock implements OnPreferenceChangeListener {
 
-    private static final String FILE = "/sys/class/misc/liveoc/oc_value";
+    private static final String FILE = "/sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/cpufreq_lock";
 
     public static boolean isSupported() {
         return Utils.fileExists(FILE);
@@ -21,7 +21,7 @@ public class LiveOverClock implements OnPreferenceChangeListener {
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Utils.writeValue(FILE, sharedPrefs.getString(DeviceSettings.KEY_LIVE_OC, "0"));
+        Utils.writeValue(FILE, sharedPrefs.getString(DeviceSettings.KEY_TOUCHSCREEN_CLOCK, "2"));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {

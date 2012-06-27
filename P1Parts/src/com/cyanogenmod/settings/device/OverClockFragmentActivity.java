@@ -35,7 +35,7 @@ public class OverClockFragmentActivity extends PreferenceFragment {
     private static final String TAG = "P1Parts_OverClock";
 
     private ListPreference mGpuOverclock;
-    private ListPreference mLiveOC;
+    private ListPreference mTouchscreenClock;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +50,11 @@ public class OverClockFragmentActivity extends PreferenceFragment {
         mGpuOverclock.setOnPreferenceChangeListener(new GpuOverclock());
         GpuOverclock.updateSummary(mGpuOverclock, Integer.parseInt(mGpuOverclock.getValue()));
 
-        mLiveOC = (ListPreference) findPreference(DeviceSettings.KEY_LIVE_OC);
-        mLiveOC.setEnabled(LiveOverClock.isSupported());
-        mLiveOC.setOnPreferenceChangeListener(new LiveOverClock());
-        LiveOverClock.updateSummary(mLiveOC, Integer.parseInt(mLiveOC.getValue()));
+        mTouchscreenClock = (ListPreference) findPreference(DeviceSettings.KEY_TOUCHSCREEN_CLOCK);
+        mTouchscreenClock.setEnabled(TouchscreenClock.isSupported());
+        mTouchscreenClock.setOnPreferenceChangeListener(new TouchscreenClock());
+        TouchscreenClock.updateSummary(mTouchscreenClock,
+                Integer.parseInt(mTouchscreenClock.getValue()));
     }
 
     public static void restore(Context context) {

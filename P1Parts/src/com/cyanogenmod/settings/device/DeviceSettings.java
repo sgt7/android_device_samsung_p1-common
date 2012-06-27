@@ -51,7 +51,7 @@ public class DeviceSettings extends Activity {
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
     public static final String KEY_GPU_OVERCLOCK = "gpu_overclock";
     public static final String KEY_WIFI_PM = "wifi_pm";
-    public static final String KEY_LIVE_OC = "live_oc";
+    public static final String KEY_TOUCHSCREEN_CLOCK = "touchscreen_clock";
     public static final String KEY_FAST_CHARGE = "fast_charge";
 
 
@@ -76,7 +76,7 @@ public class DeviceSettings extends Activity {
                 ButtonFragmentActivity.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.category_radio_title),
                 RadioFragmentActivity.class, null);
-        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_live_oc_title),
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_speed_title),
                 OverClockFragmentActivity.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.category_tvout_title),
                 TVFragmentActivity.class, null);
