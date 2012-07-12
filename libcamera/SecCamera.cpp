@@ -470,26 +470,6 @@ static int fimc_v4l2_s_ctrl(int fp, unsigned int id, unsigned int value)
     return ctrl.value;
 }
 
-static int fimc_v4l2_s_ext_ctrl(int fp, unsigned int id, void *value)
-{
-    struct v4l2_ext_controls ctrls;
-    struct v4l2_ext_control ctrl;
-    int ret;
-
-    ctrl.id = id;
-    ctrl.reserved = value;
-
-    ctrls.ctrl_class = V4L2_CTRL_CLASS_CAMERA;
-    ctrls.count = 1;
-    ctrls.controls = &ctrl;
-
-    ret = ioctl(fp, VIDIOC_S_EXT_CTRLS, &ctrls);
-    if (ret < 0)
-        ALOGE("ERR(%s):VIDIOC_S_EXT_CTRLS failed\n", __func__);
-
-    return ret;
-}
-
 static int fimc_v4l2_g_parm(int fp, struct v4l2_streamparm *streamparm)
 {
     int ret;
@@ -920,6 +900,14 @@ int SecCamera::stopRecord(void)
         ALOGE("ERR(%s):Camera was closed\n", __func__);
         return -1;
     }
+
+        // Need to switch focus mode so that the camera can focus properly
+        // after using caf.
+        // Note: This bug is not affected when the original mode is macro
+        //       so we can safely use that as a mode to switch to.
+        int orig_mode = m_params->focus_mode;
+        setFocusMode(FOCUS_MODE_MACRO);
+        setFocusMode(orig_mode);
 
     m_flag_record_start = 0;
 
