@@ -50,6 +50,7 @@ PRODUCT_PACKAGES += \
 # Audio
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
+	audio.usb.default \
 	audio.primary.s5pc110 \
 	audio_policy.s5pc110
 
