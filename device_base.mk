@@ -61,7 +61,7 @@ PRODUCT_PACKAGES += \
 
 # These are the OpenMAX IL configuration files
 PRODUCT_COPY_FILES += \
-	device/samsung/p1-common/sec_mm/sec_omx/sec_omx_core/secomxregistry:system/etc/secomxregistry \
+	hardware/samsung/exynos3/s5pc110/sec_mm/sec_omx/sec_omx_core/secomxregistry:system/etc/secomxregistry \
 	device/samsung/p1-common/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
 
 # These are the OpenMAX IL modules
