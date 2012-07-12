@@ -21,7 +21,6 @@
 # Set this up here so that BoardVendorConfig.mk can override it
 BOARD_USES_GENERIC_AUDIO := false
 
-BOARD_PROVIDES_LIBRIL := true
 BOARD_USES_LIBSECRIL_STUB := true
 
 # ARMv7-A Cortex-A8 architecture
@@ -29,12 +28,10 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
-ARCH_ARM_HAVE_TLS_REGISTER := true
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
-TARGET_PROVIDES_INIT := true
 TARGET_RECOVERY_INITRC := device/samsung/p1-common/recovery.rc
 
 TARGET_BOARD_PLATFORM := s5pc110
