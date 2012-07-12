@@ -45,29 +45,29 @@ namespace android {
 
 #define ENABLE_ESD_PREVIEW_CHECK
 
-#if defined(LOG_NDEBUG) && LOG_NDEBUG == 0
-#define LOG_CAMERA LOGD
-#define LOG_CAMERA_PREVIEW LOGD
+#if defined(ALOG_NDEBUG) && LOG_NDEBUG == 0
+#define ALOG_CAMERA LOGD
+#define ALOG_CAMERA_PREVIEW LOGD
 
-#define LOG_TIME_DEFINE(n) \
+#define ALOG_TIME_DEFINE(n) \
     struct timeval time_start_##n, time_stop_##n; unsigned long log_time_##n = 0;
 
-#define LOG_TIME_START(n) \
+#define ALOG_TIME_START(n) \
     gettimeofday(&time_start_##n, NULL);
 
-#define LOG_TIME_END(n) \
+#define ALOG_TIME_END(n) \
     gettimeofday(&time_stop_##n, NULL); log_time_##n = measure_time(&time_start_##n, &time_stop_##n);
 
-#define LOG_TIME(n) \
+#define ALOG_TIME(n) \
     log_time_##n
 
 #else
-#define LOG_CAMERA(...)
-#define LOG_CAMERA_PREVIEW(...)
-#define LOG_TIME_DEFINE(n)
-#define LOG_TIME_START(n)
-#define LOG_TIME_END(n)
-#define LOG_TIME(n)
+#define ALOG_CAMERA(...)
+#define ALOG_CAMERA_PREVIEW(...)
+#define ALOG_TIME_DEFINE(n)
+#define ALOG_TIME_START(n)
+#define ALOG_TIME_END(n)
+#define ALOG_TIME(n)
 #endif
 
 #define JOIN(x, y) JOIN_AGAIN(x, y)
