@@ -1,10 +1,12 @@
 on init
 
 loglevel 9
-    export EXTERNAL_STORAGE /mnt/sdcard
+    export EXTERNAL_STORAGE /storage/sdcard0
 
-    mkdir /mnt/sdcard 0000 system system
-    symlink /mnt/sdcard /sdcard
+    mkdir /storage 0050 system sdcard_r
+    mkdir /storage/sdcard0 0000 system system
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
 
 on fs
 
