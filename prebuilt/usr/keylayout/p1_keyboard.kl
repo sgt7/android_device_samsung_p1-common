@@ -6,7 +6,7 @@ key 150   EXPLORER
 key 139   MENU              WAKE_DROPPED
 key 102   HOME              WAKE
 key 158   BACK              WAKE_DROPPED
-key 217   SEARCH            WAKE_DROPPED
+key 217   ASSIST            WAKE_DROPPED
 key 391	MUSIC
 key 393	VIDEO
 key 207   MEDIA_PLAY_PAUSE

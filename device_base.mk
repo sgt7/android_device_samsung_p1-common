@@ -30,7 +30,8 @@ PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/init.p1-common.rc:root/init.p1-common.rc \
 	device/samsung/p1-common/init.p1.usb.rc:root/init.p1.usb.rc \
 	device/samsung/p1-common/init.p1.usb.rc:recovery/root/init.p1.usb.rc \
-	device/samsung/p1-common/lpm.rc:root/lpm.rc
+	device/samsung/p1-common/lpm.rc:root/lpm.rc \
+	device/samsung/p1-common/fstab.p1:root/fstab.p1 \
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
@@ -54,6 +55,9 @@ PRODUCT_PACKAGES += \
 	audio.primary.s5pc110 \
 	audio_policy.s5pc110
 
+PRODUCT_COPY_FILES += \
+	device/samsung/p1-common/libaudio/audio_policy.conf:system/etc/audio_policy.conf
+
 # Camera
 PRODUCT_PACKAGES += \
 	camera.s5pc110 \
@@ -62,7 +66,8 @@ PRODUCT_PACKAGES += \
 # These are the OpenMAX IL configuration files
 PRODUCT_COPY_FILES += \
 	hardware/samsung/exynos3/s5pc110/sec_mm/sec_omx/sec_omx_core/secomxregistry:system/etc/secomxregistry \
-	device/samsung/p1-common/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
+	device/samsung/p1-common/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml \
+	device/samsung/p1-common/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml
 
 # These are the OpenMAX IL modules
 PRODUCT_PACKAGES += \
@@ -103,7 +108,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
 	frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
 	frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
-        frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
+	frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
 	frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
