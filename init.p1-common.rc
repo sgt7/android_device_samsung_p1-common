@@ -8,8 +8,14 @@ loglevel 9
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
 
+    # We will create our own ril-daemon service in class 'core' because the
+    # rild doesn't like being killed. (During device encryption.)
+    stop ril-daemon
+
 on fs
 
+    # using mount_all borks it, init thinks data is encrypted
+    mount ext4 /dev/block/mmcblk0p2 /data wait nosuid nodev noatime nodiratime noauto_da_alloc
     mount_all fstab.p1
     # mount debugfs
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -85,6 +91,14 @@ on boot
 
     # data encryption
     setprop ro.crypto.keyfile.userdata /data/metadata
+
+# crashes if kernel is compiled using gcc 4.6
+service p1-ril-daemon /system/bin/rild
+    class core
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio sdcard_rw l
 
 # 3D init
 service pvrsrvinit /system/bin/pvrsrvinit
