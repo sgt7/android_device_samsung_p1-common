@@ -1036,7 +1036,7 @@ int SecCamera::setPreviewSize(int width, int height, int pixel_format)
 
     int v4lpixelformat = pixel_format;
 
-#if defined(ALOG_NDEBUG) && LOG_NDEBUG == 0
+#if defined(LOG_NDEBUG) && LOG_NDEBUG == 0
     if (v4lpixelformat == V4L2_PIX_FMT_YUV420)
         ALOGV("PreviewFormat:V4L2_PIX_FMT_YUV420");
     else if (v4lpixelformat == V4L2_PIX_FMT_NV12)
@@ -1336,7 +1336,7 @@ int SecCamera::getSnapshotAndJpeg(unsigned char *yuv_buf, unsigned char *jpeg_bu
     m_events_c.fd = m_cam_fd;
     m_events_c.events = POLLIN | POLLERR;
 
-#if defined(ALOG_NDEBUG) && LOG_NDEBUG == 0
+#if defined(LOG_NDEBUG) && LOG_NDEBUG == 0
     if (m_snapshot_v4lformat == V4L2_PIX_FMT_YUV420)
         ALOGV("SnapshotFormat:V4L2_PIX_FMT_YUV420");
     else if (m_snapshot_v4lformat == V4L2_PIX_FMT_NV12)
@@ -1522,7 +1522,7 @@ int SecCamera::setSnapshotPixelFormat(int pixel_format)
         m_snapshot_v4lformat = v4lpixelformat;
     }
 
-#if defined(ALOG_NDEBUG) && LOG_NDEBUG == 0
+#if defined(LOG_NDEBUG) && LOG_NDEBUG == 0
     if (m_snapshot_v4lformat == V4L2_PIX_FMT_YUV420)
         ALOGE("%s : SnapshotFormat:V4L2_PIX_FMT_YUV420", __func__);
     else if (m_snapshot_v4lformat == V4L2_PIX_FMT_NV12)
