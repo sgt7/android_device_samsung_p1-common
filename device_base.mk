@@ -71,12 +71,11 @@ PRODUCT_COPY_FILES += \
 
 # These are the OpenMAX IL modules
 PRODUCT_PACKAGES += \
-	libSEC_OMX_Core.s5pc110 \
-	libOMX.SEC.AVC.Decoder.s5pc110 \
-	libOMX.SEC.M4V.Decoder.s5pc110 \
-	libOMX.SEC.M4V.Encoder.s5pc110 \
-	libOMX.SEC.AVC.Encoder.s5pc110
-
+	libSEC_OMX_Core \
+	libOMX.SEC.AVC.Decoder \
+	libOMX.SEC.M4V.Decoder \
+	libOMX.SEC.M4V.Encoder \
+	libOMX.SEC.AVC.Encoder
 # Libs
 PRODUCT_PACKAGES += \
 #	hwcomposer.s5pc110 \
