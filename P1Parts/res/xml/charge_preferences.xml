@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="fast_charge"
+        android:title="@string/fast_charge_title"
+        android:entries="@array/fast_charge_entries"
+        android:entryValues="@array/fast_charge_values"
+        android:defaultValue="0" />
+
+</PreferenceScreen>

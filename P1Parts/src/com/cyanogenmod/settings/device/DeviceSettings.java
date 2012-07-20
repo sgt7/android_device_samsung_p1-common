@@ -1,24 +1,47 @@
+/*
+ * Copyright (C) 2011 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.cyanogenmod.settings.device;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.hardware.TvOut;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
+import android.os.IBinder;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 
-import java.io.File;
-import java.io.IOException;
+import com.cyanogenmod.settings.device.R;
 
-public class DeviceSettings extends PreferenceActivity  {
+import java.util.ArrayList;
 
+public class DeviceSettings extends Activity {
+
+    public static final String SHARED_PREFERENCES_BASENAME = "com.cyanogenmod.settings.device";
+    public static final String ACTION_UPDATE_PREFERENCES = "com.cyanogenmod.settings.device.UPDATE";
+    public static final String KEY_CATEGORY_RADIO = "category_radio";
     public static final String KEY_HSPA = "hspa";
     public static final String KEY_TVOUT_ENABLE = "tvout_enable";
     public static final String KEY_TVOUT_SYSTEM = "tvout_system";
@@ -26,188 +49,128 @@ public class DeviceSettings extends PreferenceActivity  {
     public static final String KEY_BUTTONS_DISABLE = "buttons_disable";
     public static final String KEY_BUTTONS = "buttons_category";
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
+    public static final String KEY_GPU_OVERCLOCK = "gpu_overclock";
+    public static final String KEY_WIFI_PM = "wifi_pm";
+    public static final String KEY_TOUCHSCREEN_CLOCK = "touchscreen_clock";
+    public static final String KEY_FAST_CHARGE = "fast_charge";
 
-    private ListPreference mHspa;
-    private CheckBoxPreference mTvOutEnable;
-    private CheckBoxPreference mHDMIEnable;
-    private ListPreference mTvOutSystem;
-    private TvOut mTvOut;
-    private C30Observer	c30plug;
-    private Activity	me;
-    private CheckBoxPreference mDisableButtons;
-    private ListPreference mBacklightTimeout;
 
-    private boolean	mTVoutConnected = false;
-    private boolean mHDMIConnected = false;
+    ViewPager mViewPager;
+    TabsAdapter mTabsAdapter;
 
-    private BroadcastReceiver mHeadsetReceiver = new BroadcastReceiver() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mViewPager = new ViewPager(this);
+        mViewPager.setId(R.id.viewPager);
+        setContentView(mViewPager);
+
+        final ActionBar bar = getActionBar();
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        bar.setTitle(R.string.app_name);
+
+        mTabsAdapter = new TabsAdapter(this, mViewPager);
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_buttons_title),
+                ButtonFragmentActivity.class, null);
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_radio_title),
+                RadioFragmentActivity.class, null);
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_speed_title),
+                OverClockFragmentActivity.class, null);
+/*        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_tvout_title),
+                TVFragmentActivity.class, null);
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_usb_title),
+                FastChargeFragmentActivity.class, null);*/
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_wifi_title),
+                WifiFragmentActivity.class, null);
+
+        if (savedInstanceState != null) {
+            bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+    }
+
+    public static class TabsAdapter extends FragmentPagerAdapter
+            implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
+        private final Context mContext;
+        private final ActionBar mActionBar;
+        private final ViewPager mViewPager;
+        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+
+        static final class TabInfo {
+            private final Class<?> clss;
+            private final Bundle args;
+
+            TabInfo(Class<?> _class, Bundle _args) {
+                clss = _class;
+                args = _args;
+            }
+        }
+
+        public TabsAdapter(Activity activity, ViewPager pager) {
+            super(activity.getFragmentManager());
+            mContext = activity;
+            mActionBar = activity.getActionBar();
+            mViewPager = pager;
+            mViewPager.setAdapter(this);
+            mViewPager.setOnPageChangeListener(this);
+        }
+
+        public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
+            TabInfo info = new TabInfo(clss, args);
+            tab.setTag(info);
+            tab.setTabListener(this);
+            mTabs.add(info);
+            mActionBar.addTab(tab);
+            notifyDataSetChanged();
+        }
 
         @Override
-        public void onReceive(Context context, Intent intent) {
-            int state = intent.getIntExtra("state", 0);
-            updateTvOutEnable(state != 0);
+        public int getCount() {
+            return mTabs.size();
         }
 
-    };
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.main);
-        
-        me = this;
-
-        PreferenceScreen prefSet = getPreferenceScreen();
-
-        mHspa = (ListPreference) findPreference(KEY_HSPA);
-        if (Hspa.isSupported()) {
-            mHspa.setEnabled(true);
-            mHspa.setOnPreferenceChangeListener(new Hspa(this));
-        } else {
-            mHspa.setEnabled(false);
-            PreferenceCategory category = (PreferenceCategory) prefSet.findPreference("category_radio");
-            category.removePreference(mHspa);
-            prefSet.removePreference(category);
+        @Override
+        public Fragment getItem(int position) {
+            TabInfo info = mTabs.get(position);
+            return Fragment.instantiate(mContext, info.clss.getName(), info.args);
         }
 
-        mTvOut = new TvOut();
-        mTvOutEnable = (CheckBoxPreference) findPreference(KEY_TVOUT_ENABLE);
-        mTvOutEnable.setChecked(mTvOut._isEnabled());
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
 
-        mTvOutEnable.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        @Override
+        public void onPageSelected(int position) {
+            mActionBar.setSelectedNavigationItem(position);
+        }
 
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                boolean enable = (Boolean) newValue;
-                Intent i = new Intent(DeviceSettings.this, TvOutService.class);
-                i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_ENABLE :
-                        TvOutService.COMMAND_DISABLE);
-                startService(i);
-                return true;
-            }
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
 
-        });
-
-        mTvOutSystem = (ListPreference) findPreference(KEY_TVOUT_SYSTEM);
-        mTvOutSystem.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (mTvOut._isEnabled()) {
-                    int newSystem = Integer.valueOf((String) newValue);
-                    Intent i = new Intent(DeviceSettings.this, TvOutService.class);
-                    i.putExtra(TvOutService.EXTRA_COMMAND, TvOutService.COMMAND_CHANGE_SYSTEM);
-                    i.putExtra(TvOutService.EXTRA_SYSTEM, newSystem);
-                    startService(i);
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            Object tag = tab.getTag();
+            for (int i=0; i<mTabs.size(); i++) {
+                if (mTabs.get(i) == tag) {
+                    mViewPager.setCurrentItem(i);
                 }
-                return true;
             }
-
-        });
-
-        mHDMIEnable = (CheckBoxPreference) findPreference(KEY_HDMI_ENABLE);
-        mHDMIEnable.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {       	
-                boolean enable = (Boolean) newValue;
-                Intent i = new Intent(DeviceSettings.this, TvOutService.class);
-                i.putExtra(TvOutService.EXTRA_COMMAND, enable ? TvOutService.COMMAND_HDMI_ENABLE : TvOutService.COMMAND_HDMI_DISABLE);
-                startService(i);
-                return true;
-            }
-
-        });
-
-        mDisableButtons = (CheckBoxPreference) findPreference(KEY_BUTTONS_DISABLE);
-        mDisableButtons.setEnabled(ToggleCapacitiveKeys.isSupported());
-        mDisableButtons.setOnPreferenceChangeListener(new ToggleCapacitiveKeys());
-
-        mBacklightTimeout = (ListPreference) findPreference(KEY_BACKLIGHT_TIMEOUT);
-        mBacklightTimeout.setEnabled(TouchKeyBacklightTimeout.isSupported());
-        mBacklightTimeout.setOnPreferenceChangeListener(new TouchKeyBacklightTimeout());
-
-        c30plug = new C30Observer();
-        
-        mTVoutConnected = c30plug.isTVoutConnected();
-        mHDMIConnected = c30plug.isDockDeskConnected();
-        
-        updateTvOutEnable(mTVoutConnected);
-        updateHDMIEnable(mHDMIConnected);
-        
-        c30plug.setOnStateChangeListener(new C30StateListener() {
-			
-			@Override
-			public boolean onStateChange(Object dev, Object state) {
-				final boolean connected = "online".equals(state);
-				final String  device = (String)dev;
-				
-				// Need to post message to itself here
-				me.runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						if ("TV".equals(device))
-							updateTvOutEnable(connected);
-						else if ("desk".equals(device))
-							updateHDMIEnable(connected);
-					}
-				});
-
-				return true;
-			}
-		});
-        
-        c30plug.start();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(mHeadsetReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(mHeadsetReceiver);
-    }
-
-    private void updateTvOutEnable(boolean connected) {
-        mTvOutEnable.setEnabled(connected);
-        mTvOutEnable.setSummaryOff(connected ? R.string.tvout_enable_summary :
-                R.string.tvout_enable_summary_nocable);
-
-        if (!connected)
-        {
-        	if (mTvOutEnable.isChecked())
-        		// Disable on unplug (UI)
-        		mTvOutEnable.setChecked(false);
         }
-        else
-        	if (mTvOut._isEnabled())
-        		mTvOutEnable.setChecked(true);
-    }
 
-    private void updateHDMIEnable(boolean connected) {
-        mHDMIEnable.setEnabled(connected);
-        mHDMIEnable.setSummaryOff(connected ? R.string.hdmi_dock_summary : R.string.hdmi_dock_summary_nodock);
-
-        if (!connected)
-        {
-        	if (mHDMIEnable.isChecked())
-        		// Disable on unplug (UI)
-        		mHDMIEnable.setChecked(false);
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
         }
-        else
-        	if (mTvOut._isHdmiEnabled())
-        		mHDMIEnable.setChecked(true);
-    }
 
-    @Override
-    protected void onDestroy() {
-        mTvOut.finalize();
-        super.onDestroy();
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        }
     }
-
 }

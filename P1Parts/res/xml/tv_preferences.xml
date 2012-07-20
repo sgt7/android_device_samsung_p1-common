@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="tvout_enable"
+        android:title="@string/tvout_enable_head"
+        android:summaryOn="@string/tvout_enable_summary_on"
+        android:summaryOff="@string/tvout_enable_summary_nocable"
+        android:persistent="false"
+        android:enabled="false" />
+
+    <ListPreference
+        android:key="tvout_system"
+        android:title="@string/tvout_system_head"
+        android:summary="@string/tvout_system_summary"
+        android:entries="@array/tvout_system_entries"
+        android:entryValues="@array/tvout_system_entries_values"
+        android:defaultValue="2" />
+
+    <CheckBoxPreference
+        android:key="hdmi_enable"
+        android:title="@string/hdmi_dock_head"
+        android:enabled="false"
+        android:persistent="false"
+        android:summaryOff="@string/hdmi_dock_summary_nodock"
+        android:summaryOn="@string/hdmi_dock_summary_on"/>
+
+</PreferenceScreen>
