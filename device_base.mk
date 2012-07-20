@@ -78,12 +78,8 @@ PRODUCT_PACKAGES += \
 	libOMX.SEC.AVC.Encoder
 # Libs
 PRODUCT_PACKAGES += \
-#	hwcomposer.s5pc110 \
+	hwcomposer.s5pc110 \
 	libstagefrighthw
-
-# argh!
-PRODUCT_COPY_FILES += \
-	device/samsung/p1-common/prebuilt/lib/hw/hwcomposer.s5pc110.so:system/lib/hw/hwcomposer.s5pc110.so
 
 # tvout
 PRODUCT_PACKAGES += \
