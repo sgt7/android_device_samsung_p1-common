@@ -73,6 +73,8 @@ USE_OPENGL_RENDERER := true
 
 # skia
 BOARD_USE_SKIA_LCDTEXT := true
+# SkTextBox for libtvout
+BOARD_USES_SKTEXTBOX := true
 
 # Device related defines
 BOARD_NAND_PAGE_SIZE := 4096
