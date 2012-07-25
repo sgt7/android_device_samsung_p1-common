@@ -8,6 +8,9 @@ loglevel 9
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
 
+    # Increase read ahead on moviNAND
+    write /sys/devices/virtual/bdi/179:0/read_ahead_kb 1024
+
     # We will create our own ril-daemon service in class 'core' because the
     # rild doesn't like being killed. (During device encryption.)
     stop ril-daemon
