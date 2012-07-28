@@ -13,7 +13,6 @@
         <item>10 segundos</item>
         <item>15 segundos</item>
         <item>30 segundos</item>
-        <item>Sempre ligado</item>
-        <item>Sempre desligado</item>
+        <item>Nunca</item>
     </string-array>
 </resources>
