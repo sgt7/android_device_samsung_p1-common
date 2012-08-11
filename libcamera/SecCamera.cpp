@@ -470,6 +470,26 @@ static int fimc_v4l2_s_ctrl(int fp, unsigned int id, unsigned int value)
     return ctrl.value;
 }
 
+static int fimc_v4l2_s_ext_ctrl(int fp, unsigned int id, void *value)
+{
+    struct v4l2_ext_controls ctrls;
+    struct v4l2_ext_control ctrl;
+    int ret;
+
+    ctrl.id = id;
+    ctrl.string = (char *) value;
+
+    ctrls.ctrl_class = V4L2_CTRL_CLASS_CAMERA;
+    ctrls.count = 1;
+    ctrls.controls = &ctrl;
+
+    ret = ioctl(fp, VIDIOC_S_EXT_CTRLS, &ctrls);
+    if (ret < 0)
+        ALOGE("ERR(%s):VIDIOC_S_EXT_CTRLS failed\n", __func__);
+
+    return ret;
+}
+
 static int fimc_v4l2_g_parm(int fp, struct v4l2_streamparm *streamparm)
 {
     int ret;
@@ -2123,9 +2143,6 @@ int SecCamera::getFocusMode(void)
 int SecCamera::setObjectPosition(int x, int y)
 {
     ALOGV("%s(setObjectPosition(x=%d, y=%d))", __func__, x, y);
-
-    if (m_preview_width ==640)
-        x = x - 80;
 
     if (fimc_v4l2_s_ctrl(m_cam_fd, V4L2_CID_CAMERA_OBJECT_POSITION_X, x) < 0) {
         ALOGE("ERR(%s):Fail on V4L2_CID_CAMERA_OBJECT_POSITION_X", __func__);

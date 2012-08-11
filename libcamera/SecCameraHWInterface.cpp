@@ -22,6 +22,8 @@
 #include <utils/Log.h>
 
 #include "SecCameraHWInterface.h"
+#include "SecCameraUtils.h"
+
 #include <utils/threads.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -283,6 +285,10 @@ void CameraHardwareSec::initDefaultParameters(int cameraId)
         p.set(CameraParameters::KEY_PREVIEW_FPS_RANGE, "15000,30000");
 
         p.set(CameraParameters::KEY_FOCAL_LENGTH, "2.78");
+
+        // touch focus
+        p.set(CameraParameters::KEY_MAX_NUM_FOCUS_AREAS, "1");
+        p.set(CameraParameters::KEY_FOCUS_AREAS, "(0,0,0,0,0)");
     } else {
         p.set(CameraParameters::KEY_SUPPORTED_PREVIEW_FPS_RANGE, "(7500,30000)");
         p.set(CameraParameters::KEY_PREVIEW_FPS_RANGE, "7500,30000");
@@ -1856,7 +1862,32 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
         }
     }
 
-    // ---------------------------------------------------------------------------
+        // touch to focus
+        const char *new_focus_area = params.get(CameraParameters::KEY_FOCUS_AREAS);
+        if (new_focus_area != NULL) {
+            ALOGV("focus area: %s", new_focus_area);
+            SecCameraArea area(new_focus_area);
+
+            if (!area.isDummy()) {
+                int width, height, frame_size;
+                mSecCamera->getPreviewSize(&width, &height, &frame_size);
+
+                int x = area.getX(width);
+                int y = area.getY(height);
+
+                ALOGV("area=%s, x=%i, y=%i", area.toString8().string(), x, y);
+                if (mSecCamera->setObjectPosition(x, y) < 0) {
+                    ALOGE("ERR(%s):Fail on mSecCamera->setObjectPosition(%s)", __func__, new_focus_area);
+                    ret = UNKNOWN_ERROR;
+                }
+            }
+
+            int val = area.isDummy() ? 0 : 1;
+            if (mSecCamera->setTouchAFStartStop(val) < 0) {
+                ALOGE("ERR(%s):Fail on mSecCamera->setTouchAFStartStop(%d)", __func__, val);
+                ret = UNKNOWN_ERROR;
+            }
+        }
 
     // image effect
     const char *new_image_effect_str = params.get(CameraParameters::KEY_EFFECT);
