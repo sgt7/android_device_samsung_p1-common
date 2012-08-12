@@ -52,15 +52,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
-	audio.primary.p1 \
-	audio_policy.p1
+	audio.primary.s5pc110 \
+	audio_policy.s5pc110
 
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/libaudio/audio_policy.conf:system/etc/audio_policy.conf
 
 # Camera
 PRODUCT_PACKAGES += \
-	camera.p1 \
+	camera.s5pc110 \
 	libs3cjpeg
 
 # These are the OpenMAX IL configuration files
