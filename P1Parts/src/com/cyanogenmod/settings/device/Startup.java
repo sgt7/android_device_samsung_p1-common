@@ -32,5 +32,6 @@ public class Startup extends BroadcastReceiver {
         VibratorTuningPreference.restore(context);
         Intent myIntent = new Intent(context, DockObserver.class);
         context.startService(myIntent);
+        Sanity.check(context);
     }
 }
