@@ -28,5 +28,6 @@ public class Startup extends BroadcastReceiver {
         TouchKeyBacklightTimeout.restore(context);
         TouchscreenClock.restore(context);
         VibratorTuningPreference.restore(context);
+        Sanity.check(context);
     }
 }
