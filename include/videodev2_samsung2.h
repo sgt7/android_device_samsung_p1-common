@@ -25,8 +25,8 @@
  * limitations under the License.
  */
 
-#ifndef __LINUX_VIDEODEV2_SAMSUNG_H
-#define __LINUX_VIDEODEV2_SAMSUNG_H
+#ifndef __LINUX_VIDEODEV2_SAMSUNG_H2
+#define __LINUX_VIDEODEV2_SAMSUNG_H2
 
 /* Values for 'capabilities' field */
 /* Object detection device */
@@ -650,4 +650,4 @@ struct sec_cam_parm {
 	int white_balance;
 };
 
-#endif /* __LINUX_VIDEODEV2_SAMSUNG_H */
+#endif /* __LINUX_VIDEODEV2_SAMSUNG_H2 */

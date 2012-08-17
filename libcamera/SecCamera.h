@@ -35,7 +35,7 @@
 
 #include <utils/RefBase.h>
 #include <linux/videodev2.h>
-#include <videodev2_samsung.h>
+#include <videodev2_samsung2.h>
 
 #include <utils/String8.h>
 
