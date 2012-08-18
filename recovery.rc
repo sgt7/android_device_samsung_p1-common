@@ -1,4 +1,4 @@
-import /usb.rc
+import init.p1.usb.rc
 on early-init
     start ueventd
 
