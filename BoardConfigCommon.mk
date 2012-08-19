@@ -104,9 +104,10 @@ BOARD_USES_BML_OVER_MTD := true
 # MTP
 BOARD_MTP_DEVICE := "/dev/usb_mtp_gadget"
 
-# Bootanimation
+# Boot Animation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := false
+TARGET_BOOTANIMATION_USE_RGB565 := true
 
 # TARGET_DISABLE_TRIPLE_BUFFERING can be used to disable triple buffering
 # on per target basis. On crespo it is possible to do so in theory
