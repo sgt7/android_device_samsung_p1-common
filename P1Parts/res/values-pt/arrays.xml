@@ -6,13 +6,14 @@
     </string-array>
 
     <string-array name="backlight_timeout_entries">
-        <item>Padr\u00e3o (1.6 segundos)</item>
+        <item>Sempre ligado</item>
+        <item>Sempre desligado</item>
         <item>0.5 segundos</item>
+        <item>1.6 segundos (padr\u00e3o)</item>
         <item>2 segundos</item>
         <item>5 segundos</item>
         <item>10 segundos</item>
         <item>15 segundos</item>
         <item>30 segundos</item>
-        <item>Nunca</item>
     </string-array>
 </resources>
