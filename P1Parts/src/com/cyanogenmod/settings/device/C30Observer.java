@@ -1,13 +1,28 @@
-package com.cyanogenmod.settings.device;
+/*
+ * Copyright (C) 2012 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+package com.cyanogenmod.settings.device;
 
 import android.content.Context;
 import android.os.UEventObserver;
 import android.util.Log;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 /**
  * UEVENT: {SUBSYSTEM=platform, STATE=online, DEVPATH=/devices/platform/acc_con, SEQNUM=1508, ACTION=change, DRIVER=acc_con, MODALIAS=platform:acc_con, ACCESSORY=TV} 
  * UEVENT: {SUBSYSTEM=platform, STATE=offline, DEVPATH=/devices/platform/acc_con, SEQNUM=1509, ACTION=change, DRIVER=acc_con, MODALIAS=platform:acc_con, ACCESSORY=TV}

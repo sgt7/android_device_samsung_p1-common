@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 The CyanogenMod Project
+ * Copyright (C) 2012 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ public class OverClockFragmentActivity extends PreferenceFragment {
     private static final String TAG = "P1Parts_OverClock";
 
     private ListPreference mGpuOverclock;
+    private ListPreference mTouchscreenClock;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,12 @@ public class OverClockFragmentActivity extends PreferenceFragment {
         mGpuOverclock.setEnabled(GpuOverclock.isSupported());
         mGpuOverclock.setOnPreferenceChangeListener(new GpuOverclock());
         GpuOverclock.updateSummary(mGpuOverclock, Integer.parseInt(mGpuOverclock.getValue()));
+
+        mTouchscreenClock = (ListPreference) findPreference(DeviceSettings.KEY_TOUCHSCREEN_CLOCK);
+        mTouchscreenClock.setEnabled(TouchscreenClock.isSupported());
+        mTouchscreenClock.setOnPreferenceChangeListener(new TouchscreenClock());
+        TouchscreenClock.updateSummary(mTouchscreenClock,
+                Integer.parseInt(mTouchscreenClock.getValue()));
     }
 
     public static void restore(Context context) {
