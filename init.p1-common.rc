@@ -194,10 +194,9 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci \
     oneshot
 
 service tvout /system/bin/tvoutserver
-    class late_start
+    class main
     user system
     group graphics
-    disabled
 
 service tvouthack /system/bin/tvouthack
     user system
