@@ -1,12 +1,6 @@
 on init
 
 loglevel 9
-    export EXTERNAL_STORAGE /storage/sdcard0
-
-    mkdir /storage 0050 system sdcard_r
-    mkdir /storage/sdcard0 0000 system system
-    symlink /storage/sdcard0 /sdcard
-    symlink /storage/sdcard0 /mnt/sdcard
 
     # Increase read ahead on moviNAND
     write /sys/devices/virtual/bdi/179:0/read_ahead_kb 1024
@@ -95,7 +89,6 @@ on boot
     # data encryption
     setprop ro.crypto.keyfile.userdata /data/metadata
 
-# crashes if kernel is compiled using gcc 4.6
 service p1-ril-daemon /system/bin/rild
     class core
     socket rild stream 660 root radio
