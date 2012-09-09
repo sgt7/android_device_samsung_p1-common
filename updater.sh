@@ -29,17 +29,21 @@ if /tmp/busybox test "$1" = cdma ; then
     # CDMA mode
     IS_GSM='/tmp/busybox false'
     SD_PART='/dev/block/mmcblk1p1'
-    SYSTEM_SIZE=''
-    DATA_SIZE=''
+    DATA_SIZE='490733568'
 else
     # GSM mode
     IS_GSM='/tmp/busybox true'
     SD_PART='/dev/block/mmcblk0p1'
-    SYSTEM_SIZE='425721856'
     DATA_SIZE='477626368'
 fi
 
-# check if we're running on a bml, mtd(old) or mtd (current) device
+# check for old/non-cwm recovery.
+if ! /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
+    # scrape package location from /tmp/recovery.log
+    UPDATE_PACKAGE=`/tmp/busybox cat /tmp/recovery.log | /tmp/busybox grep 'Update location:' | /tmp/busybox tail -n 1 | /tmp/busybox cut -d ' ' -f 3-`
+fi
+
+# check if we're running on a bml, mtd (old) or mtd (current) device
 if /tmp/busybox test -e /dev/block/bml7 ; then
     # we're running on a bml device
 
@@ -82,33 +86,32 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
     /sbin/reboot now
     exit 0
 
-elif /tmp/busybox test -e /dev/block/mtdblock5 ; then
+elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$DATA_SIZE" ; then
     # we're running on a mtd (old) device
 
     # make sure sdcard is mounted
-    check_mount /mnt/sdcard $SD_PART vfat
+    check_mount /sdcard $SD_PART vfat
 
-    # everything is logged into /mnt/sdcard/cyanogenmod_mtd_old.log
-    set_log /mnt/sdcard/cyanogenmod_mtd_old.log
+    # everything is logged into /sdcard/cyanogenmod_mtd_old.log
+    set_log /sdcard/cyanogenmod_mtd_old.log
+
+    # write the package path to sdcard cyanogenmod.cfg
+    if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
+        /tmp/busybox echo "$UPDATE_PACKAGE" > /sdcard/cyanogenmod.cfg
+    fi
 
     if $IS_GSM ; then
         # make sure efs is mounted
         check_mount /efs /dev/block/mtdblock4 yaffs2
 
         # create a backup of efs
-        if /tmp/busybox test -e /mnt/sdcard/backup/efs ; then
-            /tmp/busybox mv /mnt/sdcard/backup/efs /mnt/sdcard/backup/efs-$$
+        if /tmp/busybox test -e /sdcard/backup/efs ; then
+            /tmp/busybox mv /sdcard/backup/efs /sdcard/backup/efs-$$
         fi
-        /tmp/busybox rm -rf /mnt/sdcard/backup/efs
+        /tmp/busybox rm -rf /sdcard/backup/efs
 
-        /tmp/busybox mkdir -p /mnt/sdcard/backup/efs
-        /tmp/busybox cp -R /efs/ /mnt/sdcard/backup
-    fi
-
-    # write the package path to sdcard cyanogenmod.cfg
-    if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
-        PACKAGE_LOCATION=${UPDATE_PACKAGE#/mnt}
-        /tmp/busybox echo "$PACKAGE_LOCATION" > /mnt/sdcard/cyanogenmod.cfg
+        /tmp/busybox mkdir -p /sdcard/backup/efs
+        /tmp/busybox cp -R /efs/ /sdcard/backup
     fi
 
     # write new kernel to boot partition
@@ -124,7 +127,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock5 ; then
     /sbin/reboot now
     exit 0
 
-elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` = "$DATA_SIZE" ; then
+elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     # we're running on a mtd (current) device
 
     # make sure sdcard is mounted
@@ -135,7 +138,7 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` = "$DATA_SIZE
 
     if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg ; then
         # update install - flash boot image then skip back to updater-script
-        # (boot image is already flashed for first time install)
+        # (boot image is already flashed for first time install or old mtd upgrade)
 
         # flash boot image
         /tmp/bml_over_mtd.sh boot 72 reservoir 2004 /tmp/boot.img
@@ -144,22 +147,8 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` = "$DATA_SIZE
             /tmp/bml_over_mtd.sh recovery 102 reservoir 2004 /tmp/boot.img
         fi
 
-	if $IS_GSM ; then
-        # Copy modem.bin and script to preserve it if they aren't there already.
-        check_mount /system /dev/block/mmcblk0p2 ext4
-	if ! /tmp/busybox test -e /system/vendor/modem.bin ; then
-        /tmp/busybox mkdir -p /system/vendor
-        /tmp/busybox cp /tmp/modem.bin /system/vendor/modem.bin
-	fi
-	if ! /tmp/busybox test -e /system/addon.d/20-modem.sh ; then
-	/tmp/busybox mkdir -p /system/addon.d
-	/tmp/busybox cp /tmp/20-modem.sh /system/addon.d/20-modem.sh
-	/tmp/busybox chmod +x /system/addon.d/20-modem.sh
-	fi
-	fi
-
-    # unmount system (recovery seems to expect system to be unmounted)
-    /tmp/busybox umount -l /system
+        # unmount system (recovery seems to expect system to be unmounted)
+        /tmp/busybox umount -l /system
 
         exit 0
     fi
@@ -174,13 +163,12 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` = "$DATA_SIZE
     /tmp/busybox umount -l /system
     /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -a /system /dev/block/mmcblk0p2
 
-    # unmount and format cache
-    /tmp/busybox umount -l /cache
-    /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -a /cache /dev/block/mmcblk0p3
-
-    # format data
+    # unmount and format data
     /tmp/busybox umount -l /data
     /tmp/erase_image userdata
+
+    # restart into recovery so the user can install further packages before booting
+    /tmp/busybox touch /cache/.startrecovery
 
     if $IS_GSM ; then
         # Copy modem.bin and script to preserve it
