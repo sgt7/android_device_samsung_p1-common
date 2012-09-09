@@ -2,9 +2,6 @@ on init
 
 loglevel 9
 
-    # Increase read ahead on moviNAND
-    write /sys/devices/virtual/bdi/179:0/read_ahead_kb 1024
-
 on fs
 
     # We don't support encryption on yaffs (set before mount_all)
