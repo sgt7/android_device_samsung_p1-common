@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Galaxy Tab Einstellungen</string>
+
+    <string name="category_radio_title">Mobilfunk</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">HSDPA/HSUPA einschalten</string>
+
+    <string name="category_tvout_title">TV</string>
+    <string name="tvout_enable_head">TV-Out</string>
+    <string name="tvout_enable_summary_nocable">TV-Out kein Kabel verbunden</string>
+    <string name="tvout_enable_summary">TV-Out Kabel verbunden, zum aktivieren, Haken setzen</string>
+    <string name="tvout_enable_summary_on">TV-Out eingeschaltet</string>
+    <string name="tvout_system_head">TV-System</string>
+    <string name="tvout_system_summary">Stelle dein TV-System für TV-Out ein</string>
+    <string name="hdmi_dock_summary_nodock">HDMI-Dock nicht verbunden</string>
+    <string name="hdmi_dock_summary">HDMI-Dock verbunden, zum aktivieren, Haken setzen</string>
+    <string name="hdmi_dock_summary_on">HDMI-Dock eingeschaltet</string>
+    <string name="hdmi_dock_head">HDMI-Dock</string>
+
+    <string name="category_buttons_title">Tasten</string>
+    <string name="category_capacitive_buttons_title">Sensortasten</string>
+    <string name="capacitive_buttons_title">Sensortasten deaktivieren</string>
+    <string name="capacitive_buttons_summary">Sensortasten inklusive deren Beleuchtung deaktivieren (Benachrichtigungen eingeschlossen)</string>
+    <string name="backlight_timeout_title_head">Beleuchtungs-Timeout</string>
+    <string name="backlight_timeout_summary_head">Verändere die Zeitspanne bevor die Beleuchtung der Sensortasten automatisch ausgeschaltet wird</string>
+
+    <string name="category_wifi_title">WiFi</string>
+    <string name="category_wifi_pm_title">WiFi Energiesparrichtlinien</string>
+    <string name="wifi_pm_title">Energiesparmodus</string>
+</resources>
