@@ -86,6 +86,10 @@ PRODUCT_PACKAGES += \
 	P1Parts \
 	tvouthack
 
+# torch
+PRODUCT_PACKAGES += \
+	Torch
+
 # Usb accessory
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
