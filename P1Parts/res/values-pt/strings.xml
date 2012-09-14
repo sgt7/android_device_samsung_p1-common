@@ -22,4 +22,10 @@
     <string name="hdmi_dock_summary_nodock">Encaixe HDMI não está conectado</string>
     <string name="backlight_timeout_title_head">Tempo limite da luz de fundo</string>
     <string name="backlight_timeout_summary_head">Ajusta o tempo que a luz de fundo da tecla sensível ao toque ficará piscando antes de desligar automaticamente</string>
+    <string name="category_buttons_title">Botões</string>
+    <string name="category_wifi_title">Wi-Fi</string>
+    <string name="category_wifi_pm_title">Gerenciador de Energia Wi-Fi</string>
+    <string name="wifi_pm_title">Modo de Energia ao Dormir</string>
+    <string name="category_speed_title">Velocidade</string>
+    <string name="touchscreen_clock_title">Velocidade da Tela Sensível ao Toque</string>
 </resources>
