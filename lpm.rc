@@ -29,7 +29,7 @@ on early-fs
 
 on fs
     mount tmpfs tmpfs /tmp
-    mount ext4 /dev/block/mmcblk0p2 /system ro noatime nodev nomblk_io_submit errors=panic wait
+    mount yaffs2 mtd@system /system ro
 
 on boot
 
@@ -47,9 +47,9 @@ service ueventd /sbin/ueventd
 
 service console /system/bin/sh
     console
-    disabled
     user shell
     group log
+    disabled
 
 on property:ro.secure=0
     start console
