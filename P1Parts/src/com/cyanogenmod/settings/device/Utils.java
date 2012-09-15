@@ -68,6 +68,57 @@ public class Utils {
     }
 
     /**
+     * Write a string value to the specified file.
+     * 
+     * @param filename The filename
+     * @param value The value
+     */
+    public static void writeValue(String filename, Boolean value) {
+        FileOutputStream fos = null;
+        String sEnvia;
+        try {
+            fos = new FileOutputStream(new File(filename), false);
+            if (value)
+                sEnvia = "1";
+            else
+                sEnvia = "0";
+            fos.write(sEnvia.getBytes());
+            fos.flush();
+            // fos.getFD().sync();
+        } catch (FileNotFoundException ex) {
+            Log.w(TAG, "file " + filename + " not found: " + ex);
+        } catch (SyncFailedException ex) {
+            Log.w(TAG, "file " + filename + " sync failed: " + ex);
+        } catch (IOException ex) {
+            Log.w(TAG, "IOException trying to sync " + filename + ": " + ex);
+        } catch (RuntimeException ex) {
+            Log.w(TAG, "exception while syncing file: ", ex);
+        } finally {
+            if (fos != null) {
+                try {
+                    Log.w(TAG_WRITE, "file " + filename + ": " + value);
+                    fos.close();
+                } catch (IOException ex) {
+                    Log.w(TAG, "IOException while closing synced file: ", ex);
+                } catch (RuntimeException ex) {
+                    Log.w(TAG, "exception while closing file: ", ex);
+                }
+            }
+        }
+    }
+
+    /**
+     * Write the "color value" to the specified file. The value is scaled from
+     * an integer to an unsigned integer by multiplying by 2.
+     * 
+     * @param filename The filename
+     * @param value The value of max value Integer.MAX
+     */
+    public static void writeColor(String filename, int value) {
+        writeValue(filename, String.valueOf((long) value * 2));
+    }
+
+    /**
      * Check if the specified file exists.
      * 
      * @param filename The filename

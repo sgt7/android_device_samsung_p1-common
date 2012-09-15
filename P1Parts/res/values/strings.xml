@@ -31,4 +31,9 @@
 
     <string name="category_speed_title">Speed</string>
     <string name="touchscreen_clock_title">Touchscreen Clock Speed</string>
+
+    <string name="category_usb_title">USB</string>
+    <string name="category_fast_charge_title">Charging Mode</string>
+    <string name="fast_charge_title">Fast Charge</string>
+
 </resources>

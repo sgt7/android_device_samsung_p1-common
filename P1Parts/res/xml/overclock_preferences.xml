@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="touchscreen_clock"
+        android:title="@string/touchscreen_clock_title"
+        android:entries="@array/touchscreen_clock_entries"
+        android:entryValues="@array/touchscreen_clock_values"
+        android:defaultValue="2" />
+
+</PreferenceScreen>
