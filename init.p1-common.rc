@@ -78,9 +78,6 @@ service pvrsrvinit /system/bin/pvrsrvinit
     group root
     oneshot
 
-# zram init
-start szram
-
 # zram
 service szram /sbin/init.zram
 	class main
@@ -97,6 +94,7 @@ service set-macaddr /system/vendor/bin/set-macaddr
 
 on property:sys.boot_completed=1
     start set-macaddr
+	start szram
 
 # FIXME
 # service p2p_supplicant /system/bin/wpa_supplicant \
