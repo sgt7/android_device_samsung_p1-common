@@ -78,6 +78,16 @@ service pvrsrvinit /system/bin/pvrsrvinit
     group root
     oneshot
 
+# zram init
+start szram
+
+# zram
+service szram /sbin/init.zram
+	class main
+	user root
+	oneshot
+	disabled
+
 # set device specific MAC addresses, depends on preceding start of rild
 service set-macaddr /system/vendor/bin/set-macaddr
     user root

@@ -1,0 +1,56 @@
+#!/system/bin/sh
+# zram activation
+# by HumberOS
+
+ZRAM="persist.service.zram"
+
+if [ "$(getprop $ZRAM)" = "0" ]; then
+
+	busybox echo "[ZRAM]: NOT ACTIVATED.";
+	exit 1
+
+else
+
+	busybox echo "[ZRAM]: INIT";
+
+	if ! busybox test -e /sys/block/zram0/disksize ; then
+
+		busybox echo "[ZRAM]: ERROR unable to find /sys/block/zram0/disksize";
+		busybox echo "[ZRAM]: NOT ACTIVATED IN KERNEL.";
+		exit 1
+
+	else
+
+		ZRAM_VALUE="$(getprop $ZRAM)"
+		busybox echo "[ZRAM]: ZRAM_VALUE $ZRAM_VALUE";
+
+		RAM_SIZE=`busybox cat /proc/meminfo | awk 'match($1,"MemTotal") == 1 {print $2}'`
+		let "RAM_SIZE *= 1024"
+		busybox echo "[ZRAM]: RAM_SIZE $RAM_SIZE";
+
+		let "RAM_SIZE/=100"
+		DISKSIZE=$(($RAM_SIZE * $ZRAM_VALUE))
+		busybox echo "[ZRAM]: DISKSIZE $DISKSIZE";
+
+		if (( "$DISKSIZE" > 0 )) ; then
+
+			busybox echo "[ZRAM]: Setting ZRAM disksize.";
+			busybox echo $DISKSIZE > /sys/block/zram0/disksize
+
+			busybox echo "[ZRAM]: Starting ZRAM.";
+			busybox mkswap /dev/block/zram0
+			busybox swapon /dev/block/zram0
+			busybox echo "[ZRAM]: ACTIVATED.";
+
+		else
+
+			busybox echo "[ZRAM]: Invalid Disk Size.";
+			exit 1
+
+		fi
+
+	fi
+
+fi
+
+exit 0
