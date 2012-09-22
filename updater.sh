@@ -93,7 +93,8 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
     /sbin/reboot now
     exit 0
 
-elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE" ; then
+elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE" || \
+    /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/name` != "system" ; then
     # we're running on a mtd (old) device
 
     # make sure sdcard is mounted
