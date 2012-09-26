@@ -77,10 +77,17 @@ PRODUCT_PACKAGES += \
 	libOMX.SEC.M4V.Decoder \
 	libOMX.SEC.M4V.Encoder \
 	libOMX.SEC.AVC.Encoder
+
 # Libs
 PRODUCT_PACKAGES += \
 	hwcomposer.s5pc110 \
 	libstagefrighthw
+
+# Powah
+ifneq ($(filter p1 p1l p1n,$(TARGET_DEVICE)),)
+PRODUCT_PACKAGES += \
+	power.s5pc110
+endif
 
 # tvout
 PRODUCT_PACKAGES += \
