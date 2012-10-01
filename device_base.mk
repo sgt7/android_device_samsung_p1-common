@@ -83,10 +83,8 @@ PRODUCT_PACKAGES += \
 	libstagefrighthw
 
 # Powah
-ifneq ($(filter p1 p1l p1n,$(TARGET_DEVICE)),)
 PRODUCT_PACKAGES += \
 	power.s5pc110
-endif
 
 # tvout
 PRODUCT_PACKAGES += \
