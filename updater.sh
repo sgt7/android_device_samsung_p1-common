@@ -21,6 +21,17 @@ set_log() {
     exec >> $1 2>&1
 }
 
+# ui_print by Chainfire
+OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "update_binary(.*)" | /tmp/busybox cut -d " " -f 3);
+ui_print() {
+  if [ $OUTFD != "" ]; then
+    echo "ui_print ${1} " 1>&$OUTFD;
+    echo "ui_print " 1>&$OUTFD;
+  else
+    echo "${1}";
+  fi;
+}
+
 set -x
 export PATH=/:/sbin:/system/xbin:/system/bin:/tmp:$PATH
 
@@ -102,6 +113,19 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE
 
     # everything is logged into /sdcard/cyanogenmod_mtd_old.log
     set_log /sdcard/cyanogenmod_mtd_old.log
+
+    if ! /tmp/busybox test -e /cache/.accept_wipe ; then
+        /tmp/busybox touch /cache/.accept_wipe
+        ui_print
+        ui_print "============================================"
+        ui_print "This ROM uses an incompatible partition layout"
+        ui_print "Your /data will be wiped upon installation"
+        ui_print "Run this update.zip again to confirm install"
+        ui_print "============================================"
+        ui_print
+        exit 9
+    fi
+    /tmp/busybox rm /cache/.accept_wipe
 
     # write the package path to sdcard cyanogenmod.cfg
     if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
