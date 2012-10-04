@@ -29,7 +29,6 @@
         <activity android:name=".OverClockFragmentActivity" />
         <activity android:name=".RadioFragmentActivity" />
         <activity android:name=".TVFragmentActivity" />
-        <activity android:name=".WifiFragmentActivity" />
 
         <service android:name=".TvOutService" />
     </application>
