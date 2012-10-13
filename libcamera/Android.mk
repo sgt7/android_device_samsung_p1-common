@@ -11,7 +11,9 @@ LOCAL_C_INCLUDES += hardware/samsung/exynos3/s5pc110/libs3cjpeg
 LOCAL_C_INCLUDES += frameworks/native/include/media/hardware
 
 LOCAL_SRC_FILES:= \
-	SecCamera.cpp SecCameraHWInterface.cpp
+	SecCamera.cpp \
+	SecCameraHWInterface.cpp \
+	SecCameraUtils.cpp \
 
 LOCAL_SHARED_LIBRARIES:= libutils libcutils libbinder liblog libcamera_client libhardware
 LOCAL_SHARED_LIBRARIES+= libs3cjpeg

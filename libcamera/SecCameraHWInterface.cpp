@@ -1,5 +1,4 @@
 /*
-**
 ** Copyright 2008, The Android Open Source Project
 ** Copyright 2010, Samsung Electronics Co. LTD
 ** Copyright 2011, The CyanogenMod Project
@@ -22,6 +21,7 @@
 #include <utils/Log.h>
 
 #include "SecCameraHWInterface.h"
+#include "SecCameraUtils.h"
 #include <utils/threads.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -271,8 +271,8 @@ void CameraHardwareSec::initDefaultParameters(int cameraId)
         parameterString.append(CameraParameters::SCENE_MODE_PARTY);
         parameterString.append(",");
         parameterString.append(CameraParameters::SCENE_MODE_CANDLELIGHT);
-        //p.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
-        //      parameterString.string());
+        p.set(CameraParameters::KEY_SUPPORTED_SCENE_MODES,
+              parameterString.string());
         p.set(CameraParameters::KEY_SCENE_MODE,
               CameraParameters::SCENE_MODE_AUTO);
 
@@ -283,6 +283,10 @@ void CameraHardwareSec::initDefaultParameters(int cameraId)
         p.set(CameraParameters::KEY_PREVIEW_FPS_RANGE, "15000,30000");
 
         p.set(CameraParameters::KEY_FOCAL_LENGTH, "2.78");
+
+        // touch to focus
+        p.set(CameraParameters::KEY_MAX_NUM_FOCUS_AREAS, "1");
+        p.set(CameraParameters::KEY_FOCUS_AREAS, "(0,0,0,0,0)");
     } else {
         p.set(CameraParameters::KEY_SUPPORTED_PREVIEW_FPS_RANGE, "(7500,30000)");
         p.set(CameraParameters::KEY_PREVIEW_FPS_RANGE, "7500,30000");
@@ -897,11 +901,6 @@ status_t CameraHardwareSec::autoFocus()
 status_t CameraHardwareSec::cancelAutoFocus()
 {
     ALOGV("%s :", __func__);
-
-    // If preview is not running, cancel autofocus can still be called.
-    // Since the camera subsystem is completely reset on preview start,
-    // cancel AF is a no-op.
-    if (!mPreviewRunning) return NO_ERROR;
 
     // cancelAutoFocus should be allowed after preview is started. But if
     // the preview is deferred, cancelAutoFocus will fail. Ignore it if that is
@@ -1848,6 +1847,34 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
                 mParameters.set(CameraParameters::KEY_SCENE_MODE, new_scene_mode_str);
             }
         }
+
+        // touch to focus
+        const char *new_focus_area = params.get(CameraParameters::KEY_FOCUS_AREAS);
+        if (new_focus_area != NULL) {
+            ALOGV("focus area: %s", new_focus_area);
+            SecCameraArea area(new_focus_area);
+
+            if (!area.isDummy()) {
+                int width, height, frame_size;
+                mSecCamera->getPreviewSize(&width, &height, &frame_size);
+
+                int x = area.getX(width);
+                int y = area.getY(height);
+
+                ALOGV("area=%s, x=%i, y=%i", area.toString8().string(), x, y);
+                if (mSecCamera->setObjectPosition(x, y) < 0) {
+                    ALOGE("ERR(%s):Fail on mSecCamera->setObjectPosition(%s)", __func__, new_focus_area);
+                    ret = UNKNOWN_ERROR;
+                }
+            }
+
+            int val = area.isDummy() ? 0 : 1;
+            if (mSecCamera->setTouchAFStartStop(val) < 0) {
+                ALOGE("ERR(%s):Fail on mSecCamera->setTouchAFStartStop(%d)", __func__, val);
+                ret = UNKNOWN_ERROR;
+            }
+        }
+
     } else {
         if (!isSupportedParameter(new_focus_mode_str,
                     mParameters.get(CameraParameters::KEY_SUPPORTED_FOCUS_MODES))) {
