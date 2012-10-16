@@ -1671,7 +1671,7 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
             new_white = WHITE_BALANCE_AUTO;
         else if (!strcmp(new_white_str,
                          CameraParameters::WHITE_BALANCE_DAYLIGHT))
-            new_white = WHITE_BALANCE_SUNNY;
+            new_white = WHITE_BALANCE_DAYLIGHT;
         else if (!strcmp(new_white_str,
                          CameraParameters::WHITE_BALANCE_CLOUDY_DAYLIGHT))
             new_white = WHITE_BALANCE_CLOUDY_DAYLIGHT;
@@ -1680,7 +1680,7 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
             new_white = WHITE_BALANCE_FLUORESCENT;
         else if (!strcmp(new_white_str,
                          CameraParameters::WHITE_BALANCE_INCANDESCENT))
-            new_white = WHITE_BALANCE_TUNGSTEN;
+            new_white = WHITE_BALANCE_INCANDESCENT;
         else {
             ALOGE("ERR(%s):Invalid white balance(%s)", __func__, new_white_str); //twilight, shade, warm_flourescent
             ret = UNKNOWN_ERROR;
@@ -1928,8 +1928,6 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
             new_image_effect = IMAGE_EFFECT_BNW;
         else if (!strcmp(new_image_effect_str, CameraParameters::EFFECT_SEPIA))
             new_image_effect = IMAGE_EFFECT_SEPIA;
-        else if (!strcmp(new_image_effect_str, CameraParameters::EFFECT_AQUA))
-            new_image_effect = IMAGE_EFFECT_AQUA;
         else if (!strcmp(new_image_effect_str, CameraParameters::EFFECT_NEGATIVE))
             new_image_effect = IMAGE_EFFECT_NEGATIVE;
         else {
