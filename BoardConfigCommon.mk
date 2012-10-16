@@ -100,6 +100,10 @@ BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/p1-common/recovery/graphics.c
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/p1-common/recovery/keys.c
 BOARD_USES_BML_OVER_MTD := true
 
+# Samsung EMMC brick bug
+# Already disabled in kernel, but disable again for safety
+BOARD_SUPPRESS_EMMC_WIPE := true
+
 # MTP
 BOARD_MTP_DEVICE := "/dev/usb_mtp_gadget"
 
