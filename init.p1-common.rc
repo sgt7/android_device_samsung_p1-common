@@ -86,13 +86,6 @@ service pvrsrvinit /system/bin/pvrsrvinit
     group root
     oneshot
 
-# zram
-service szram /sbin/init.zram
-	class main
-	user root
-	oneshot
-	disabled
-
 # set device specific MAC addresses, depends on preceding start of rild
 service set-macaddr /system/vendor/bin/set-macaddr
     user root
@@ -102,7 +95,6 @@ service set-macaddr /system/vendor/bin/set-macaddr
 
 on property:sys.boot_completed=1
     start set-macaddr
-	start szram
 
 # FIXME
 # service p2p_supplicant /system/bin/wpa_supplicant \
