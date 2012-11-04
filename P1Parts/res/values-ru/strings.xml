@@ -18,8 +18,25 @@
     <string name="hdmi_dock_summary_on">HDMI док-станция включена</string>
     <string name="hdmi_dock_head">HDMI док-станция</string>
 
+    <string name="category_buttons_title">Кнопки</string>
     <string name="category_capacitive_buttons_title">Сенсорные кнопки</string>
     <string name="capacitive_buttons_title">Отключить сенсорные кнопки</string>
     <string name="capacitive_buttons_summary">Выключить сенсорные кнопки и их подсветку (включая уведомления)</string>
+    <string name="backlight_timeout_title_head">Тайм-аут подсветки</string>
+    <string name="backlight_timeout_summary_head">Регулировка времени отключения сенсорных кнопок</string>
+
+    <string name="category_wifi_title">Wi-Fi</string>
+    <string name="category_wifi_pm_title">Управление питанием Wi-Fi</string>
+    <string name="wifi_pm_title">Спящий режим</string>
+
+    <string name="category_speed_title">Частота</string>
+    <string name="touchscreen_clock_title">Тактовая частота сенсорного экрана</string>
+
+    <string name="category_vibrator_tuning_title">Вибрация</string>
+    <string name="vibrator_tuning_title_head">Настройка виброотклика</string>
+    <string name="vibrator_tuning_summary_head">Настройка виброотклика по умолчанию</string>
+    <string name="vibrator_title">% вибрации</string>
+    <string name="vibrator_default_title">По умолч.</string>
+    <string name="vibrator_test_title">Тест</string>
 
 </resources>
