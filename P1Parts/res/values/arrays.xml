@@ -45,6 +45,20 @@
         <item>30000</item>
     </string-array>
 
+    <string-array name="key_led_brightness_entries">
+        <item>Disabled (no lights)</item>
+        <item>Minimum  (0.5mA - save battery)</item>
+        <item>Moderate (1mA)</item>
+        <item>Maximum  (2mA)</item>
+    </string-array>
+
+    <string-array name="key_led_brightness_entries_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="touchscreen_clock_entries">
         <item>400 Mhz</item>
         <item>800 Mhz</item>

@@ -17,4 +17,13 @@
         android:defaultValue="1600"
         android:dependency="buttons_disable" />
 
+    <ListPreference
+        android:key="key_led_brightness"
+        android:title="@string/key_led_brightness_title_head"
+        android:summary="@string/key_led_brightness_summary_head"
+        android:entries="@array/key_led_brightness_entries"
+        android:entryValues="@array/key_led_brightness_entries_values"
+        android:defaultValue="1"
+        android:dependency="buttons_disable" />
+
 </PreferenceScreen>

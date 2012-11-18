@@ -50,6 +50,7 @@ public class DeviceSettings extends Activity {
     public static final String KEY_BUTTONS_DISABLE = "buttons_disable";
     public static final String KEY_BUTTONS = "buttons_category";
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
+    public static final String KEY_LED_BRIGHTNESS = "key_led_brightness";
     public static final String KEY_TOUCHSCREEN_CLOCK = "touchscreen_clock";
     public static final String KEY_FAST_CHARGE = "fast_charge";
     public static final String KEY_VIBRATOR_TUNING = "vibrator_tuning";

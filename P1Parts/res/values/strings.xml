@@ -24,6 +24,9 @@
     <string name="capacitive_buttons_summary">Disable hard capacitive button lights and touches (Including notifications)</string>
     <string name="backlight_timeout_title_head">Backlight Timeout</string>
     <string name="backlight_timeout_summary_head">Adjust the delay before the touch key backlight automatically turns off</string>
+    <string name="key_led_brightness_title_head">Key Led Brightness</string>
+    <string name="key_led_brightness_summary_head">Adjust the keys led brightness</string>
+
 
     <string name="category_speed_title">Speed</string>
     <string name="touchscreen_clock_title">Touchscreen Clock Speed</string>
