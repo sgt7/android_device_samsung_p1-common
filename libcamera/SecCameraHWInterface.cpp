@@ -1973,6 +1973,75 @@ status_t CameraHardwareSec::setParameters(const CameraParameters& params)
         }
     }
 
+    // gps latitude
+    const char *new_gps_latitude_str = params.get(CameraParameters::KEY_GPS_LATITUDE);
+    if (mSecCamera->setGPSLatitude(new_gps_latitude_str) < 0) {
+        ALOGE("%s::mSecCamera->setGPSLatitude(%s) fail", __func__, new_gps_latitude_str);
+        ret = UNKNOWN_ERROR;
+    } else {
+        if (new_gps_latitude_str) {
+            mParameters.set(CameraParameters::KEY_GPS_LATITUDE, new_gps_latitude_str);
+        } else {
+            mParameters.remove(CameraParameters::KEY_GPS_LATITUDE);
+        }
+    }
+
+    // gps longitude
+    const char *new_gps_longitude_str = params.get(CameraParameters::KEY_GPS_LONGITUDE);
+
+    if (mSecCamera->setGPSLongitude(new_gps_longitude_str) < 0) {
+        ALOGE("%s::mSecCamera->setGPSLongitude(%s) fail", __func__, new_gps_longitude_str);
+        ret = UNKNOWN_ERROR;
+    } else {
+        if (new_gps_longitude_str) {
+            mParameters.set(CameraParameters::KEY_GPS_LONGITUDE, new_gps_longitude_str);
+        } else {
+            mParameters.remove(CameraParameters::KEY_GPS_LONGITUDE);
+        }
+    }
+
+    // gps altitude
+    const char *new_gps_altitude_str = params.get(CameraParameters::KEY_GPS_ALTITUDE);
+
+    if (mSecCamera->setGPSAltitude(new_gps_altitude_str) < 0) {
+        ALOGE("%s::mSecCamera->setGPSAltitude(%s) fail", __func__, new_gps_altitude_str);
+        ret = UNKNOWN_ERROR;
+    } else {
+        if (new_gps_altitude_str) {
+            mParameters.set(CameraParameters::KEY_GPS_ALTITUDE, new_gps_altitude_str);
+        } else {
+            mParameters.remove(CameraParameters::KEY_GPS_ALTITUDE);
+        }
+    }
+
+    // gps timestamp
+    const char *new_gps_timestamp_str = params.get(CameraParameters::KEY_GPS_TIMESTAMP);
+
+    if (mSecCamera->setGPSTimeStamp(new_gps_timestamp_str) < 0) {
+        ALOGE("%s::mSecCamera->setGPSTimeStamp(%s) fail", __func__, new_gps_timestamp_str);
+        ret = UNKNOWN_ERROR;
+    } else {
+        if (new_gps_timestamp_str) {
+            mParameters.set(CameraParameters::KEY_GPS_TIMESTAMP, new_gps_timestamp_str);
+        } else {
+            mParameters.remove(CameraParameters::KEY_GPS_TIMESTAMP);
+        }
+    }
+
+    // gps processing method
+    const char *new_gps_processing_method_str = params.get(CameraParameters::KEY_GPS_PROCESSING_METHOD);
+
+    if (mSecCamera->setGPSProcessingMethod(new_gps_processing_method_str) < 0) {
+        ALOGE("%s::mSecCamera->setGPSProcessingMethod(%s) fail", __func__, new_gps_processing_method_str);
+        ret = UNKNOWN_ERROR;
+    } else {
+        if (new_gps_processing_method_str) {
+            mParameters.set(CameraParameters::KEY_GPS_PROCESSING_METHOD, new_gps_processing_method_str);
+        } else {
+            mParameters.remove(CameraParameters::KEY_GPS_PROCESSING_METHOD);
+        }
+    }
+
     // Recording size
     int new_recording_width = mInternalParameters.getInt("recording-size-width");
     int new_recording_height= mInternalParameters.getInt("recording-size-height");

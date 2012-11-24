@@ -525,6 +525,11 @@ SecCamera::SecCamera() :
             m_angle(-1),
             m_zoom_level(-1),
             m_object_tracking(-1),
+            m_gps_enabled(false),
+            m_gps_latitude(-1),
+            m_gps_longitude(-1),
+            m_gps_altitude(-1),
+            m_gps_timestamp(-1),
             m_vtmode(0),
             m_sensor_mode(-1),
             m_shot_mode(-1),
@@ -2120,6 +2125,115 @@ int SecCamera::getFocusMode(void)
 
 //======================================================================
 
+int SecCamera::setGPSLatitude(const char *gps_latitude)
+{
+    ALOGV("%s(gps_latitude(%s))", __func__, gps_latitude);
+    if (gps_latitude == NULL)
+        m_gps_enabled = false;
+    else {
+        m_gps_enabled = true;
+        m_gps_latitude = lround(strtod(gps_latitude, NULL) * 10000000);
+    }
+
+    if (m_camera_id == CAMERA_ID_BACK) {
+        if (m_gps_enabled) {
+            long tmp = (m_gps_latitude >= 0) ? m_gps_latitude : -m_gps_latitude;
+            gpsInfoLatitude.north_south = m_gps_latitude < 0;
+            gpsInfoLatitude.dgree = tmp / 10000000;
+            tmp = (tmp % 10000000) * 60;
+            gpsInfoLatitude.minute = tmp / 10000000;
+            gpsInfoLatitude.second = (tmp % 10000000) * 60 / 10000000;
+        }
+        else {
+            gpsInfoLatitude.north_south = 0;
+            gpsInfoLatitude.dgree = 0;
+            gpsInfoLatitude.minute = 0;
+            gpsInfoLatitude.second = 0;
+        }
+    }
+
+    ALOGV("%s(m_gps_latitude(%ld))", __func__, m_gps_latitude);
+    return 0;
+}
+
+int SecCamera::setGPSLongitude(const char *gps_longitude)
+{
+    ALOGV("%s(gps_longitude(%s))", __func__, gps_longitude);
+    if (gps_longitude == NULL)
+        m_gps_enabled = false;
+    else {
+        m_gps_enabled = true;
+        m_gps_longitude = lround(strtod(gps_longitude, NULL) * 10000000);
+    }
+
+    if (m_camera_id == CAMERA_ID_BACK) {
+        if (m_gps_enabled) {
+            long tmp = (m_gps_longitude >= 0) ? m_gps_longitude : -m_gps_longitude;
+            gpsInfoLongitude.east_west = m_gps_longitude < 0;
+            gpsInfoLongitude.dgree = tmp / 10000000;
+            tmp = (tmp % 10000000) * 60;
+            gpsInfoLongitude.minute = tmp / 10000000;
+            gpsInfoLongitude.second = (tmp % 10000000) * 60 / 10000000;
+        }
+        else {
+            gpsInfoLongitude.east_west = 0;
+            gpsInfoLongitude.dgree = 0;
+            gpsInfoLongitude.minute = 0;
+            gpsInfoLongitude.second = 0;
+        }
+    }
+
+    ALOGV("%s(m_gps_longitude(%ld))", __func__, m_gps_longitude);
+    return 0;
+}
+
+int SecCamera::setGPSAltitude(const char *gps_altitude)
+{
+    ALOGV("%s(gps_altitude(%s))", __func__, gps_altitude);
+    if (gps_altitude == NULL)
+        m_gps_altitude = 0;
+    else {
+        m_gps_altitude = lround(strtod(gps_altitude, NULL) * 100);
+    }
+
+    if (m_camera_id == CAMERA_ID_BACK) {
+        gpsInfoAltitude.plus_minus = (m_gps_altitude >= 0);
+        long tmp = gpsInfoAltitude.plus_minus ? m_gps_altitude : -m_gps_altitude;
+        gpsInfoAltitude.dgree = tmp / 100;
+        gpsInfoAltitude.minute = tmp % 100;
+        gpsInfoAltitude.second = 0;
+    }
+
+    ALOGV("%s(m_gps_altitude(%ld))", __func__, m_gps_altitude);
+    return 0;
+}
+
+int SecCamera::setGPSTimeStamp(const char *gps_timestamp)
+{
+    ALOGV("%s(gps_timestamp(%s))", __func__, gps_timestamp);
+    if (gps_timestamp == NULL)
+        m_gps_timestamp = 0;
+    else
+        m_gps_timestamp = atol(gps_timestamp);
+
+    ALOGV("%s(m_gps_timestamp(%ld))", __func__, m_gps_timestamp);
+    return 0;
+}
+
+int SecCamera::setGPSProcessingMethod(const char *gps_processing_method)
+{
+    ALOGV("%s(gps_processing_method(%s))", __func__, gps_processing_method);
+    memset(mExifInfo.gps_processing_method, 0, sizeof(mExifInfo.gps_processing_method));
+    if (gps_processing_method != NULL) {
+        size_t len = strlen(gps_processing_method);
+        if (len > sizeof(mExifInfo.gps_processing_method)) {
+            len = sizeof(mExifInfo.gps_processing_method);
+        }
+        memcpy(mExifInfo.gps_processing_method, gps_processing_method, len);
+    }
+    return 0;
+}
+
 int SecCamera::setObjectPosition(int x, int y)
 {
     ALOGV("%s(setObjectPosition(x=%d, y=%d))", __func__, x, y);
@@ -2377,6 +2491,10 @@ void SecCamera::setExifFixedAttribute()
     //3 Exposure Mode
     mExifInfo.exposure_mode = EXIF_DEF_EXPOSURE_MODE;
 
+    //2 0th IFD GPS Info Tags
+    unsigned char gps_version[4] = { 0x02, 0x02, 0x00, 0x00 };
+    memcpy(mExifInfo.gps_version_id, gps_version, sizeof(gps_version));
+
     //2 1th IFD TIFF Tags
     mExifInfo.compression_scheme = EXIF_DEF_COMPRESSION;
     mExifInfo.x_resolution.num = EXIF_DEF_RESOLUTION_NUM;
@@ -2526,6 +2644,56 @@ void SecCamera::setExifChangedAttribute()
     default:
         mExifInfo.scene_capture_type = EXIF_SCENE_STANDARD;
         break;
+    }
+
+    //2 0th IFD GPS Info Tags
+    if (m_gps_enabled) {
+        if (m_gps_latitude >= 0)
+            strcpy((char *)mExifInfo.gps_latitude_ref, "N");
+        else
+            strcpy((char *)mExifInfo.gps_latitude_ref, "S");
+
+        if (m_gps_longitude >= 0)
+            strcpy((char *)mExifInfo.gps_longitude_ref, "E");
+        else
+            strcpy((char *)mExifInfo.gps_longitude_ref, "W");
+
+        if (m_gps_altitude >= 0)
+            mExifInfo.gps_altitude_ref = 0;
+        else
+            mExifInfo.gps_altitude_ref = 1;
+
+        mExifInfo.gps_latitude[0].num = (uint32_t)labs(m_gps_latitude);
+        mExifInfo.gps_latitude[0].den = 10000000;
+        mExifInfo.gps_latitude[1].num = 0;
+        mExifInfo.gps_latitude[1].den = 1;
+        mExifInfo.gps_latitude[2].num = 0;
+        mExifInfo.gps_latitude[2].den = 1;
+
+        mExifInfo.gps_longitude[0].num = (uint32_t)labs(m_gps_longitude);
+        mExifInfo.gps_longitude[0].den = 10000000;
+        mExifInfo.gps_longitude[1].num = 0;
+        mExifInfo.gps_longitude[1].den = 1;
+        mExifInfo.gps_longitude[2].num = 0;
+        mExifInfo.gps_longitude[2].den = 1;
+
+        mExifInfo.gps_altitude.num = (uint32_t)labs(m_gps_altitude);
+        mExifInfo.gps_altitude.den = 100;
+
+        struct tm tm_data;
+        gmtime_r(&m_gps_timestamp, &tm_data);
+        mExifInfo.gps_timestamp[0].num = tm_data.tm_hour;
+        mExifInfo.gps_timestamp[0].den = 1;
+        mExifInfo.gps_timestamp[1].num = tm_data.tm_min;
+        mExifInfo.gps_timestamp[1].den = 1;
+        mExifInfo.gps_timestamp[2].num = tm_data.tm_sec;
+        mExifInfo.gps_timestamp[2].den = 1;
+        snprintf((char*)mExifInfo.gps_datestamp, sizeof(mExifInfo.gps_datestamp),
+                "%04d:%02d:%02d", tm_data.tm_year + 1900, tm_data.tm_mon + 1, tm_data.tm_mday);
+
+        mExifInfo.enableGps = true;
+    } else {
+        mExifInfo.enableGps = false;
     }
 
     //2 1th IFD TIFF Tags
