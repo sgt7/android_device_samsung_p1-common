@@ -251,6 +251,25 @@ public:
 
     int m_touch_af_start_stop;
 
+    struct gps_info_latiude {
+        unsigned int    north_south;
+        unsigned int    dgree;
+        unsigned int    minute;
+        unsigned int    second;
+    } gpsInfoLatitude;
+    struct gps_info_longitude {
+        unsigned int    east_west;
+        unsigned int    dgree;
+        unsigned int    minute;
+        unsigned int    second;
+    } gpsInfoLongitude;
+    struct gps_info_altitude {
+        unsigned int    plus_minus;
+        unsigned int    dgree;
+        unsigned int    minute;
+        unsigned int    second;
+    } gpsInfoAltitude;
+
     SecCamera();
     virtual ~SecCamera();
 
@@ -346,6 +365,11 @@ public:
     int             setFocusMode(int focus_mode);
     int             getFocusMode(void);
 
+    int             setGPSLatitude(const char *gps_latitude);
+    int             setGPSLongitude(const char *gps_longitude);
+    int             setGPSAltitude(const char *gps_altitude);
+    int             setGPSTimeStamp(const char *gps_timestamp);
+    int             setGPSProcessingMethod(const char *gps_timestamp);
     int             cancelAutofocus(void);
     int             setObjectPosition(int x, int y);
     int             setObjectTrackingStartStop(int start_stop);
@@ -458,6 +482,11 @@ private:
     int             m_object_tracking_start_stop;
     int             m_recording_width;
     int             m_recording_height;
+    bool            m_gps_enabled;
+    long            m_gps_latitude;  /* degrees * 1e7 */
+    long            m_gps_longitude; /* degrees * 1e7 */
+    long            m_gps_altitude;  /* metres * 100 */
+    long            m_gps_timestamp;
     int             m_vtmode;
     int             m_sensor_mode; /*Camcorder fix fps */
     int             m_shot_mode; /* Shot mode */
