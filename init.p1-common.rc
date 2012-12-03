@@ -175,3 +175,8 @@ service tvouthack /system/bin/tvouthack
     user system
     group graphics
     disabled
+
+service qrngd /system/bin/qrngd -f
+    class main
+    user root
+    group root
