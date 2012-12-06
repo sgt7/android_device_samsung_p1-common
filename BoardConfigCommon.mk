@@ -24,7 +24,6 @@ BOARD_USES_GENERIC_AUDIO := false
 BOARD_USES_LIBSECRIL_STUB := true
 
 # ARMv7-A Cortex-A8 architecture
-TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
@@ -45,9 +44,6 @@ TARGET_BOARD_SAMSUNG_P1 := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/p1-common/bluetooth
-BOARD_BLUETOOTH_LIBBT_VNDCFG := device/samsung/p1-common/prebuilt/libbt_vndcfg.txt
-TARGET_BLUETOOTH_VENDOR_CONF := device/samsung/p1-common/prebuilt/bt_vendor.conf
 
 # WiFi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211

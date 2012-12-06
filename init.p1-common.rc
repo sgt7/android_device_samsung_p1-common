@@ -20,12 +20,12 @@ on post-fs
 on post-fs-data
 
     # bluetooth
-    chown bluetooth net_bt_stack /dev/s3c2410_serial0
+    chown bluetooth bluetooth /dev/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /sys/class/rfkill/rfkill1/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill1/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill1/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
 
     # System server can control backlight brightness
     chown system system /sys/class/backlight/s5p_bl/brightness
@@ -77,7 +77,7 @@ service p1-ril-daemon /system/bin/rild
     socket rild stream 660 root radio
     socket rild-debug stream 660 radio system
     user root
-    group radio cache inet misc audio log
+    group radio cache inet misc audio sdcard_rw log
 
 # 3D init
 service pvrsrvinit /system/bin/pvrsrvinit
@@ -124,6 +124,16 @@ service iprenew_wlan0 /system/bin/dhcpcd -n
 
 service iprenew_bnep0 /system/bin/dhcpcd -n
     class main
+    disabled
+    oneshot
+
+service hciattach /system/bin/brcm_patchram_plus --enable_hci \
+    --baudrate 3000000 --use_baudrate_for_download \
+    --scopcm=0,0,0,0,0,0,0,0,0,0 \
+    --patchram /system/bin/BCM4329B1_002.002.023.0534.0590.hcd /dev/s3c2410_serial0
+    class main
+    user bluetooth
+    group bluetooth net_bt_admin
     disabled
     oneshot
 

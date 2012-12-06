@@ -23,7 +23,8 @@ TARGET_SCREEN_WIDTH := 600
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
-	device/samsung/p1-common/prebuilt/etc/asound.conf:system/etc/asound.conf
+	device/samsung/p1-common/prebuilt/etc/asound.conf:system/etc/asound.conf \
+	device/samsung/p1-common/prebuilt/etc/bluetooth/main.conf:system/etc/bluetooth/main.conf
 
 # Init files
 PRODUCT_COPY_FILES += \
@@ -82,8 +83,8 @@ PRODUCT_PACKAGES += \
 	libstagefrighthw
 
 # Powah
-#PRODUCT_PACKAGES += \
-#	power.s5pc110
+PRODUCT_PACKAGES += \
+	power.s5pc110
 
 # tvout
 PRODUCT_PACKAGES += \
@@ -100,11 +101,11 @@ PRODUCT_PACKAGES += \
 
 # script to set bluetooth and wlan MAC addresses
 PRODUCT_COPY_FILES += \
-	device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
+        device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
 
 # Touchscreen
 PRODUCT_COPY_FILES += \
-	device/samsung/p1-common/prebuilt/usr/idc/AT42QT602240_Touchscreen.idc:system/usr/idc/AT42QT602240_Touchscreen.idc
+        device/samsung/p1-common/prebuilt/usr/idc/AT42QT602240_Touchscreen.idc:system/usr/idc/AT42QT602240_Touchscreen.idc
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -123,49 +124,45 @@ PRODUCT_COPY_FILES += \
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
 PRODUCT_PROPERTY_OVERRIDES := \
-	ro.opengles.version=131072
+       ro.opengles.version=131072
 
 # rotation
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.sf.hwrotation=90
-
-# dpi
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.sf.lcd_density=160
+       ro.sf.hwrotation=90
 
 # radio
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.telephony.ril_class=SamsungExynos3RIL
+       ro.telephony.ril_class=SamsungRIL
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-	wifi.interface=wlan0 \
-	wifi.supplicant_scan_interval=45
+       wifi.interface=wlan0 \
+       wifi.supplicant_scan_interval=45
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.com.google.locationfeatures=1 \
-	ro.com.google.networklocation=1
+        ro.com.google.locationfeatures=1 \
+        ro.com.google.networklocation=1
 
 # Extended JNI checks
 # The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
 # before they have a chance to cause problems.
 # Default=true for development builds, set by android buildsystem.
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.kernel.android.checkjni=0 \
-	dalvik.vm.checkjni=false
+    ro.kernel.android.checkjni=0 \
+    dalvik.vm.checkjni=false
 
 # Override /proc/sys/vm/dirty_ratio on UMS
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.vold.umsdirtyratio=20
+    ro.vold.umsdirtyratio=20
 
 # enable repeatable keys in cwm
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.cwm.enable_key_repeat=true \
-	ro.cwm.repeatable_keys=102,114,115,139
+    ro.cwm.enable_key_repeat=true \
+    ro.cwm.repeatable_keys=102,114,115,139
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -175,7 +172,7 @@ include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mass_storage
+    persist.sys.usb.config=mass_storage
 
 # installer
 PRODUCT_COPY_FILES += \
