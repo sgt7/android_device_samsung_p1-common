@@ -25,7 +25,7 @@ import android.preference.PreferenceManager;
 
 public class KeyLedBrightness implements OnPreferenceChangeListener {
 
-    private static final String FILE = "/sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/brightness";
+    private static final String FILE = "/sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/key_led_brightness";
 
     public static boolean isSupported() {
         return Utils.fileExists(FILE);
