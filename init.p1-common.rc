@@ -11,14 +11,6 @@ on fs
     # mount debugfs
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
-on post-fs
-
-    # now that all filesystems are mounted, load device specific kernel modules
-    insmod /system/lib/modules/vibrator.ko   # vibrator
-    insmod /system/lib/modules/bthid.ko      # bthid
-
-on post-fs-data
-
     # bluetooth
     chown bluetooth net_bt_stack /dev/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
@@ -37,6 +29,14 @@ on post-fs-data
     chown system radio /sys/class/sec/switch/usb_state
     chown system radio /sys/class/sec/switch/usb_sel
     chown system radio /sys/class/sec/switch/uart_sel
+
+on post-fs
+
+    # now that all filesystems are mounted, load device specific kernel modules
+    insmod /system/lib/modules/vibrator.ko   # vibrator
+    insmod /system/lib/modules/bthid.ko      # bthid
+
+on post-fs-data
 
     # create data/gps for GPS demon
     mkdir /data/gps 771 gps system
