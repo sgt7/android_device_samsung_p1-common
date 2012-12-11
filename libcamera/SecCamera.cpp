@@ -470,26 +470,6 @@ static int fimc_v4l2_s_ctrl(int fp, unsigned int id, unsigned int value)
     return ctrl.value;
 }
 
-static int fimc_v4l2_s_ext_ctrl(int fp, unsigned int id, void *value)
-{
-    struct v4l2_ext_controls ctrls;
-    struct v4l2_ext_control ctrl;
-    int ret;
-
-    ctrl.id = id;
-    ctrl.string = (char *) value;
-
-    ctrls.ctrl_class = V4L2_CTRL_CLASS_CAMERA;
-    ctrls.count = 1;
-    ctrls.controls = &ctrl;
-
-    ret = ioctl(fp, VIDIOC_S_EXT_CTRLS, &ctrls);
-    if (ret < 0)
-        ALOGE("ERR(%s):VIDIOC_S_EXT_CTRLS failed\n", __func__);
-
-    return ret;
-}
-
 static int fimc_v4l2_g_parm(int fp, struct v4l2_streamparm *streamparm)
 {
     int ret;
@@ -1156,27 +1136,6 @@ int SecCamera::setSnapshotCmd(void)
     CHECK(ret);
 
     ret = fimc_v4l2_streamon(m_cam_fd);
-    CHECK(ret);
-
-    // GPS
-    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_LATITUDE, &gpsInfoLatitude);
-    CHECK(ret);
-    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_LONGITUDE, &gpsInfoLongitude);
-    CHECK(ret);
-    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_ALTITUDE, &gpsInfoAltitude);
-    CHECK(ret);
-    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_PROCESSINGMETHOD,
-        mExifInfo.gps_processing_method);
-    CHECK(ret);
-    unsigned long temp = m_gps_timestamp;
-    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_GPS_TIMESTAMP, &temp);
-    CHECK(ret);
-
-    // Time
-    time_t rawtime;
-    time(&rawtime);
-    struct tm *timeinfo = localtime(&rawtime);
-    ret = fimc_v4l2_s_ext_ctrl(m_cam_fd, V4L2_CID_CAMERA_EXIF_TIME_INFO, timeinfo);
     CHECK(ret);
 
     ALOG_TIME_END(1)
