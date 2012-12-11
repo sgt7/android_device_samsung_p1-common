@@ -130,8 +130,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	ro.opengles.version=131072
 
 # rotation
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.sf.hwrotation=90
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.sf.hwrotation=90
 
 # dpi
 PRODUCT_PROPERTY_OVERRIDES += \
