@@ -16,8 +16,11 @@
 
 package com.cyanogenmod.settings.device;
 
+import android.app.ActivityManagerNative;
 import android.content.Context;
+import android.content.Intent;
 import android.os.UEventObserver;
+import android.os.UserHandle;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
@@ -31,76 +34,42 @@ import java.io.IOException;
  */
 
 public class C30Observer extends UEventObserver {
-	
-	private static final String	uEventInfo = "DEVPATH=/devices/platform/acc_con";
-	private static final String	stateFile = "/sys/devices/platform/acc_con/acc_file";
-	private C30StateListener	listener;
-	private int	mState = 0;	
-	
-	private static final int	DOCK_DESK 		= 1 << 0;
-	private static final int	DOCK_KEYBD 		= 1 << 1;
-	private static final int	ACC_CARMOUNT 	= 1 << 2;
-	private static final int	ACC_TVOUT 		= 1 << 3;
-	private static final int	ACC_LINEOUT 	= 1 << 4;
-	private static final int	HDMI_CONNECTED 	= 1 << 5;
-	
-	public C30Observer()
-	{
-		FileReader	curState;
-		
-		try
-		{
-			// Read current driver state of 30-pin connector
-			// The state bits describe current status:
-			// 0 - DOCK_DESK connected
-			// 1 - DOCK_KEYBD connected
-			// 2 - ACC_CARMOUNT connected
-			// 3 - ACC_TVOUT connected
-			// 4 - ACC_LINEOUT connected
-			// 5 - HDMI cable is connected ?
-			
-			curState = new FileReader(stateFile);
-			
-			char[]	rawData = new char[128];
-			
-			if (curState.read(rawData, 0, 128) > 0)
-			{
-				String	state = new String(rawData);
-				Integer	val = new Integer(state.trim());
-			
-				if (val != null)
-					mState = val.intValue();
-					
-				Log.v("SGT7", "C30 initial state: " + mState);
-			}
-			
-			curState.close();
-		}
-		catch(FileNotFoundException e) { }
-		catch (IOException e) { }
-	}
-	
-	/**
-	 * Starts observing for kernel user events
-	 */
-	public void start()
-	{
-		//this.startObserving("");
-		this.startObserving(uEventInfo);
-		
-		Log.v("SGT7", "C30 UEVENT Observer started");
-	}
-	
-	public void setOnStateChangeListener(C30StateListener l)
-	{
-		listener = l;
-	}
-	
-	/**
-	 * Handles user event from kernel
-	 * 
-	 * @param event kernel event
-	 */
+
+    private static final String uEventInfo = "DEVPATH=/devices/platform/acc_con";
+    private static final String stateFile = "/sys/devices/platform/acc_con/acc_file";
+    private C30StateListener listener;
+    private int	mState = 0;
+    private Context mContext;
+
+    private static final int DOCK_DESK = 1 << 0;
+    private static final int DOCK_KEYBD = 1 << 1;
+    private static final int ACC_CARMOUNT = 1 << 2;
+    private static final int ACC_TVOUT = 1 << 3;
+    private static final int ACC_LINEOUT = 1 << 4;
+    private static final int HDMI_CONNECTED = 1 << 5;
+
+    public C30Observer(Context context) {
+        mContext = context;
+        setConnectionState();
+    }
+
+    /**
+     * Starts observing for kernel user events
+     */
+    public void start() {
+        this.startObserving(uEventInfo);
+        Log.v("SGT7", "C30 UEVENT Observer started");
+    }
+
+    public void setOnStateChangeListener(C30StateListener l) {
+        listener = l;
+    }
+
+    /**
+     * Handles user event from kernel
+     *
+     * @param event kernel event
+     */
     @Override
     public void onUEvent(UEventObserver.UEvent event) {
         Log.v("SGT7", "C30 UEVENT: " + event.toString());
@@ -108,40 +77,99 @@ public class C30Observer extends UEventObserver {
         String accessory = event.get("ACCESSORY");
         String dock = event.get("DOCK");
         
-        if (accessory != null && "TV".equals(accessory))
-        {
-        	String	state = event.get("STATE");
+        if (accessory != null && "TV".equals(accessory)) {
+            String	state = event.get("STATE");
 
-        	Log.v("SGT7", "TVout 30-pin connection state: " + state);
-        	
-        	if (listener != null)
-        		listener.onStateChange(accessory, state);
+            Log.v("SGT7", "TVout 30-pin connection state: " + state);
+
+            if (listener != null)
+                listener.onStateChange(accessory, state);
         }
-    
-        if (dock != null && "desk".equals(dock))
-        {
-        	String	state = event.get("STATE");
-        
-        	Log.v("SGT7", "Dock connection state: " + state);
-        	
-        	if (listener != null)
-        		listener.onStateChange(dock, state);
+
+        if (dock != null && "desk".equals(dock)) {
+            String	state = event.get("STATE");
+
+            Log.v("SGT7", "Dock connection state: " + state);
+
+            if (listener != null)
+                listener.onStateChange(dock, state);
         }
+        setConnectionState();
     }
-    
+
+    /**
+     * Sets current state of C30 connector
+     */
+    public void setConnectionState() {
+        FileReader curState;
+
+        try {
+            // Read current driver state of 30-pin connector
+            // The state bits describe current status:
+            // 0 - DOCK_DESK connected
+            // 1 - DOCK_KEYBD connected
+            // 2 - ACC_CARMOUNT connected
+            // 3 - ACC_TVOUT connected
+            // 4 - ACC_LINEOUT connected
+            // 5 - HDMI cable is connected ?
+
+            curState = new FileReader(stateFile);
+
+            char[] rawData = new char[128];
+
+            if (curState.read(rawData, 0, 128) > 0) {
+                String state = new String(rawData);
+                Integer val = new Integer(state.trim());
+
+                if (val != null)
+                    mState = val.intValue();
+
+                Log.v("SGT7", "C30 initial state: " + mState);
+            }
+
+            curState.close();
+        } catch(FileNotFoundException e) {
+        } catch (IOException e) { }
+
+        int androidState = 0;
+
+        switch (mState) {
+            case 0:
+            case 1:
+            case 2:
+                androidState = mState;
+                break;
+            case 17:
+                androidState = 3;
+                break;
+            case 33:
+                androidState = 4;
+        }
+
+        // Pack up the values and broadcast them to everyone
+        Intent intent = new Intent(Intent.ACTION_DOCK_EVENT);
+        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+        intent.putExtra(Intent.EXTRA_DOCK_STATE, androidState);
+
+        // Send the dock event intent.
+        // There are many components in the system watching for this so as to
+        // adjust audio routing, screen orientation, etc.
+        mContext.sendStickyBroadcastAsUser(intent, UserHandle.ALL);
+    }
+
     /**
      * Returns current state of C30 connector
      * @return true if connected
      */
     public boolean getConnectionState() {
-		return (mState > 0);
-	}
+        return (mState > 0);
+    }
     
     public boolean isTVoutConnected() {
-    	return (mState & ACC_TVOUT) != 0;
+        return (mState & ACC_TVOUT) != 0;
     }
     
     public boolean isDockDeskConnected() {
-    	return (mState & DOCK_DESK) != 0;
+        return (mState & DOCK_DESK) != 0;
     }
 }
