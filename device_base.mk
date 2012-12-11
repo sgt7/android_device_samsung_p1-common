@@ -102,6 +102,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
 
+# bluetooth firmware
+PRODUCT_COPY_FILES := \
+  vendor/samsung/p1/proprietary/bin/BCM4329B1_002.002.023.0534.0590.hcd:system/vendor/firmware/BCM4329B1_002.002.023.0534.0590.hcd \
+  device/samsung/p1-common/prebuilt/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+
+
 # Touchscreen
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/prebuilt/usr/idc/AT42QT602240_Touchscreen.idc:system/usr/idc/AT42QT602240_Touchscreen.idc

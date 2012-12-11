@@ -12,12 +12,11 @@ on fs
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
     # bluetooth
-    chown bluetooth net_bt_stack /dev/s3c2410_serial0
+    chown bluetooth bluetooth /dev/s3c2410_serial0
+    chmod 0600 /device/s3c2410_serial0
     chmod 0660 /sys/class/rfkill/rfkill0/state
-    chmod 0660 /sys/class/rfkill/rfkill1/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill1/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
 
     # System server can control backlight brightness
     chown system system /sys/class/backlight/s5p_bl/brightness
@@ -35,6 +34,7 @@ on post-fs
     # now that all filesystems are mounted, load device specific kernel modules
     insmod /system/lib/modules/vibrator.ko   # vibrator
     insmod /system/lib/modules/bthid.ko      # bthid
+    insmod /system/lib/modules/bcmdhd.ko     # wi-fi
 
 on post-fs-data
 
