@@ -122,7 +122,7 @@ public class TVFragmentActivity extends PreferenceFragment {
 
         });
 
-        c30plug = new C30Observer();
+        c30plug = new C30Observer(me);
 
         mTVoutConnected = c30plug.isTVoutConnected();
         mHDMIConnected = c30plug.isDockDeskConnected();

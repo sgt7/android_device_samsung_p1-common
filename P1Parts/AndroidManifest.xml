@@ -31,6 +31,10 @@
         <activity android:name=".WifiFragmentActivity" />
 
         <service android:name=".TvOutService" />
+
+        <service
+            android:enabled="true"
+            android:name=".DockObserver"/>
     </application>
 
 </manifest>

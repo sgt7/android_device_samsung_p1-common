@@ -16,19 +16,30 @@
 
 package com.cyanogenmod.settings.device;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
 
-public class Startup extends BroadcastReceiver {
+public class DockObserver extends Service {
 
-    @Override
-    public void onReceive(final Context context, final Intent bootintent) {
-        ToggleCapacitiveKeys.restore(context);
-        TouchKeyBacklightTimeout.restore(context);
-        TouchscreenClock.restore(context);
-        VibratorTuningPreference.restore(context);
-        Intent myIntent = new Intent(context, DockObserver.class);
-        context.startService(myIntent);
-    }
+   @Override
+   public IBinder onBind(Intent intent) {
+      return null;
+   }
+
+   @Override
+   public void onCreate() {
+      //code to execute when the service is first created
+   }
+
+   @Override
+   public void onDestroy() {
+      //code to execute when the service is shutting down
+   }
+
+   @Override
+   public void onStart(Intent intent, int startid) {
+        C30Observer c30plug = new C30Observer(getApplicationContext());
+        c30plug.start();
+   }
 }
