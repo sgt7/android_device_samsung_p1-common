@@ -185,6 +185,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/bml_over_mtd.sh:bml_over_mtd.sh
 
+# WiFi
+PRODUCT_PACKAGES += \
+	libnetcmdiface
+
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
 # Set product characteristic to tablet, needed for some ui elements
