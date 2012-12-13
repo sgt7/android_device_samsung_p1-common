@@ -27,6 +27,10 @@ TARGET_DEVICE = os.getenv('CM_BUILD')
 def FullOTA_Assertions(info):
   if TARGET_DEVICE == "p1":
     info.output_zip.write(os.path.join(TARGET_DIR, "modem.bin"), "modem.bin")
+    info.output_zip.write(os.path.join(TARGET_DIR, "p1ln.sh"), "p1ln.sh")
+    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1.img"), "boot_p1.img")
+    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1l.img"), "boot_p1l.img")
+    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1n.img"), "boot_p1n.img")
 
   info.output_zip.write(os.path.join(TARGET_DIR, "updater.sh"), "updater.sh")
   info.output_zip.write(os.path.join(UTILITIES_DIR, "make_ext4fs"), "make_ext4fs")
@@ -40,6 +44,9 @@ def FullOTA_Assertions(info):
     info.script.AppendExtra(
           ('package_extract_file("modem.bin", "/tmp/modem.bin");\n'
            'set_perm(0, 0, 0777, "/tmp/modem.bin");'))
+    info.script.AppendExtra(
+          ('package_extract_file("p1ln.sh", "/tmp/p1ln.sh");\n'
+           'set_perm(0, 0, 0777, "/tmp/p1ln.sh");'))
 
   info.script.AppendExtra(
         ('package_extract_file("updater.sh", "/tmp/updater.sh");\n'
@@ -63,10 +70,13 @@ def FullOTA_Assertions(info):
         ('package_extract_file("bml_over_mtd.sh", "/tmp/bml_over_mtd.sh");\n'
          'set_perm(0, 0, 0777, "/tmp/bml_over_mtd.sh");'))
 
-  info.script.AppendExtra('package_extract_file("boot.img", "/tmp/boot.img");')
   if TARGET_DEVICE == "p1c":
+    info.script.AppendExtra('package_extract_file("boot.img", "/tmp/boot.img");')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh", "cdma") == 0);')
   else:
+    info.script.AppendExtra('package_extract_file("boot_p1.img", "/tmp/boot_p1.img");')
+    info.script.AppendExtra('package_extract_file("boot_p1l.img", "/tmp/boot_p1l.img");')
+    info.script.AppendExtra('package_extract_file("boot_p1n.img", "/tmp/boot_p1n.img");')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh") == 0);')
 
   # Make common releasetools copy boot.img verbatim
