@@ -146,3 +146,4 @@ service qrngd /system/bin/qrngd -f
     class main
     user root
     group root
+	disabled
