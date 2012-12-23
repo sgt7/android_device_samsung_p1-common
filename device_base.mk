@@ -102,6 +102,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
+# Bluetooth vendor conf
+PRODUCT_COPY_FILES := \
+	device/samsung/p1-common/prebuilt/etc/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+
 # script to set bluetooth and wlan MAC addresses
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
