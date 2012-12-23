@@ -28,7 +28,6 @@ def FullOTA_Assertions(info):
   if TARGET_DEVICE == "p1":
     info.output_zip.write(os.path.join(TARGET_DIR, "modem.bin"), "modem.bin")
     info.output_zip.write(os.path.join(TARGET_DIR, "p1ln.sh"), "p1ln.sh")
-    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1.img"), "boot_p1.img")
     info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1l.img"), "boot_p1l.img")
     info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1n.img"), "boot_p1n.img")
 
