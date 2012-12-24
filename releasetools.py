@@ -76,6 +76,7 @@ def FullOTA_Assertions(info):
   else:
     info.script.AppendExtra('package_extract_file("boot_p1l.img", "/tmp/boot_p1l.img");')
     info.script.AppendExtra('package_extract_file("boot_p1n.img", "/tmp/boot_p1n.img");')
+    info.script.AppendExtra('assert(run_program("/tmp/p1ln.sh") == 0);')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh") == 0);')
 
   # Make common releasetools copy boot.img verbatim
