@@ -69,7 +69,7 @@ def FullOTA_Assertions(info):
         ('package_extract_file("bml_over_mtd.sh", "/tmp/bml_over_mtd.sh");\n'
          'set_perm(0, 0, 0777, "/tmp/bml_over_mtd.sh");'))
 
-    info.script.AppendExtra('package_extract_file("boot.img", "/tmp/boot.img");')
+  info.script.AppendExtra('package_extract_file("boot.img", "/tmp/boot.img");')
 
   if TARGET_DEVICE == "p1c":
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh", "cdma") == 0);')
