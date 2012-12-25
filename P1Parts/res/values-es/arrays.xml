@@ -19,10 +19,6 @@
         <item>15 segundos</item>
         <item>30 segundos</item>
     </string-array>
-    <string-array name="wifi_pm_entries">
-        <item>PM_MAX</item>
-        <item>PM_FAST</item>
-    </string-array>
     <string-array name="touchscreen_clock_entries">
         <item>400 Mhz</item>
         <item>800 Mhz</item>

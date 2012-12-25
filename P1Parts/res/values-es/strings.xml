@@ -21,9 +21,5 @@
     <string name="capacitive_buttons_summary">"Deshabilitar luces y pulsaciones de botones capacitivos (incluidas notificaciones)"</string>
     <string name="backlight_timeout_title_head">"Tiempo de espera de retroiluminación"</string>
     <string name="backlight_timeout_summary_head">"Tiempo tras pulsar una tecla antes de apagar la retroiluminación"</string>
-    <string name="category_wifi_title">"WiFi"</string>
-    <string name="category_wifi_pm_title">"Gestión alimentación WiFi"</string>
-    <string name="wifi_pm_title">"Modo espera"</string>
-    <string name="category_speed_title">"Velocidad"</string>
     <string name="touchscreen_clock_title">"Reloj de pantalla táctil"</string>
 </resources>

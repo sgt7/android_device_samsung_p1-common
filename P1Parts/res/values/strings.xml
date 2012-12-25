@@ -25,10 +25,6 @@
     <string name="backlight_timeout_title_head">Backlight Timeout</string>
     <string name="backlight_timeout_summary_head">Adjust the delay before the touch key backlight automatically turns off</string>
 
-    <string name="category_wifi_title">WiFi</string>
-    <string name="category_wifi_pm_title">WiFi Power Management</string>
-    <string name="wifi_pm_title">Sleep Power Mode</string>
-
     <string name="category_speed_title">Speed</string>
     <string name="touchscreen_clock_title">Touchscreen Clock Speed</string>
 

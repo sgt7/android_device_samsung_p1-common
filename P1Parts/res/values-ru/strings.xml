@@ -25,10 +25,6 @@
     <string name="backlight_timeout_title_head">Тайм-аут подсветки</string>
     <string name="backlight_timeout_summary_head">Регулировка времени отключения сенсорных кнопок</string>
 
-    <string name="category_wifi_title">Wi-Fi</string>
-    <string name="category_wifi_pm_title">Управление питанием Wi-Fi</string>
-    <string name="wifi_pm_title">Спящий режим</string>
-
     <string name="category_speed_title">Частота</string>
     <string name="touchscreen_clock_title">Тактовая частота сенсорного экрана</string>
 

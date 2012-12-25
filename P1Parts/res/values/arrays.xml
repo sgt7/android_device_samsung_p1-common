@@ -45,16 +45,6 @@
         <item>30000</item>
     </string-array>
 
-    <string-array name="wifi_pm_entries">
-        <item>PM_MAX</item>
-        <item>PM_FAST</item>
-    </string-array>
-
-    <string-array name="wifi_pm_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-
     <string-array name="touchscreen_clock_entries">
         <item>400 Mhz</item>
         <item>800 Mhz</item>
