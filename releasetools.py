@@ -69,13 +69,14 @@ def FullOTA_Assertions(info):
         ('package_extract_file("bml_over_mtd.sh", "/tmp/bml_over_mtd.sh");\n'
          'set_perm(0, 0, 0777, "/tmp/bml_over_mtd.sh");'))
 
+  info.script.AppendExtra('package_extract_file("boot.img", "/tmp/boot.img");')
+
   if TARGET_DEVICE == "p1c":
-    info.script.AppendExtra('package_extract_file("boot.img", "/tmp/boot.img");')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh", "cdma") == 0);')
   else:
-    info.script.AppendExtra('package_extract_file("boot_p1.img", "/tmp/boot_p1.img");')
     info.script.AppendExtra('package_extract_file("boot_p1l.img", "/tmp/boot_p1l.img");')
     info.script.AppendExtra('package_extract_file("boot_p1n.img", "/tmp/boot_p1n.img");')
+    info.script.AppendExtra('assert(run_program("/tmp/p1ln.sh") == 0);')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh") == 0);')
 
   # Make common releasetools copy boot.img verbatim
