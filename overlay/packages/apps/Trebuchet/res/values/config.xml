@@ -1,8 +1,0 @@
-<resources>
-    <bool name="is_large_screen">true</bool>
-    <bool name="allow_rotation">true</bool>
-
-<!-- Workspace -->
-    <integer name="cell_count_x">5</integer>
-    <integer name="cell_count_y">5</integer>
-</resources>
