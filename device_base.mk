@@ -94,10 +94,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	Torch
 
-# QRNGD
-PRODUCT_PACKAGES += \
-    qrngd
-
 # Usb accessory
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
