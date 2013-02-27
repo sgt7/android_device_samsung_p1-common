@@ -102,10 +102,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
-# Bluetooth vendor conf
-PRODUCT_COPY_FILES := \
-	device/samsung/p1-common/prebuilt/etc/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
-
 # script to set bluetooth and wlan MAC addresses
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/prebuilt/bin/set-macaddr:system/vendor/bin/set-macaddr
@@ -113,6 +109,10 @@ PRODUCT_COPY_FILES += \
 # Touchscreen
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/prebuilt/usr/idc/AT42QT602240_Touchscreen.idc:system/usr/idc/AT42QT602240_Touchscreen.idc
+
+# Bluetooth vendor conf
+PRODUCT_COPY_FILES += \
+	device/samsung/p1-common/prebuilt/etc/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
