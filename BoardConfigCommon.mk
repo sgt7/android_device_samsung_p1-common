@@ -28,12 +28,11 @@ TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_ARCH_VARIANT_CPU := cortex-a8
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
-
-TARGET_RECOVERY_INITRC := device/samsung/p1-common/recovery.rc
 
 TARGET_BOARD_PLATFORM := s5pc110
 TARGET_BOARD_PLATFORM_GPU := POWERVR_SGX540_120
@@ -43,7 +42,7 @@ TARGET_BOOTLOADER_BOARD_NAME := s5pc110
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/p1-common/bluetooth
-BOARD_BLUEDROID_VENDOR_CONF := device/samsung/p1-common/prebuilt/libbt_vndcfg.txt
+BOARD_BLUEDROID_VENDOR_CONF := device/samsung/p1-common/libbt_vndcfg.txt
 
 # WiFi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
@@ -52,7 +51,7 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_HOSTAPD_DRIVER        := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE           := bcmdhd
-#BOARD_WLAN_DEVICE_REV       := bcm4329
+BOARD_WLAN_DEVICE_REV       := bcm4329
 WIFI_DRIVER_MODULE_NAME     := "bcmdhd"
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
@@ -71,8 +70,6 @@ BOARD_CAMERA_HAVE_ISO := true
 BOARD_EGL_CFG := device/samsung/p1-common/prebuilt/lib/egl/egl.cfg
 USE_OPENGL_RENDERER := true
 
-# skia
-BOARD_USE_SKIA_LCDTEXT := true
 # SkTextBox for libtvout
 BOARD_USES_SKTEXTBOX := true
 
@@ -104,9 +101,6 @@ BOARD_USES_BML_OVER_MTD := true
 # Samsung EMMC brick bug
 # Already disabled in kernel, but disable again for safety
 BOARD_SUPPRESS_EMMC_WIPE := true
-
-# MTP
-BOARD_MTP_DEVICE := "/dev/usb_mtp_gadget"
 
 # Boot Animation
 TARGET_BOOTANIMATION_PRELOAD := true
