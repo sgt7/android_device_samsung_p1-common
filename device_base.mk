@@ -23,13 +23,14 @@ TARGET_SCREEN_WIDTH := 600
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
-	device/samsung/p1-common/prebuilt/etc/asound.conf:system/etc/asound.conf
+	device/samsung/p1-common/libaudio/audio_policy.conf:system/etc/audio_policy.conf \
+	device/samsung/p1-common/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/init.p1-common.rc:root/init.p1-common.rc \
 	device/samsung/p1-common/init.p1.usb.rc:root/init.p1.usb.rc \
-	device/samsung/p1-common/init.p1.usb.rc:recovery/root/init.p1.usb.rc \
+	device/samsung/p1-common/init.p1.usb.rc:recovery/root/usb.rc \
 	device/samsung/p1-common/lpm.rc:root/lpm.rc
 
 # Prebuilt kl keymaps
@@ -51,11 +52,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
-	audio.primary.s5pc110 \
-	audio_policy.s5pc110
-
-PRODUCT_COPY_FILES += \
-	device/samsung/p1-common/libaudio/audio_policy.conf:system/etc/audio_policy.conf
+	audio.primary.s5pc110
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -184,10 +181,6 @@ PRODUCT_COPY_FILES += \
 # bml_over_mtd
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/bml_over_mtd.sh:bml_over_mtd.sh
-
-# WiFi
-PRODUCT_PACKAGES += \
-	libnetcmdiface
 
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
