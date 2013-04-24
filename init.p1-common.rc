@@ -11,11 +11,6 @@ on fs
     # mount debugfs
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
-on post-fs
-
-    # now that all filesystems are mounted, load device specific kernel modules
-    insmod /system/lib/modules/bcmdhd.ko     # wi-fi
-
 on post-fs-data
 
     # bluetooth
