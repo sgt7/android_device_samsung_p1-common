@@ -242,14 +242,14 @@ public class VibratorTuningPreference extends DialogPreference implements OnClic
         private int convertAverageToVibrator(int averageValue) {
             int resultVibrator;
 
-            resultVibrator = (averageValue * 127) / 100;
+            resultVibrator = (averageValue * 100) / 100;
             return resultVibrator;
         }
 
         private int convertVibratorToAverage(int resultVibrator) {
             int averageValue;
 
-            averageValue = (resultVibrator * 100) / 127;
+            averageValue = (resultVibrator * 100) / 100;
             return averageValue;
         }
 
