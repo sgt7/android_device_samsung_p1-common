@@ -24,8 +24,4 @@
     <string name="capacitive_buttons_summary">Sensortasten inklusive deren Beleuchtung deaktivieren (Benachrichtigungen eingeschlossen)</string>
     <string name="backlight_timeout_title_head">Beleuchtungs-Timeout</string>
     <string name="backlight_timeout_summary_head">Verändere die Zeitspanne bevor die Beleuchtung der Sensortasten automatisch ausgeschaltet wird</string>
-
-    <string name="category_wifi_title">WiFi</string>
-    <string name="category_wifi_pm_title">WiFi Energiesparrichtlinien</string>
-    <string name="wifi_pm_title">Energiesparmodus</string>
 </resources>
