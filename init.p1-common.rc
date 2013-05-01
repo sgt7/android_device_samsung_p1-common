@@ -11,6 +11,11 @@ on fs
     # mount debugfs
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
+on post-fs
+
+	# vibrator
+    insmod /system/lib/modules/vibrator.ko
+
 on post-fs-data
 
     # bluetooth
