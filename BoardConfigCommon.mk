@@ -85,7 +85,6 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun%d/file"
 
 # Releasetools
 TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/p1-common
