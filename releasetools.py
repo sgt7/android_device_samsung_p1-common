@@ -28,8 +28,7 @@ def FullOTA_Assertions(info):
   if TARGET_DEVICE == "p1":
     info.output_zip.write(os.path.join(TARGET_DIR, "modem.bin"), "modem.bin")
     info.output_zip.write(os.path.join(TARGET_DIR, "p1ln.sh"), "p1ln.sh")
-    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1l.img"), "boot_p1l.img")
-    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1n.img"), "boot_p1n.img")
+    info.output_zip.write(os.path.join(TARGET_DIR, "boot_p1ln.img"), "boot_p1ln.img")
 
   info.output_zip.write(os.path.join(TARGET_DIR, "updater.sh"), "updater.sh")
   info.output_zip.write(os.path.join(UTILITIES_DIR, "make_ext4fs"), "make_ext4fs")
@@ -74,8 +73,7 @@ def FullOTA_Assertions(info):
   if TARGET_DEVICE == "p1c":
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh", "cdma") == 0);')
   else:
-    info.script.AppendExtra('package_extract_file("boot_p1l.img", "/tmp/boot_p1l.img");')
-    info.script.AppendExtra('package_extract_file("boot_p1n.img", "/tmp/boot_p1n.img");')
+    info.script.AppendExtra('package_extract_file("boot_p1ln.img", "/tmp/boot_p1ln.img");')
     info.script.AppendExtra('assert(run_program("/tmp/p1ln.sh") == 0);')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh") == 0);')
 
@@ -85,7 +83,6 @@ def FullOTA_Assertions(info):
   prebuilt_path = os.path.join(prebuilt_dir, "boot.img")
   os.mkdir(prebuilt_dir)
   shutil.copyfile(kernel_path, prebuilt_path)
-
 
 def FullOTA_InstallEnd(info):
   # Remove writing boot.img from script (we do it in updater.sh)
