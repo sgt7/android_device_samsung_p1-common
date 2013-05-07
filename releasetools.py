@@ -77,6 +77,13 @@ def FullOTA_Assertions(info):
     info.script.AppendExtra('assert(run_program("/tmp/p1ln.sh") == 0);')
     info.script.AppendExtra('assert(run_program("/tmp/updater.sh") == 0);')
 
+  # Make common releasetools copy boot.img verbatim
+  kernel_path = os.path.join(info.input_tmp, "BOOT", "kernel")
+  prebuilt_dir = os.path.join(info.input_tmp, "BOOTABLE_IMAGES")
+  prebuilt_path = os.path.join(prebuilt_dir, "boot.img")
+  os.mkdir(prebuilt_dir)
+  shutil.copyfile(kernel_path, prebuilt_path)
+
 def FullOTA_InstallEnd(info):
   # Remove writing boot.img from script (we do it in updater.sh)
   info.script.script = [cmd for cmd in info.script.script if not "write_raw_image" in cmd]
