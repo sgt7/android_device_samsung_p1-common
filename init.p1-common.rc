@@ -11,13 +11,6 @@ on fs
     # mount debugfs
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
-on post-fs
-
-	# vibrator
-    insmod /system/lib/modules/vibrator.ko
-
-on post-fs-data
-
     # bluetooth
     chown bluetooth net_bt_stack /dev/s3c2410_serial0
     chmod 0600 /dev/s3c2410_serial0
@@ -39,6 +32,13 @@ on post-fs-data
     chown system radio /sys/class/sec/switch/usb_sel
     chown system radio /sys/class/sec/switch/uart_sel
 
+on post-fs
+
+    # now that all filesystems are mounted, load device specific kernel modules
+    insmod /system/lib/modules/vibrator.ko   # vibrator
+
+on post-fs-data
+
     # create data/gps for GPS demon
     mkdir /data/gps 771 gps system
     chown gps system /data/gps
@@ -46,11 +46,6 @@ on post-fs-data
     # wi-fi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-
-    # Allow system to have access to /dev/tun directory
-    mkdir /dev/tun 0770 system vpn
-    chown system vpn /dev/tun
-    chmod 0770 /dev/tun
 
     # cpufreq, set ondemand governor
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
@@ -77,10 +72,6 @@ on boot
     # phone
     setprop ro.radio.noril yes
     setprop ro.telephony.call_ring.multiple 0
-
-    # Flash storage isn't a good entropy source, and only causes locking
-    # overhead in the kernel. Turn it off.
-    write /sys/block/mmcblk0/queue/add_random 0
 
 service p1-ril-daemon /system/bin/rild
     class core
