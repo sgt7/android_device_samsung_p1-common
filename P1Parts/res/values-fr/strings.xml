@@ -19,7 +19,6 @@
     <string name="hspa_title_head">HSPA</string>
     <string name="hspa_summary_head">Activer HSDPA/HSUPA</string>
     <string name="category_tvout_title">TV</string>
-    <string name="category_tvout_title">Sortie TV</string>
     <string name="tvout_enable_head">Sortie TV</string>
     <string name="tvout_enable_summary_nocable">Câble de sortie TV non connecté</string>
     <string name="tvout_enable_summary">Câble de sortie TV connecté, vérification de l\'activation</string>
