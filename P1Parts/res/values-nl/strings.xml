@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012 The CyanogenMod Project
+<!-- Copyright (C) 2012-2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -12,9 +12,9 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-<resources>
-    <string name="app_name">Galaxy Tab-instellingen</string>
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Geavanceerde instellingen</string>
 
     <string name="category_radio_title">Radio</string>
     <string name="hspa_title_head">HSPA</string>
@@ -32,8 +32,26 @@
     <string name="hdmi_dock_summary_on">HDMI-dock ingeschakeld</string>
     <string name="hdmi_dock_head">HDMI-dock</string>
     
-    <string name="category_capacitive_buttons_title">Capacitieve knoppen</string>
-    <string name="capacitive_buttons_title">Capacitieve knoppen</string>
-    <string name="capacitive_buttons_summary">Lichten en aanrakingen op vaste capacitieve knoppen uitschakelen (incl. meldingen)</string>
+    <string name="category_buttons_title">Knoppen</string>
+    <string name="category_capacitive_buttons_title">Aanraakknoppen</string>
+    <string name="capacitive_buttons_title">Aanraakknoppen uitschakelen</string>
+    <string name="capacitive_buttons_summary">Verlichting en aanrakingen van aanraakknoppen uitschakelen (incl. meldingen)</string>
+    <string name="backlight_timeout_title_head">Time-out verlichting</string>
+    <string name="backlight_timeout_summary_head">Vertraging van uitschakelen verlichting aanraakknoppen</string>
 
+    <string name="category_speed_title">Snelheid</string>
+    <string name="touchscreen_clock_title">Kloksnelheid van aanraakscherm</string>
+
+    <string name="category_vibrator_tuning_title">Trillen</string>
+    <string name="vibrator_tuning_title_head">Trilintensiteit</string>
+    <string name="vibrator_tuning_summary_head">Trilintensiteit instellen</string>
+    <string name="vibrator_title">Trilintensiteit</string>
+    <string name="vibrator_default_title">Standaard</string>
+    <string name="vibrator_test_title">Test</string>
+
+    <string name="generic_warning_title">Let op</string>
+
+    <string name="imei_not_sane_title">Let op</string>
+    <string name="imei_not_sane_message">Er is een probleem gevonden met uw telefoon. Het IMEI-nummer van uw telefoon is ongeldig. Hierdoor kunnen problemen optreden met uw mobiele netwerkverbinding, inclusief het niet kunnen bellen van het alarmnummer.</string>
+    <string name="imei_not_sane_ok">OK</string>
 </resources>
