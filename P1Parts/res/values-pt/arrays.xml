@@ -31,4 +31,13 @@
         <item>15 segundos</item>
         <item>30 segundos</item>
     </string-array>
+    <string-array name="tvout_system_entries">
+        <item>NTSC</item>
+        <item>PAL</item>
+    </string-array>
+    <string-array name="touchscreen_clock_entries">
+        <item>400 Mhz</item>
+        <item>800 Mhz</item>
+        <item>1000 Mhz</item>
+    </string-array>
 </resources>
