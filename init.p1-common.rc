@@ -70,7 +70,6 @@ on boot
     setprop status.battery.level_scale 9
 
     # phone
-    setprop ro.radio.noril yes
     setprop ro.telephony.call_ring.multiple 0
 
 service p1-ril-daemon /system/bin/rild
