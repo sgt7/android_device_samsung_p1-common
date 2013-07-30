@@ -20,6 +20,10 @@ on fs
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill1/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill1/type
+    restorecon /sys/class/rfkill/rfkill0/state
+    restorecon /sys/class/rfkill/rfkill1/state
+    restorecon /sys/class/rfkill/rfkill0/type
+    restorecon /sys/class/rfkill/rfkill1/type
 
     # System server can control backlight brightness
     chown system system /sys/class/backlight/s5p_bl/brightness

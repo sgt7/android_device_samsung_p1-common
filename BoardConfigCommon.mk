@@ -123,3 +123,18 @@ BOARD_HARDWARE_CLASS := device/samsung/p1-common/cmhw/
 
 # Dalvik startup with a low memory footprint
 TARGET_ARCH_LOWMEM := true
+
+# SELinux
+BOARD_SEPOLICY_DIRS += \
+    device/samsung/p1-common/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+    device.te \
+    domain.te \
+    file_contexts \
+    mediaserver.te \
+    property_contexts \
+    pvrsrvinit.te \
+    rild.te \
+    tvouthack.te \
+    tvoutserver.te
