@@ -39,7 +39,6 @@ PRODUCT_COPY_FILES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES := \
-	make_ext4fs \
 	bml_over_mtd
 
 # Lights
@@ -120,6 +119,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES := \
 	ro.opengles.version=131072
 
+# Support for Browser's saved page feature. This allows
+# for pages saved on previous versions of the OS to be
+# viewed on the current OS.
+PRODUCT_PACKAGES += \
+	libskia_legacy
+
 # rotation
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.sf.hwrotation=90
@@ -138,6 +143,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	wifi.interface=wlan0 \
 	wifi.supplicant_scan_interval=45
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.bq.gpu_to_cpu_unsupported=1 \
+
+# SGX540 is slower with the scissor optimization enabled
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.hwui.disable_scissor_opt=true
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
