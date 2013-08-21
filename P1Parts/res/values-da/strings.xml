@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Avancerede indstillinger</string>
+    <string name="category_radio_title">Radio</string>
+    <string name="hspa_title_head">HSPA</string>
+    <string name="hspa_summary_head">Aktivér HSDPA/HSUPA</string>
+    <string name="category_tvout_title">TV</string>
+    <string name="tvout_enable_head">TV-Out</string>
+    <string name="tvout_enable_summary_nocable">TV-Out-kabel ikke tilsluttet</string>
+    <string name="tvout_enable_summary">TV-Out-kabel tilsluttet, markér for at aktivere</string>
+    <string name="tvout_enable_summary_on">TV-Out aktiveret</string>
+    <string name="tvout_system_head">TV-system</string>
+    <string name="tvout_system_summary">Angiv dit TV-system til TV-Out</string>
+    <string name="hdmi_dock_summary_nodock">HDMI-dock ikke tilsluttet</string>
+    <string name="hdmi_dock_summary">HDMI-dock tilsluttet, markér for at aktivere</string>
+    <string name="hdmi_dock_summary_on">HDMI-dock aktiveret</string>
+    <string name="hdmi_dock_head">HDMI-dock</string>
+    <string name="category_buttons_title">Knapper</string>
+    <string name="category_capacitive_buttons_title">Berøringstaster</string>
+    <string name="capacitive_buttons_title">Deaktivér berøringstaster</string>
+    <string name="capacitive_buttons_summary">Deaktivér berøringstasternes lys og berøring (Inkl. underretninger)</string>
+    <string name="backlight_timeout_title_head">Timeout for baggrundslys</string>
+    <string name="backlight_timeout_summary_head">Justér forsinkelsen, før baggrundslyset for berøringstasterne automatisk slukkes</string>
+    <string name="category_speed_title">Hastighed</string>
+    <string name="touchscreen_clock_title">Clockfrekvens for touchskærm</string>
+    <string name="category_vibrator_tuning_title">Vibration</string>
+    <string name="vibrator_tuning_title_head">Finjustering af vibrator-feedback</string>
+    <string name="vibrator_tuning_summary_head">Styrer standardstyrken på vibrator-feedback</string>
+    <string name="vibrator_title">Vibration %</string>
+    <string name="vibrator_default_title">Standard</string>
+    <string name="vibrator_test_title">Test</string>
+    <string name="generic_warning_title">Advarsel</string>
+    <string name="imei_not_sane_title">Advarsel!</string>
+    <string name="imei_not_sane_message">Der blev fundet et problem med din enhed. Din enheds IMEI-nummer er ugyldigt. Et ugyldigt IMEI-nummer kan forårsage netværksproblemer inkl. manglende mulighed for  nødopkald.</string>
+    <string name="imei_not_sane_ok">OK</string>
+</resources>
