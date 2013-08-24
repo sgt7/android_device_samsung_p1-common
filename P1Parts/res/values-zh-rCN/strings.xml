@@ -42,13 +42,6 @@
     <string name="category_speed_title">速度</string>
     <string name="touchscreen_clock_title">触摸屏时钟频率速度</string>
 
-    <string name="category_vibrator_tuning_title">振动</string>
-    <string name="vibrator_tuning_title_head">振动反馈调整</string>
-    <string name="vibrator_tuning_summary_head">调整振动反馈的默认强度</string>
-    <string name="vibrator_title">振动 %</string>
-    <string name="vibrator_default_title">默认</string>
-    <string name="vibrator_test_title">测试</string>
-
     <string name="generic_warning_title">警告</string>
 
     <string name="imei_not_sane_title">警告！</string>

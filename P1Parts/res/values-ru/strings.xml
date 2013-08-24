@@ -41,11 +41,4 @@
 
     <string name="category_speed_title">Частота</string>
     <string name="touchscreen_clock_title">Тактовая частота сенсорного экрана</string>
-
-    <string name="category_vibrator_tuning_title">Вибрация</string>
-    <string name="vibrator_tuning_title_head">Настройка виброотклика</string>
-    <string name="vibrator_tuning_summary_head">Настройка виброотклика по умолчанию</string>
-    <string name="vibrator_title">% вибрации</string>
-    <string name="vibrator_default_title">По умолч.</string>
-    <string name="vibrator_test_title">Тест</string>
 </resources>

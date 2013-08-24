@@ -42,13 +42,6 @@
     <string name="category_speed_title">Snelheid</string>
     <string name="touchscreen_clock_title">Kloksnelheid van aanraakscherm</string>
 
-    <string name="category_vibrator_tuning_title">Trillen</string>
-    <string name="vibrator_tuning_title_head">Trilintensiteit</string>
-    <string name="vibrator_tuning_summary_head">Trilintensiteit instellen</string>
-    <string name="vibrator_title">Trilintensiteit</string>
-    <string name="vibrator_default_title">Standaard</string>
-    <string name="vibrator_test_title">Test</string>
-
     <string name="generic_warning_title">Let op</string>
 
     <string name="imei_not_sane_title">Let op</string>

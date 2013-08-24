@@ -42,13 +42,6 @@
     <string name="category_speed_title">Speed</string>
     <string name="touchscreen_clock_title">Touchscreen Clock Speed</string>
 
-    <string name="category_vibrator_tuning_title">Vibration</string>
-    <string name="vibrator_tuning_title_head">Vibrator feedback tuning</string>
-    <string name="vibrator_tuning_summary_head">Controls the default power of vibrator feedback</string>
-    <string name="vibrator_title">Vibration %</string>
-    <string name="vibrator_default_title">Default</string>
-    <string name="vibrator_test_title">Test</string>
-
     <!-- Used for activity title. Usually not visible, except on the
          multi-task screen -->
     <string name="generic_warning_title">Warning</string>

@@ -37,12 +37,6 @@
     <string name="backlight_timeout_summary_head">Définir le délai avant l\'extinction des touches</string>
     <string name="category_speed_title">Vitesse</string>
     <string name="touchscreen_clock_title">Vitesse d\'horloge de l\'écran tactile</string>
-    <string name="category_vibrator_tuning_title">Vibreur</string>
-    <string name="vibrator_tuning_title_head">Intensité du vibreur</string>
-    <string name="vibrator_tuning_summary_head">Définir l\'intensité du vibreur</string>
-    <string name="vibrator_title">Vibreur</string>
-    <string name="vibrator_default_title">Défaut</string>
-    <string name="vibrator_test_title">Tester</string>
     <string name="generic_warning_title">Attention</string>
     <string name="imei_not_sane_title">Attention\u00A0!</string>
     <string name="imei_not_sane_message">Un problème a été détecté avec votre appareil. Votre numéro IMEI est invalide. Un numéro IMEI invalide peut poser des problèmes de connexion au réseau mobile y compris l\'impossibilité de passer des appels d\'urgence.</string>

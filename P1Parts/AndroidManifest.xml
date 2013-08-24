@@ -25,7 +25,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".VibratorFragmentActivity" />
         <activity android:name=".ButtonFragmentActivity" />
         <activity android:name=".RadioFragmentActivity" />
         <activity android:name=".TVFragmentActivity" />

@@ -37,12 +37,6 @@
     <string name="backlight_timeout_summary_head">Háttérvilágítás késleltetése</string>
     <string name="category_speed_title">Sebesség</string>
     <string name="touchscreen_clock_title">Érintőképernyő órajele</string>
-    <string name="category_vibrator_tuning_title">Rezgés</string>
-    <string name="vibrator_tuning_title_head">Rezgés erőssége</string>
-    <string name="vibrator_tuning_summary_head">Rezgés erősségének beállítása</string>
-    <string name="vibrator_title">Rezgés %</string>
-    <string name="vibrator_default_title">Alapbeállítás</string>
-    <string name="vibrator_test_title">Teszt</string>
     <string name="generic_warning_title">Figyelmeztetés</string>
     <string name="imei_not_sane_title">Figyelmeztetés!</string>
     <string name="imei_not_sane_message">Problémát észleltünk a készülékkel kapcsolatban. A készülék IMEI száma érvénytelen. Érvénytelen IMEI szám hálózati hibát okozhat, beleértve hogy segélyhívó számokat sem fog tudni felhívni.</string>

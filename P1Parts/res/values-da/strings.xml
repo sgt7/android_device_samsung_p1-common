@@ -37,12 +37,6 @@
     <string name="backlight_timeout_summary_head">Justér forsinkelsen, før baggrundslyset for berøringstasterne automatisk slukkes</string>
     <string name="category_speed_title">Hastighed</string>
     <string name="touchscreen_clock_title">Clockfrekvens for touchskærm</string>
-    <string name="category_vibrator_tuning_title">Vibration</string>
-    <string name="vibrator_tuning_title_head">Finjustering af vibrator-feedback</string>
-    <string name="vibrator_tuning_summary_head">Styrer standardstyrken på vibrator-feedback</string>
-    <string name="vibrator_title">Vibration %</string>
-    <string name="vibrator_default_title">Standard</string>
-    <string name="vibrator_test_title">Test</string>
     <string name="generic_warning_title">Advarsel</string>
     <string name="imei_not_sane_title">Advarsel!</string>
     <string name="imei_not_sane_message">Der blev fundet et problem med din enhed. Din enheds IMEI-nummer er ugyldigt. Et ugyldigt IMEI-nummer kan forårsage netværksproblemer inkl. manglende mulighed for  nødopkald.</string>

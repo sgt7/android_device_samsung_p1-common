@@ -37,12 +37,6 @@
     <string name="backlight_timeout_summary_head">Tiempo tras pulsar una tecla antes de apagar la retroiluminación</string>
     <string name="category_speed_title">Velocidad</string>
     <string name="touchscreen_clock_title">Reloj de pantalla táctil</string>
-    <string name="category_vibrator_tuning_title">Vibración</string>
-    <string name="vibrator_tuning_title_head">Respuesta háptica</string>
-    <string name="vibrator_tuning_summary_head">Establece la fuerza predeterminada para la respuesta háptica (vibración)</string>
-    <string name="vibrator_title">Intensidad de vibración</string>
-    <string name="vibrator_default_title">Predeterminado</string>
-    <string name="vibrator_test_title">Probar</string>
     <string name="generic_warning_title">Aviso</string>
     <string name="imei_not_sane_title">¡Aviso!</string>
     <string name="imei_not_sane_message">Se ha detectado un problema en su dispositivo. El número IMEI de su dispositivo es inválido. Un número IMEI inválido puede causar problemas de red, incluyendo la imposibilidad de realizar llamadas a números de emergencia.</string>

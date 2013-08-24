@@ -37,12 +37,6 @@
     <string name="category_speed_title">Velocidade</string>
     <string name="touchscreen_clock_title">Velocidade da Tela Sensível ao Toque</string>
     <string name="category_buttons_title">Botões</string>
-    <string name="category_vibrator_tuning_title">Vibração</string>
-    <string name="vibrator_tuning_title_head">Ajustar resposta por vibração</string>
-    <string name="vibrator_tuning_summary_head">Controla a força padrão da resposta por vibração</string>
-    <string name="vibrator_title">% de vibração</string>
-    <string name="vibrator_default_title">Padrão</string>
-    <string name="vibrator_test_title">Testar</string>
     <string name="generic_warning_title">Aviso</string>
     <string name="imei_not_sane_title">Aviso!</string>
     <string name="imei_not_sane_message">Um problema foi detectado com o seu dispositivo. O número IMEI do seu dispositivo é inválido. Um número de IMEI inválido pode causar problemas com a rede incluindo a incapacidade de ligar para números de emergência.</string>
