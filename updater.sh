@@ -6,11 +6,18 @@
 #
 
 check_mount() {
-    if ! /tmp/busybox grep -q $1 /proc/mounts ; then
-        /tmp/busybox mkdir -p $1
+    local MOUNT_POINT=`/tmp/busybox readlink $1`
+    if ! /tmp/busybox test -n "$MOUNT_POINT" ; then
+        # readlink does not work on older recoveries for some reason
+        # doesn't matter since the path is already correct in that case
+        /tmp/busybox echo "Using non-readlink mount point $1"
+        MOUNT_POINT=$1
+    fi
+    if ! /tmp/busybox grep -q $MOUNT_POINT /proc/mounts ; then
+        /tmp/busybox mkdir -p $MOUNT_POINT
         /tmp/busybox umount -l $2
-        if ! /tmp/busybox mount -t $3 $2 $1 ; then
-            /tmp/busybox echo "Cannot mount $1."
+        if ! /tmp/busybox mount -t $3 $2 $MOUNT_POINT ; then
+            /tmp/busybox echo "Cannot mount $1 ($MOUNT_POINT)."
             exit 1
         fi
     fi
@@ -19,6 +26,16 @@ check_mount() {
 set_log() {
     rm -rf $1
     exec >> $1 2>&1
+}
+
+fix_package_location() {
+    local PACKAGE_LOCATION=$1
+    # Remove leading /mnt
+    PACKAGE_LOCATION=${PACKAGE_LOCATION#/mnt}
+    # Convert to modern sdcard path
+    PACKAGE_LOCATION=`echo $PACKAGE_LOCATION | /tmp/busybox sed -e "s|^/sdcard|/storage/sdcard0|"`
+    PACKAGE_LOCATION=`echo $PACKAGE_LOCATION | /tmp/busybox sed -e "s|^/emmc|/storage/sdcard1|"`
+    echo $PACKAGE_LOCATION
 }
 
 # ui_print by Chainfire
@@ -87,8 +104,7 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
 
     # write the package path to sdcard cyanogenmod.cfg
     if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
-        PACKAGE_LOCATION=${UPDATE_PACKAGE#/mnt}
-        /tmp/busybox echo "$PACKAGE_LOCATION" > /mnt/sdcard/cyanogenmod.cfg
+        /tmp/busybox echo `fix_package_location $UPDATE_PACKAGE` > /mnt/sdcard/cyanogenmod.cfg
     fi
 
     # Scorch any ROM Manager settings to require the user to reflash recovery
@@ -129,7 +145,7 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE
 
     # write the package path to sdcard cyanogenmod.cfg
     if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
-        /tmp/busybox echo "$UPDATE_PACKAGE" > /sdcard/cyanogenmod.cfg
+        /tmp/busybox echo `fix_package_location $UPDATE_PACKAGE` > /sdcard/cyanogenmod.cfg
     fi
 
     if $IS_GSM ; then
