@@ -120,3 +120,6 @@ BOARD_CUSTOM_VSYNC_IOCTL := true
 
 # Hardware tunables
 BOARD_HARDWARE_CLASS := device/samsung/p1-common/cmhw/
+
+# Dalvik startup with a low memory footprint
+TARGET_ARCH_LOWMEM := true
