@@ -138,3 +138,5 @@ BOARD_SEPOLICY_UNION += \
     rild.te \
     tvouthack.te \
     tvoutserver.te
+
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
