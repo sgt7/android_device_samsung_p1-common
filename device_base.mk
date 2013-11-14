@@ -174,6 +174,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.cwm.enable_key_repeat=true \
 	ro.cwm.repeatable_keys=102,114,115,139
 
+# Enable Low Ram Device flag
+# This is used by ActivityManager.isLowRamDevice()
+PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
