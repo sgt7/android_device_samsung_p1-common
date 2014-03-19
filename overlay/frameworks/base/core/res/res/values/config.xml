@@ -159,9 +159,6 @@
     <!-- Minimum screen brightness allowed by the power manager. -->
     <integer name="config_screenBrightnessDim">10</integer>
 
-    <!-- CRT Screen off animation -->
-    <bool name="config_animateScreenLights">false</bool>
-
     <!-- Workaround for devices with broken keyboards -->
     <bool name="config_forceDisableHardwareKeyboard">true</bool>
 
@@ -195,5 +192,9 @@
 
     <!--  Maximum number of supported users -->
     <integer name="config_multiuserMaximumUsers">5</integer>
+
+    <bool name="config_enableLockScreenTranslucentDecor">true</bool>
+
+    <bool name="config_enableLockScreenRotation">true</bool>
 
 </resources>

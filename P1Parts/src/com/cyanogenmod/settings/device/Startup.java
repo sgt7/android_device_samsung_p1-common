@@ -24,7 +24,6 @@ public class Startup extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent bootintent) {
-        ToggleCapacitiveKeys.restore(context);
         TouchKeyBacklightTimeout.restore(context);
         TouchscreenClock.restore(context);
         Sanity.check(context);
